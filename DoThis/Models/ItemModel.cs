@@ -1,4 +1,5 @@
 ﻿using DoThis.Common;
+using System;
 
 namespace DoThis.Models
 {
@@ -6,6 +7,8 @@ namespace DoThis.Models
     {
         private int iterations;
         private string title;
+
+        public int Id { get; set; }
 
         public string Title
         {
@@ -28,5 +31,16 @@ namespace DoThis.Models
                 OnPropertyChanged();
             }
         }
+
+        public DateTime CreatedAt { get; set; }
+
+        public string Details { get; set; }
+
+        public DateTime CompletedAt { get; set; }
+
+        public int Urgency { get; set; }
+
+        public int Importance { get; set; }
+
     }
 }

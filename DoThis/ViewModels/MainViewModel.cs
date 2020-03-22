@@ -34,7 +34,7 @@ namespace DoThis.ViewModels
             Timer.TimerFinished += OnTimerFinished;
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             EditableTitleBarVisibility = Visibility.Collapsed;
-            Items = new ObservableCollection<ItemModel>();
+            Items = new ObservableCollection<ItemModel>(App.Database.Items);
         }
 
         public bool IsExpanded
@@ -157,9 +157,16 @@ namespace DoThis.ViewModels
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             if (!string.IsNullOrEmpty(EditableTitleBarText))
             {
-                TitleBarText = EditableTitleBarText;
-                var newItem = new ItemModel { Title = EditableTitleBarText };
+                var entry = App.Database.Items.Add(
+                    new ItemModel
+                    {
+                        Title = EditableTitleBarText,
+                        CreatedAt = DateTime.Now,
+                    });
+                App.Database.SaveChanges();
+                var newItem = entry.Entity;
                 Items.Add(newItem);
+                TitleBarText = EditableTitleBarText;
                 EditableTitleBarText = string.Empty;
                 SelectedItem = newItem;
             }
@@ -170,6 +177,14 @@ namespace DoThis.ViewModels
             TitleBarText = SelectedItem.Title;
         }
 
-        private void Close() => view.Close();
+        private void Close()
+        {
+            foreach (var item in Items)
+            {
+                App.Database.Update(item);
+            }
+            App.Database.SaveChanges();
+            view.Close();
+        }
     }
 }

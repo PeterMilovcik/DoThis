@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DoThis.Data;
 using System.Windows;
 
 namespace DoThis
@@ -13,5 +8,19 @@ namespace DoThis
     /// </summary>
     public partial class App : Application
     {
+        private static Database database;
+
+        internal static Database Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new Database();
+                    database.Database.EnsureCreated();
+                }
+                return database;
+            }
+        }
     }
 }
