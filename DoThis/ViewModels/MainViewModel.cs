@@ -1,6 +1,8 @@
 ﻿using DoThis.Commands;
+using DoThis.Models;
 using DoThis.Views;
 using MaterialDesignThemes.Wpf;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -29,6 +31,7 @@ namespace DoThis.ViewModels
             Timer = new TimerViewModel();
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             EditableTitleBarVisibility = Visibility.Collapsed;
+            Items = new ObservableCollection<ItemModel>();
         }
 
         public bool IsExpanded
@@ -99,6 +102,8 @@ namespace DoThis.ViewModels
             }
         }
 
+        public ObservableCollection<ItemModel> Items { get; }
+
         public ICommand CustomCommand { get; }
 
         public ICommand CloseCommand { get; }
@@ -127,6 +132,7 @@ namespace DoThis.ViewModels
             if (!string.IsNullOrEmpty(EditableTitleBarText))
             {
                 TitleBarText = EditableTitleBarText;
+                Items.Add(new ItemModel { Title = EditableTitleBarText });
                 EditableTitleBarText = string.Empty;
             }
         }

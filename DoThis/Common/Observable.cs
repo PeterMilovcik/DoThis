@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace DoThis.ViewModels
+namespace DoThis.Common
 {
     class Observable : INotifyPropertyChanged
     {
