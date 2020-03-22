@@ -22,6 +22,10 @@
                 <ContextMenu>
                     <MenuItem
                         Command="{Binding SetTimerCommand}"
+                        CommandParameter="1"
+                        Header="1 min" />
+                    <MenuItem
+                        Command="{Binding SetTimerCommand}"
                         CommandParameter="5"
                         Header="5 min" />
                     <MenuItem

@@ -132,7 +132,7 @@
             Grid.Column="1"
             Margin="2"
             Background="{StaticResource MaterialDesignBackground}">
-            <ListView ItemsSource="{Binding Items}">
+            <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -151,8 +151,9 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    FontSize="14"
                                     FontWeight="Bold"
-                                    Text="8" />
+                                    Text="{Binding Iterations}" />
                             </Border>
                             <TextBlock
                                 Grid.Column="1"

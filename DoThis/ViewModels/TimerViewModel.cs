@@ -111,8 +111,15 @@ namespace DoThis.ViewModels
                 StopTimer();
                 SystemSounds.Beep.Play();
                 MessageBox.Show("Timer elapsed.", "DoThis", MessageBoxButton.OK, MessageBoxImage.Information);
+                SetTimer(TotalMinutes);
+                OnTimerFinished();
             }
         }
+
+        public event EventHandler TimerFinished;
+
+        private void OnTimerFinished() => 
+            TimerFinished?.Invoke(this, EventArgs.Empty);
 
         private void UpdateFontSize()
         {

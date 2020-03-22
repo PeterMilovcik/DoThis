@@ -2,6 +2,7 @@
 using DoThis.Models;
 using DoThis.Views;
 using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -19,6 +20,7 @@ namespace DoThis.ViewModels
         private Visibility editableTitleBarVisibility;
         private string titleBarText;
         private string editableTitleBarText;
+        private ItemModel selectedItem;
 
         public MainViewModel(IMainView view)
         {
@@ -29,6 +31,7 @@ namespace DoThis.ViewModels
             AddCommand = new DelegateCommand(obj => Add());
             SubmitCommand = new DelegateCommand(obj => Submit());
             Timer = new TimerViewModel();
+            Timer.TimerFinished += OnTimerFinished;
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             EditableTitleBarVisibility = Visibility.Collapsed;
             Items = new ObservableCollection<ItemModel>();
@@ -104,6 +107,21 @@ namespace DoThis.ViewModels
 
         public ObservableCollection<ItemModel> Items { get; }
 
+        public ItemModel SelectedItem
+        {
+            get => selectedItem;
+            set
+            {
+                if (Equals(selectedItem, value)) return;
+                selectedItem = value;
+                if (selectedItem != null)
+                {
+                    OnSelectedItemChanged();
+                }
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand CustomCommand { get; }
 
         public ICommand CloseCommand { get; }
@@ -115,6 +133,14 @@ namespace DoThis.ViewModels
         public void SetWorkArea(Rect workArea) => this.workArea = workArea;
 
         public TimerViewModel Timer { get; }
+
+        private void OnTimerFinished(object sender, EventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                SelectedItem.Iterations++;
+            }
+        }
 
         private void ExpandOrCollapse() => IsExpanded = !IsExpanded;
 
@@ -132,9 +158,16 @@ namespace DoThis.ViewModels
             if (!string.IsNullOrEmpty(EditableTitleBarText))
             {
                 TitleBarText = EditableTitleBarText;
-                Items.Add(new ItemModel { Title = EditableTitleBarText });
+                var newItem = new ItemModel { Title = EditableTitleBarText };
+                Items.Add(newItem);
                 EditableTitleBarText = string.Empty;
+                SelectedItem = newItem;
             }
+        }
+
+        private void OnSelectedItemChanged()
+        {
+            TitleBarText = SelectedItem.Title;
         }
 
         private void Close() => view.Close();
