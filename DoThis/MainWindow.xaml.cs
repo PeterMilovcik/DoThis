@@ -19,10 +19,16 @@ namespace DoThis
             DataContext = viewModel;
         }
 
+        public void FocusEditableTitleBar()
+        {
+
+        }
+
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            viewModel.AdjustPositionTo(SystemParameters.WorkArea);
+            viewModel.SetWorkArea(SystemParameters.WorkArea);
+            viewModel.IsExpanded = true;
         }
     }
 }

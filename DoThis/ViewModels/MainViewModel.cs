@@ -8,18 +8,41 @@ namespace DoThis.ViewModels
 {
     class MainViewModel : ViewModel
     {
-        public MainViewModel(IMainView view)
-        {
-            this.view = view;
-            CustomIcon = nameof(PackIconKind.ArrowLeft);
-            CustomCommand = new DelegateCommand(ExpandOrCollapse);
-            CloseCommand = new DelegateCommand(Close);
-        }
-
+        private const int ExpansionOffset = 40;
         private string customIcon;
         private readonly IMainView view;
         private bool isExpanded;
         private Rect workArea;
+        private Visibility readOnlyTitleBarVisibility;
+        private Visibility editableTitleBarVisibility;
+        private string titleBarText;
+        private string editableTitleBarText;
+
+        public MainViewModel(IMainView view)
+        {
+            this.view = view;
+            CustomIcon = nameof(PackIconKind.ArrowLeft);
+            CustomCommand = new DelegateCommand(obj => ExpandOrCollapse());
+            CloseCommand = new DelegateCommand(obj => Close());
+            AddCommand = new DelegateCommand(obj => Add());
+            SubmitCommand = new DelegateCommand(obj => Submit());
+            Timer = new TimerViewModel();
+            ReadOnlyTitleBarVisibility = Visibility.Visible;
+            EditableTitleBarVisibility = Visibility.Collapsed;
+        }
+
+        public bool IsExpanded
+        {
+            get => isExpanded;
+            set
+            {
+                if (Equals(isExpanded, value)) return;
+                isExpanded = value;
+                CustomIcon = isExpanded ? nameof(PackIconKind.ArrowRight) : nameof(PackIconKind.ArrowLeft);
+                view.Left = isExpanded ? workArea.Width - view.Width : workArea.Width - ExpansionOffset;
+                view.Top = workArea.Height / 5;
+            }
+        }
 
         public string CustomIcon
         {
@@ -32,22 +55,80 @@ namespace DoThis.ViewModels
             }
         }
 
+        public Visibility ReadOnlyTitleBarVisibility
+        {
+            get => readOnlyTitleBarVisibility;
+            set
+            {
+                if (Equals(readOnlyTitleBarVisibility, value)) return;
+                readOnlyTitleBarVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility EditableTitleBarVisibility
+        {
+            get => editableTitleBarVisibility;
+            set
+            {
+                if (Equals(editableTitleBarVisibility, value)) return;
+                editableTitleBarVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string TitleBarText
+        {
+            get => titleBarText;
+            set
+            {
+                if (Equals(titleBarText, value)) return;
+                titleBarText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string EditableTitleBarText
+        {
+            get => editableTitleBarText;
+            set
+            {
+                if (Equals(editableTitleBarText, value)) return;
+                editableTitleBarText = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand CustomCommand { get; }
 
         public ICommand CloseCommand { get; }
 
-        public void AdjustPositionTo(Rect workArea)
+        public ICommand AddCommand { get; }
+
+        public ICommand SubmitCommand { get; }
+
+        public void SetWorkArea(Rect workArea) => this.workArea = workArea;
+
+        public TimerViewModel Timer { get; }
+
+        private void ExpandOrCollapse() => IsExpanded = !IsExpanded;
+
+        private void Add()
         {
-            this.workArea = workArea;
-            view.Left = workArea.Width - 30;
-            view.Top = workArea.Height / 4;
+            EditableTitleBarVisibility = Visibility.Visible;
+            ReadOnlyTitleBarVisibility = Visibility.Collapsed;
+            view.FocusEditableTitleBar();
         }
 
-        private void ExpandOrCollapse()
+        private void Submit()
         {
-            isExpanded = !isExpanded;
-            CustomIcon = isExpanded ? nameof(PackIconKind.ArrowRight) : nameof(PackIconKind.ArrowLeft);
-            view.Left = isExpanded ? workArea.Width - 30 - view.Width : workArea.Width - 30;
+            EditableTitleBarVisibility = Visibility.Collapsed;
+            ReadOnlyTitleBarVisibility = Visibility.Visible;
+            if (!string.IsNullOrEmpty(EditableTitleBarText))
+            {
+                TitleBarText = EditableTitleBarText;
+                EditableTitleBarText = string.Empty;
+            }
         }
 
         private void Close() => view.Close();

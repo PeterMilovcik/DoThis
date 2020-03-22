@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace DoThis.Commands
 {
     class DelegateCommand : ICommand
     {
-        private readonly Func<bool> canExecute;
-        private readonly Action action;
+        private readonly Func<object, bool> canExecute;
+        private readonly Action<object> action;
 
-        public DelegateCommand(Action action)
-            : this(() => true, action)
+        public DelegateCommand(Action<object> action)
+            : this(obj => true, action)
         {
         }
 
-        public DelegateCommand(Func<bool> canExecute, Action action)
+        public DelegateCommand(Func<object, bool> canExecute, Action<object> action)
         {
             this.canExecute = canExecute;
             this.action = action;
@@ -25,8 +23,8 @@ namespace DoThis.Commands
 
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 
-        public bool CanExecute(object parameter) => canExecute();
+        public bool CanExecute(object parameter) => canExecute(parameter);
 
-        public void Execute(object parameter) => action();
+        public void Execute(object parameter) => action(parameter);
     }
 }
