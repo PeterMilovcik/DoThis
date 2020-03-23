@@ -133,43 +133,54 @@
             Grid.Column="1"
             Margin="2"
             Background="{StaticResource MaterialDesignBackground}">
-            <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
-                <ListView.ItemTemplate>
+            <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Items}">
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="Yellow">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Border
-                                Grid.Column="0"
-                                Width="24"
-                                Height="24"
-                                HorizontalAlignment="Center"
-                                BorderBrush="{StaticResource MaterialDesignDarkBackground}"
-                                BorderThickness="1"
-                                CornerRadius="12">
-                                <TextBlock
+                        <Border
+                            x:Name="Border"
+                            Padding="8"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}"
+                            BorderThickness="0,0,0,1">
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Column="0"
+                                    Width="24"
+                                    Height="24"
                                     HorizontalAlignment="Center"
+                                    BorderBrush="{StaticResource MaterialDesignDarkBackground}"
+                                    BorderThickness="1"
+                                    CornerRadius="12">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        FontWeight="Bold"
+                                        Text="{Binding Iterations}" />
+                                </Border>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="8,0"
                                     VerticalAlignment="Center"
-                                    FontSize="14"
                                     FontWeight="Bold"
-                                    Text="{Binding Iterations}" />
-                            </Border>
-                            <TextBlock
-                                Grid.Column="1"
-                                Margin="8,0"
-                                VerticalAlignment="Center"
-                                FontWeight="Bold"
-                                Text="{Binding Title}" />
-                            <Button Grid.Column="2" Style="{StaticResource MaterialDesignIconButton}">
-                                <md:PackIcon Kind="CloseBox" />
-                            </Button>
-                        </Grid>
+                                    Text="{Binding Title}" />
+                                <Button
+                                    Grid.Column="2"
+                                    Width="24"
+                                    Height="24"
+                                    Padding="0"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                    <md:PackIcon Kind="Close" />
+                                </Button>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </md:Card>
     </Grid>
 </Window>
