@@ -43,6 +43,8 @@ namespace Beeffective.ViewModels
             {
                 item.Selected += OnItemSelected;
             }
+
+            SelectedItem = Items.FirstOrDefault(i => i.IsSelected);
         }
 
         private IEnumerable<ItemViewModel> LoadItems() => 

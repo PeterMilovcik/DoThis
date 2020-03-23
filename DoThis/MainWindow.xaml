@@ -9,7 +9,11 @@
     Height="450"
     AllowsTransparency="True"
     Background="Transparent"
+    FontFamily="{md:MaterialDesignFont}"
     Icon="bee.png"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     Topmost="True"
     WindowState="Normal"
     WindowStyle="None">
@@ -42,7 +46,7 @@
             Padding="0"
             md:ButtonAssist.CornerRadius="16 0 0 16"
             Command="{Binding CustomCommand}"
-            Style="{StaticResource MaterialDesignRaisedLightButton}">
+            Style="{StaticResource MaterialDesignRaisedButton}">
             <md:PackIcon Kind="{Binding CustomIcon}" />
         </Button>
 
@@ -50,7 +54,7 @@
             Grid.Row="0"
             Grid.Column="1"
             Margin="2"
-            Background="{StaticResource MaterialDesignBackground}">
+            Background="{DynamicResource MaterialDesignPaper}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -66,7 +70,7 @@
                     FontWeight="Bold"
                     Text="{Binding TitleBarText}"
                     Visibility="{Binding ReadOnlyTitleBarVisibility}" />
-                <Grid Visibility="{Binding EditableTitleBarVisibility}">
+                <Grid Grid.Column="0" Visibility="{Binding EditableTitleBarVisibility}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -84,25 +88,28 @@
                     <Button
                         Grid.Column="1"
                         Width="30"
+                        Margin="2"
                         Padding="0"
                         Command="{Binding SubmitCommand}"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}">
+                        Style="{StaticResource MaterialDesignRaisedButton}">
                         <md:PackIcon Kind="Check" />
                     </Button>
                 </Grid>
                 <Button
                     Grid.Column="1"
                     Width="30"
+                    Margin="0,2,2,2"
                     Padding="0"
                     Command="{Binding AddCommand}"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}">
+                    Style="{StaticResource MaterialDesignRaisedButton}">
                     <md:PackIcon Kind="Add" />
                 </Button>
                 <Button
                     Grid.Column="2"
                     Width="30"
+                    Margin="0,2,2,2"
                     Padding="0"
-                    Style="{StaticResource MaterialDesignRaisedLightButton}">
+                    Style="{StaticResource MaterialDesignRaisedButton}">
                     <md:PackIcon Kind="FormatListText" />
                 </Button>
             </Grid>
@@ -117,13 +124,14 @@
             Padding="0"
             md:ButtonAssist.CornerRadius="0 16 16 0"
             Command="{Binding CloseCommand}"
-            Style="{StaticResource MaterialDesignRaisedLightButton}">
+            Style="{StaticResource MaterialDesignRaisedButton}">
             <md:PackIcon Kind="Close" />
         </Button>
 
         <controls:TimerControl
             Grid.Row="1"
             Grid.Column="0"
+            Margin="6"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             DataContext="{Binding Timer}" />
@@ -132,7 +140,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Margin="2"
-            Background="{StaticResource MaterialDesignBackground}">
+            Background="{DynamicResource MaterialDesignPaper}">
             <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -150,6 +158,7 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Button
+                                    Margin="8,0"
                                     VerticalAlignment="Center"
                                     Command="{Binding SelectCommand}"
                                     Style="{StaticResource MaterialDesignToolForegroundButton}">
@@ -160,7 +169,7 @@
                                     Width="24"
                                     Height="24"
                                     HorizontalAlignment="Center"
-                                    BorderBrush="{StaticResource MaterialDesignDarkBackground}"
+                                    BorderBrush="{StaticResource PrimaryHueMidBrush}"
                                     BorderThickness="1"
                                     CornerRadius="12">
                                     <TextBlock
@@ -168,6 +177,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="14"
                                         FontWeight="Bold"
+                                        Foreground="{StaticResource PrimaryHueMidBrush}"
                                         Text="{Binding Iterations}" />
                                 </Border>
 
