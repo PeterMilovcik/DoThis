@@ -1,7 +1,7 @@
-﻿using DoThis.Common;
-using System;
+﻿using System;
+using Beeffective.Common;
 
-namespace DoThis.Models
+namespace Beeffective.Models
 {
     class ItemModel : Observable
     {

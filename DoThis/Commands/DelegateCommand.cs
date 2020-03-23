@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace DoThis.Commands
+namespace Beeffective.Commands
 {
     class DelegateCommand : ICommand
     {

@@ -1,16 +1,16 @@
-﻿using DoThis.Commands;
-using DoThis.Extensions;
-using DoThis.Models;
-using DoThis.Views;
-using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Beeffective.Commands;
+using Beeffective.Extensions;
+using Beeffective.Models;
+using Beeffective.Views;
+using MaterialDesignThemes.Wpf;
 
-namespace DoThis.ViewModels
+namespace Beeffective.ViewModels
 {
     class MainViewModel : ViewModel
     {

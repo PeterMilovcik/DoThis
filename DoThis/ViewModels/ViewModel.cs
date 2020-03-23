@@ -1,6 +1,6 @@
-﻿using DoThis.Common;
+﻿using Beeffective.Common;
 
-namespace DoThis.ViewModels
+namespace Beeffective.ViewModels
 {
     class ViewModel : Observable
     {

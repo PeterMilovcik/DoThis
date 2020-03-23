@@ -1,7 +1,7 @@
-﻿using DoThis.Data;
-using System.Windows;
+﻿using System.Windows;
+using Beeffective.Data;
 
-namespace DoThis
+namespace Beeffective
 {
     /// <summary>
     /// Interaction logic for App.xaml

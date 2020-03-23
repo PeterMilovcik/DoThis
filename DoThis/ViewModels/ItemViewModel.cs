@@ -1,11 +1,11 @@
-﻿using DoThis.Commands;
-using DoThis.Extensions;
-using DoThis.Models;
-using MaterialDesignThemes.Wpf;
-using System;
+﻿using System;
 using System.Windows.Input;
+using Beeffective.Commands;
+using Beeffective.Extensions;
+using Beeffective.Models;
+using MaterialDesignThemes.Wpf;
 
-namespace DoThis.ViewModels
+namespace Beeffective.ViewModels
 {
     class ItemViewModel : ViewModel
     {

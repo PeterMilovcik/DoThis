@@ -1,11 +1,11 @@
-﻿using DoThis.Commands;
-using System;
+﻿using System;
 using System.Media;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using Beeffective.Commands;
 
-namespace DoThis.ViewModels
+namespace Beeffective.ViewModels
 {
     class TimerViewModel : ViewModel
     {

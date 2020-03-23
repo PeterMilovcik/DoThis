@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DoThis.Extensions
+namespace Beeffective.Extensions
 {
     static class BooleanExtensions
     {

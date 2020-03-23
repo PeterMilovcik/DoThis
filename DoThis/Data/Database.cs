@@ -1,7 +1,7 @@
-﻿using DoThis.Models;
+﻿using Beeffective.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DoThis.Data
+namespace Beeffective.Data
 {
     class Database : DbContext
     {

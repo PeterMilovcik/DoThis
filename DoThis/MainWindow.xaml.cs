@@ -1,10 +1,10 @@
-﻿using DoThis.ViewModels;
-using DoThis.Views;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Beeffective.ViewModels;
+using Beeffective.Views;
 
-namespace DoThis
+namespace Beeffective
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

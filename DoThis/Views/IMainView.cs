@@ -1,4 +1,4 @@
-﻿namespace DoThis.Views
+﻿namespace Beeffective.Views
 {
     interface IMainView
     {
