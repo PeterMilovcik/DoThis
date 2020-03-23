@@ -9,6 +9,7 @@
     Height="450"
     AllowsTransparency="True"
     Background="Transparent"
+    Icon="bee.png"
     Topmost="True"
     WindowState="Normal"
     WindowStyle="None">
@@ -135,10 +136,11 @@
             <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
+                        <Grid Background="Yellow">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Border
                                 Grid.Column="0"
@@ -161,6 +163,9 @@
                                 VerticalAlignment="Center"
                                 FontWeight="Bold"
                                 Text="{Binding Title}" />
+                            <Button Grid.Column="2" Style="{StaticResource MaterialDesignIconButton}">
+                                <md:PackIcon Kind="CloseBox" />
+                            </Button>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
