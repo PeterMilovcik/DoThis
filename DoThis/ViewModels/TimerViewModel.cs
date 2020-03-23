@@ -86,6 +86,8 @@ namespace DoThis.ViewModels
             }
         }
 
+        public TimeSpan Interval => TimeSpan.FromMilliseconds(timer.Interval);
+
         public ICommand TimerCommand { get; }
 
         public ICommand SetTimerCommand { get; }
@@ -104,6 +106,7 @@ namespace DoThis.ViewModels
                     ? (int)timeSpan.TotalMinutes + (int)Math.Min(timeSpan.TotalSeconds, 1) 
                     : (int)timeSpan.TotalSeconds;
                 Progress = (int)(timeSpan.TotalMinutes * 100 / TotalMinutes);
+                OnTicked();
             }
             else
             {
@@ -152,5 +155,9 @@ namespace DoThis.ViewModels
                 Remaining = (int)timeSpan.TotalMinutes;
             }
         }
+
+        public event EventHandler Ticked;
+
+        private void OnTicked() => Ticked?.Invoke(this, EventArgs.Empty);
     }
 }

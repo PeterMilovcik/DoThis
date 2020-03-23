@@ -17,7 +17,6 @@ namespace DoThis
                 if (database == null)
                 {
                     database = new Database();
-                    database.Database.EnsureCreated();
                 }
                 return database;
             }

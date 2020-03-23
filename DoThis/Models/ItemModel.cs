@@ -5,32 +5,13 @@ namespace DoThis.Models
 {
     class ItemModel : Observable
     {
-        private int iterations;
-        private string title;
-
         public int Id { get; set; }
 
-        public string Title
-        {
-            get => title;
-            set
-            {
-                if (Equals(title, value)) return;
-                title = value;
-                OnPropertyChanged();
-            }
-        }
+        public string Title { get; set; }
 
-        public int Iterations
-        {
-            get => iterations;
-            set
-            {
-                if (Equals(iterations, value)) return;
-                iterations = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool IsSelected { get; set; }
+
+        public int Iterations { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
@@ -42,5 +23,6 @@ namespace DoThis.Models
 
         public int Importance { get; set; }
 
+        public TimeSpan AggregatedTime { get; set; }
     }
 }

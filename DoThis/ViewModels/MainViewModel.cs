@@ -1,9 +1,12 @@
 ﻿using DoThis.Commands;
+using DoThis.Extensions;
 using DoThis.Models;
 using DoThis.Views;
 using MaterialDesignThemes.Wpf;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -20,7 +23,7 @@ namespace DoThis.ViewModels
         private Visibility editableTitleBarVisibility;
         private string titleBarText;
         private string editableTitleBarText;
-        private ItemModel selectedItem;
+        private ItemViewModel selectedItem;
 
         public MainViewModel(IMainView view)
         {
@@ -31,11 +34,19 @@ namespace DoThis.ViewModels
             AddCommand = new DelegateCommand(obj => Add());
             SubmitCommand = new DelegateCommand(obj => Submit());
             Timer = new TimerViewModel();
+            Timer.Ticked += OnTimerTicked;
             Timer.TimerFinished += OnTimerFinished;
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             EditableTitleBarVisibility = Visibility.Collapsed;
-            Items = new ObservableCollection<ItemModel>(App.Database.Items);
+            Items = new ObservableCollection<ItemViewModel>(LoadItems());
+            foreach (var item in Items)
+            {
+                item.Selected += OnItemSelected;
+            }
         }
+
+        private IEnumerable<ItemViewModel> LoadItems() => 
+            App.Database.Items.Select(m => new ItemViewModel(m));
 
         public bool IsExpanded
         {
@@ -105,9 +116,9 @@ namespace DoThis.ViewModels
             }
         }
 
-        public ObservableCollection<ItemModel> Items { get; }
+        public ObservableCollection<ItemViewModel> Items { get; }
 
-        public ItemModel SelectedItem
+        public ItemViewModel SelectedItem
         {
             get => selectedItem;
             set
@@ -164,11 +175,12 @@ namespace DoThis.ViewModels
                         CreatedAt = DateTime.Now,
                     });
                 App.Database.SaveChanges();
-                var newItem = entry.Entity;
-                Items.Add(newItem);
+                var newModel = entry.Entity;
+                var newViewModel = new ItemViewModel(newModel);
+                Items.Add(newViewModel);
                 TitleBarText = EditableTitleBarText;
                 EditableTitleBarText = string.Empty;
-                SelectedItem = newItem;
+                SelectedItem = newViewModel;
             }
         }
 
@@ -177,14 +189,17 @@ namespace DoThis.ViewModels
             TitleBarText = SelectedItem.Title;
         }
 
-        private void Close()
+        private void OnItemSelected(object sender, EventArgs e)
         {
-            foreach (var item in Items)
-            {
-                App.Database.Update(item);
-            }
-            App.Database.SaveChanges();
-            view.Close();
+            SelectedItem = sender as ItemViewModel;
+            Items.Except(new[] { SelectedItem }).ToList()
+                .ForEach(i => i.IsSelected = false);
         }
+
+        private void OnTimerTicked(object sender, EventArgs e) 
+            => SelectedItem.IfNotNull(
+                () => SelectedItem.AggregatedTime = SelectedItem.AggregatedTime.Add(Timer.Interval));
+
+        private void Close() => view.Close();
     }
 }
