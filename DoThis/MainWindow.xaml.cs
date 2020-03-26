@@ -15,16 +15,16 @@ namespace Beeffective
 
         public MainWindow()
         {
-            InitializeComponent();
             viewModel = new MainViewModel(this);
+            InitializeComponent();
             DataContext = viewModel;
         }
 
         public void FocusEditableTitleBar() => EditableTitleBar.Focus();
 
-        protected override void OnActivated(EventArgs e)
+        protected override void OnInitialized(EventArgs e)
         {
-            base.OnActivated(e);
+            base.OnInitialized(e);
             viewModel.SetWorkArea(SystemParameters.WorkArea);
             viewModel.IsExpanded = true;
         }
