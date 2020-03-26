@@ -29,7 +29,9 @@ namespace Beeffective.ViewModels
         {
             this.view = view;
             CustomIcon = nameof(PackIconKind.ArrowLeft);
-            CustomCommand = new DelegateCommand(obj => ExpandOrCollapse());
+            ShowHideCommand = new DelegateCommand(obj => ShowHide());
+            ShowCommand = new DelegateCommand(obj => Show());
+            HideCommand = new DelegateCommand(obj => Hide());
             CloseCommand = new DelegateCommand(obj => Close());
             AddCommand = new DelegateCommand(obj => Add());
             SubmitCommand = new DelegateCommand(obj => Submit());
@@ -135,7 +137,11 @@ namespace Beeffective.ViewModels
             }
         }
 
-        public ICommand CustomCommand { get; }
+        public ICommand ShowHideCommand { get; }
+        
+        public ICommand ShowCommand { get; }
+        
+        public ICommand HideCommand { get; }
 
         public ICommand CloseCommand { get; }
 
@@ -155,10 +161,15 @@ namespace Beeffective.ViewModels
             }
         }
 
-        private void ExpandOrCollapse() => IsExpanded = !IsExpanded;
+        private void ShowHide() => IsExpanded = !IsExpanded;
+        
+        private void Show() => IsExpanded = true;
+        
+        private void Hide() => IsExpanded = false;
 
         private void Add()
         {
+            IsExpanded = true;
             EditableTitleBarVisibility = Visibility.Visible;
             ReadOnlyTitleBarVisibility = Visibility.Collapsed;
             view.FocusEditableTitleBar();
