@@ -24,6 +24,8 @@ namespace Beeffective.ViewModels
         private string titleBarText;
         private string editableTitleBarText;
         private ItemViewModel selectedItem;
+        private double expandedLeft;
+        private double collapsedLeft;
 
         public MainViewModel(IMainView view)
         {
@@ -60,8 +62,37 @@ namespace Beeffective.ViewModels
                 if (Equals(isExpanded, value)) return;
                 isExpanded = value;
                 CustomIcon = isExpanded ? nameof(PackIconKind.ArrowRight) : nameof(PackIconKind.ArrowLeft);
-                view.Left = isExpanded ? workArea.Width - view.Width : workArea.Width - ExpansionOffset;
-                view.Top = workArea.Height / 5;
+                //view.Left = isExpanded ? ExpandedLeft : CollapsedLeft;
+                if (isExpanded)
+                {
+                    OnExpanded();
+                }
+                else
+                {
+                    OnCollapsed();
+                }
+                OnPropertyChanged();
+            }
+        }
+
+        public double ExpandedLeft
+        {
+            get => expandedLeft;
+            set
+            {
+                if (Equals(expandedLeft, value)) return;
+                expandedLeft = value;
+            }
+        }
+
+        public double CollapsedLeft
+        {
+            get => collapsedLeft;
+            set
+            {
+                if (Equals(collapsedLeft, value)) return;
+                collapsedLeft = value;
+                OnPropertyChanged();
             }
         }
 
@@ -149,9 +180,25 @@ namespace Beeffective.ViewModels
 
         public ICommand SubmitCommand { get; }
 
-        public void SetWorkArea(Rect workArea) => this.workArea = workArea;
+        public void SetWorkArea(Rect workArea)
+        {
+            this.workArea = workArea;
+            ExpandedLeft = workArea.Width - view.Width;
+            CollapsedLeft = workArea.Width - ExpansionOffset;
+            view.Top = workArea.Height / 5;
+        }
 
         public TimerViewModel Timer { get; }
+
+        public event EventHandler Expanded;
+
+        private void OnExpanded() =>
+            Expanded?.Invoke(this, EventArgs.Empty);
+
+        public event EventHandler Collapsed;
+
+        private void OnCollapsed() =>
+            Collapsed?.Invoke(this, EventArgs.Empty);
 
         private void OnTimerFinished(object sender, EventArgs e)
         {
