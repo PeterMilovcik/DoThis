@@ -24,13 +24,13 @@ namespace Beeffective
             DataContext = viewModel;
         }
 
-        private void OnExpanded(object? sender, EventArgs e)
+        private void OnExpanded(object sender, EventArgs e)
         {
             var animation = new DoubleAnimation(viewModel.CollapsedLeft, viewModel.ExpandedLeft, new Duration(animationTimeSpan));
             BeginAnimation(LeftProperty, animation);
         }
 
-        private void OnCollapsed(object? sender, EventArgs e)
+        private void OnCollapsed(object sender, EventArgs e)
         {
             var animation = new DoubleAnimation(viewModel.ExpandedLeft, viewModel.CollapsedLeft, new Duration(animationTimeSpan));
             BeginAnimation(LeftProperty, animation);

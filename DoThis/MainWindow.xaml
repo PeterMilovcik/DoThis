@@ -189,7 +189,6 @@
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
                                 <Button
-                                    Margin="8,0"
                                     VerticalAlignment="Center"
                                     Command="{Binding SelectCommand}"
                                     Style="{StaticResource MaterialDesignToolForegroundButton}">
@@ -199,6 +198,7 @@
                                     Grid.Column="1"
                                     Width="24"
                                     Height="24"
+                                    Margin="4,0"
                                     HorizontalAlignment="Center"
                                     BorderBrush="{StaticResource PrimaryHueMidBrush}"
                                     BorderThickness="1"
@@ -230,6 +230,7 @@
                                     Width="24"
                                     Height="24"
                                     Padding="0"
+                                    Command="{Binding RemoveCommand}"
                                     Style="{StaticResource MaterialDesignToolForegroundButton}">
                                     <md:PackIcon Kind="Close" />
                                 </Button>

@@ -18,6 +18,7 @@ namespace Beeffective.ViewModels
             this.model = model;
             UpdateIcon();
             SelectCommand = new DelegateCommand(obj => Select());
+            RemoveCommand = new DelegateCommand(obj => Remove());
         }
 
         public int Id => model.Id;
@@ -30,20 +31,6 @@ namespace Beeffective.ViewModels
                 if (Equals(model.Title, value)) return;
                 model.Title = value;
                 SaveModel();
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsSelected
-        {
-            get => model.IsSelected;
-            set
-            {
-                if (Equals(model.IsSelected, value)) return;
-                model.IsSelected = value;
-                SaveModel();
-                UpdateIcon();
-                model.IsSelected.Call(OnSelected);
                 OnPropertyChanged();
             }
         }
@@ -145,12 +132,40 @@ namespace Beeffective.ViewModels
 
         public ICommand SelectCommand { get; }
 
-        private void Select() => IsSelected = !IsSelected;
-
         public event EventHandler Selected;
 
         private void OnSelected()
             => Selected?.Invoke(this, EventArgs.Empty);
+
+        private void Select() => IsSelected = !IsSelected;
+
+        public bool IsSelected
+        {
+            get => model.IsSelected;
+            set
+            {
+                if (Equals(model.IsSelected, value)) return;
+                model.IsSelected = value;
+                SaveModel();
+                UpdateIcon();
+                model.IsSelected.Call(OnSelected);
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand RemoveCommand { get; }
+
+        private void Remove()
+        {
+            App.Database.Remove(model);
+            App.Database.SaveChanges();
+            OnRemoved();
+        }
+
+        public event EventHandler Removed;
+
+        private void OnRemoved()
+            => Removed?.Invoke(this, EventArgs.Empty);
 
         private void SaveModel()
         {

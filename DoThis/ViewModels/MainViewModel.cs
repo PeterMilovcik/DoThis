@@ -8,33 +8,20 @@ using Beeffective.Commands;
 using Beeffective.Extensions;
 using Beeffective.Models;
 using Beeffective.Views;
-using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.ViewModels
 {
-    class MainViewModel : ViewModel
+    class MainViewModel : ExpandableViewModel
     {
-        private const int ExpansionOffset = 40;
-        private string customIcon;
-        private readonly IMainView view;
-        private bool isExpanded;
-        private Rect workArea;
         private Visibility readOnlyTitleBarVisibility;
         private Visibility editableTitleBarVisibility;
         private string titleBarText;
         private string editableTitleBarText;
         private ItemViewModel selectedItem;
-        private double expandedLeft;
-        private double collapsedLeft;
 
         public MainViewModel(IMainView view)
+            : base(view)
         {
-            this.view = view;
-            CustomIcon = nameof(PackIconKind.ArrowLeft);
-            ShowHideCommand = new DelegateCommand(obj => ShowHide());
-            ShowCommand = new DelegateCommand(obj => Show());
-            HideCommand = new DelegateCommand(obj => Hide());
-            CloseCommand = new DelegateCommand(obj => Close());
             AddCommand = new DelegateCommand(obj => Add());
             SubmitCommand = new DelegateCommand(obj => Submit());
             Timer = new TimerViewModel();
@@ -43,69 +30,12 @@ namespace Beeffective.ViewModels
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             EditableTitleBarVisibility = Visibility.Collapsed;
             Items = new ObservableCollection<ItemViewModel>(LoadItems());
-            foreach (var item in Items)
-            {
-                item.Selected += OnItemSelected;
-            }
-
+            Items.ToList().ForEach(Subscribe);
             SelectedItem = Items.FirstOrDefault(i => i.IsSelected);
         }
 
         private IEnumerable<ItemViewModel> LoadItems() => 
             App.Database.Items.Select(m => new ItemViewModel(m));
-
-        public bool IsExpanded
-        {
-            get => isExpanded;
-            set
-            {
-                if (Equals(isExpanded, value)) return;
-                isExpanded = value;
-                CustomIcon = isExpanded ? nameof(PackIconKind.ArrowRight) : nameof(PackIconKind.ArrowLeft);
-                //view.Left = isExpanded ? ExpandedLeft : CollapsedLeft;
-                if (isExpanded)
-                {
-                    OnExpanded();
-                }
-                else
-                {
-                    OnCollapsed();
-                }
-                OnPropertyChanged();
-            }
-        }
-
-        public double ExpandedLeft
-        {
-            get => expandedLeft;
-            set
-            {
-                if (Equals(expandedLeft, value)) return;
-                expandedLeft = value;
-            }
-        }
-
-        public double CollapsedLeft
-        {
-            get => collapsedLeft;
-            set
-            {
-                if (Equals(collapsedLeft, value)) return;
-                collapsedLeft = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string CustomIcon
-        {
-            get => customIcon;
-            set
-            {
-                if (Equals(customIcon, value)) return;
-                customIcon = value;
-                OnPropertyChanged();
-            }
-        }
 
         public Visibility ReadOnlyTitleBarVisibility
         {
@@ -160,66 +90,25 @@ namespace Beeffective.ViewModels
             {
                 if (Equals(selectedItem, value)) return;
                 selectedItem = value;
-                if (selectedItem != null)
-                {
-                    OnSelectedItemChanged();
-                }
+                OnSelectedItemChanged();
                 OnPropertyChanged();
             }
         }
-
-        public ICommand ShowHideCommand { get; }
-        
-        public ICommand ShowCommand { get; }
-        
-        public ICommand HideCommand { get; }
-
-        public ICommand CloseCommand { get; }
 
         public ICommand AddCommand { get; }
 
         public ICommand SubmitCommand { get; }
 
-        public void SetWorkArea(Rect workArea)
-        {
-            this.workArea = workArea;
-            ExpandedLeft = workArea.Width - view.Width;
-            CollapsedLeft = workArea.Width - ExpansionOffset;
-            view.Top = workArea.Height / 5;
-        }
-
         public TimerViewModel Timer { get; }
 
-        public event EventHandler Expanded;
-
-        private void OnExpanded() =>
-            Expanded?.Invoke(this, EventArgs.Empty);
-
-        public event EventHandler Collapsed;
-
-        private void OnCollapsed() =>
-            Collapsed?.Invoke(this, EventArgs.Empty);
-
-        private void OnTimerFinished(object sender, EventArgs e)
-        {
-            if (SelectedItem != null)
-            {
-                SelectedItem.Iterations++;
-            }
-        }
-
-        private void ShowHide() => IsExpanded = !IsExpanded;
-        
-        private void Show() => IsExpanded = true;
-        
-        private void Hide() => IsExpanded = false;
+        private void OnTimerFinished(object sender, EventArgs e) => SelectedItem.IfNotNull(item => item.Iterations++);
 
         private void Add()
         {
             IsExpanded = true;
             EditableTitleBarVisibility = Visibility.Visible;
             ReadOnlyTitleBarVisibility = Visibility.Collapsed;
-            view.FocusEditableTitleBar();
+            View.FocusEditableTitleBar();
         }
 
         private void Submit()
@@ -237,6 +126,7 @@ namespace Beeffective.ViewModels
                 App.Database.SaveChanges();
                 var newModel = entry.Entity;
                 var newViewModel = new ItemViewModel(newModel);
+                Subscribe(newViewModel);
                 Items.Add(newViewModel);
                 TitleBarText = EditableTitleBarText;
                 EditableTitleBarText = string.Empty;
@@ -244,10 +134,13 @@ namespace Beeffective.ViewModels
             }
         }
 
-        private void OnSelectedItemChanged()
+        private void Subscribe(ItemViewModel newViewModel)
         {
-            TitleBarText = SelectedItem.Title;
+            newViewModel.Selected += OnItemSelected;
+            newViewModel.Removed += OnItemRemoved;
         }
+
+        private void OnSelectedItemChanged() => TitleBarText = SelectedItem?.Title;
 
         private void OnItemSelected(object sender, EventArgs e)
         {
@@ -256,10 +149,21 @@ namespace Beeffective.ViewModels
                 .ForEach(i => i.IsSelected = false);
         }
 
+        private void OnItemRemoved(object sender, EventArgs e)
+        {
+            if (sender is ItemViewModel viewModel)
+            {
+                if (SelectedItem == viewModel)
+                {
+                    SelectedItem = null;
+                }
+
+                Items.Remove(viewModel);
+            }
+        }
+
         private void OnTimerTicked(object sender, EventArgs e) 
             => SelectedItem.IfNotNull(
                 () => SelectedItem.AggregatedTime = SelectedItem.AggregatedTime.Add(Timer.Interval));
-
-        private void Close() => view.Close();
     }
 }

@@ -9,5 +9,11 @@ namespace Beeffective.Extensions
             if (obj != null) action();
             return obj;
         }
+
+        public static object IfNotNull<T>(this T obj, Action<T> action)
+        {
+            if (obj != null) action(obj);
+            return obj;
+        }
     }
 }
