@@ -34,18 +34,18 @@
                         BorderThickness="1"
                         CornerRadius="2">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="8,0,0,0"
+                            <Label
+                                Margin="0,-1"
                                 VerticalAlignment="Center"
+                                Content="{Binding Name}"
                                 FontSize="10"
-                                Foreground="{StaticResource PrimaryHueMidBrush}"
-                                Text="{Binding Name}" />
+                                Foreground="{StaticResource PrimaryHueMidBrush}" />
                             <Button
                                 Width="16"
                                 Height="16"
-                                Margin="4,1,1,1"
                                 Padding="0"
                                 VerticalAlignment="Center"
+                                Command="{Binding RemoveCategoryCommand}"
                                 Foreground="{StaticResource PrimaryHueMidBrush}"
                                 Style="{StaticResource MaterialDesignToolForegroundButton}">
                                 <materialDesign:PackIcon Width="10" Kind="Close" />

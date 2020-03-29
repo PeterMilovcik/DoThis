@@ -131,7 +131,7 @@ namespace Beeffective.ViewModels
                     {
                         Title = EditableTitleBarText,
                         CreatedAt = DateTime.Now,
-                        Categories = string.Join(",", categories)
+                        Categories = string.Join(" ", categories)
                     });
                 App.Database.SaveChanges();
                 var newModel = entry.Entity;

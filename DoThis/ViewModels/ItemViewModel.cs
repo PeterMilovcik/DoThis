@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -18,6 +19,7 @@ namespace Beeffective.ViewModels
         public ItemViewModel(ItemModel model)
         {
             this.model = model;
+            Categories = new ObservableCollection<CategoryViewModel>(ParseCategories());
             UpdateIcon();
             SelectCommand = new DelegateCommand(obj => Select());
             RemoveCommand = new DelegateCommand(obj => Remove());
@@ -37,15 +39,18 @@ namespace Beeffective.ViewModels
             }
         }
 
-        public ObservableCollection<CategoryViewModel> Categories
+        public ObservableCollection<CategoryViewModel> Categories { get; }
+
+        private IEnumerable<CategoryViewModel> ParseCategories()
         {
-            get
-            {
-                if (string.IsNullOrEmpty(model.Categories)) return null;
-                return new ObservableCollection<CategoryViewModel>(
-                    model.Categories.Split(",")
-                        .Select(c => new CategoryViewModel(c)));
-            }
+            if (string.IsNullOrWhiteSpace(model.Categories)) return new List<CategoryViewModel>();
+            return model.Categories.Split(" ")
+                .Select(c =>
+                {
+                    var viewModel = new CategoryViewModel(c);
+                    viewModel.Removed += OnCategoryRemoved;
+                    return viewModel;
+                });
         }
 
         public int Iterations
@@ -188,5 +193,16 @@ namespace Beeffective.ViewModels
 
         private void UpdateIcon() => 
             Icon = model.IsSelected ? nameof(PackIconKind.Pause) : nameof(PackIconKind.Play);
+
+        private void OnCategoryRemoved(object sender, EventArgs e)
+        {
+            if (sender is CategoryViewModel categoryViewModel)
+            {
+                model.Categories = model.Categories.Replace(categoryViewModel.Name, "");
+                App.Database.Update(model);
+                App.Database.SaveChanges();
+                Categories.Remove(categoryViewModel);
+            }
+        }
     }
 }

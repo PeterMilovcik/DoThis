@@ -6,7 +6,7 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="Beeffective"
     Width="800"
-    Height="450"
+    Height="530"
     AllowsTransparency="True"
     Background="Transparent"
     FontFamily="{md:MaterialDesignFont}"
@@ -69,7 +69,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid
                     Grid.Column="0"
-                    Height="60"
+                    Height="65"
                     Visibility="{Binding ReadOnlyTitleBarVisibility}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -185,25 +185,44 @@
             Grid.Column="1"
             Margin="2"
             Background="{DynamicResource MaterialDesignPaper}">
-            <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+            <ListView
+                VerticalContentAlignment="Stretch"
+                ItemsSource="{Binding Items}"
+                SelectedItem="{Binding SelectedItem}">
+                <ListView.ItemContainerStyle>
+                    <Style BasedOn="{StaticResource MaterialDesignGridViewItem}" TargetType="ListViewItem">
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="45">
+                        <GridViewColumn Width="50">
                             <GridViewColumn.HeaderTemplate>
                                 <DataTemplate>
                                     <md:PackIcon
                                         Width="16"
                                         Height="16"
-                                        Kind="Clockwise" />
+                                        Kind="Hexagons" />
                                 </DataTemplate>
                             </GridViewColumn.HeaderTemplate>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Label Content="{Binding Iterations}" />
+                                    <Grid>
+                                        <md:PackIcon
+                                            Width="34"
+                                            Height="34"
+                                            Foreground="{StaticResource MaterialDesignCardBackground}"
+                                            Kind="HexagonOutline" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                            Text="{Binding Iterations}"
+                                            TextAlignment="Center" />
+                                    </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Width="545" Header="Title">
+                        <GridViewColumn Width="525" Header="Title">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -213,9 +232,10 @@
                                         </Grid.RowDefinitions>
                                         <Label
                                             Grid.Row="0"
+                                            Margin="0,-8,0,0"
                                             Content="{Binding Title}"
                                             ToolTip="{Binding Title}" />
-                                        <controls:CategoriesControl Grid.Row="1" />
+                                        <controls:CategoriesControl Grid.Row="1" Margin="0,0,0,-4" />
                                     </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -223,7 +243,10 @@
                         <GridViewColumn Width="70" Header="Time">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Label VerticalAlignment="Center" Content="{Binding AggregatedTime}" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Text="{Binding AggregatedTime}"
+                                        TextAlignment="Center" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
