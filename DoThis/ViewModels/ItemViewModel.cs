@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Beeffective.Commands;
 using Beeffective.Extensions;
@@ -32,6 +34,17 @@ namespace Beeffective.ViewModels
                 model.Title = value;
                 SaveModel();
                 OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<CategoryViewModel> Categories
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(model.Categories)) return null;
+                return new ObservableCollection<CategoryViewModel>(
+                    model.Categories.Split(",")
+                        .Select(c => new CategoryViewModel(c)));
             }
         }
 

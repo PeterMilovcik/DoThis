@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using Beeffective.Commands;
 using Beeffective.Extensions;
 using Beeffective.Models;
@@ -117,11 +119,19 @@ namespace Beeffective.ViewModels
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             if (!string.IsNullOrEmpty(EditableTitleBarText))
             {
+                var categories = ParseCategories(EditableTitleBarText);
+                categories.ForEach(c => EditableTitleBarText = EditableTitleBarText.Replace(c, ""));
+                EditableTitleBarText = EditableTitleBarText
+                    .Replace("#", "")
+                    .Replace("@","");
+                EditableTitleBarText = Regex.Replace(EditableTitleBarText, @"\s+", " ");
+
                 var entry = App.Database.Items.Add(
                     new ItemModel
                     {
                         Title = EditableTitleBarText,
                         CreatedAt = DateTime.Now,
+                        Categories = string.Join(",", categories)
                     });
                 App.Database.SaveChanges();
                 var newModel = entry.Entity;
@@ -132,6 +142,15 @@ namespace Beeffective.ViewModels
                 EditableTitleBarText = string.Empty;
                 SelectedItem = newViewModel;
             }
+        }
+
+        private List<string> ParseCategories(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return new List<string>();
+            return text.Split(" ")
+                .Where(w => w.StartsWith("#") || w.StartsWith("@"))
+                .Select(w => w.Replace("#", ""))
+                .Select(w => w.Replace("@", "")).ToList();
         }
 
         private void Subscribe(ItemViewModel newViewModel)

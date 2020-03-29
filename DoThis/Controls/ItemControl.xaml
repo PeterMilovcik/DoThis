@@ -1,0 +1,123 @@
+﻿<Border
+    x:Class="Beeffective.Controls.ItemControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Padding="8"
+    d:DesignWidth="600"
+    BorderBrush="{DynamicResource MaterialDesignDivider}"
+    BorderThickness="0,0,0,1"
+    mc:Ignorable="d">
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Button
+            Width="32"
+            Height="32"
+            VerticalAlignment="Center"
+            Command="{Binding SelectCommand}"
+            Style="{StaticResource MaterialDesignToolForegroundButton}">
+            <materialDesign:PackIcon Kind="{Binding Icon}" />
+        </Button>
+
+        <Path
+            Grid.Column="1"
+            Width="24"
+            Height="24"
+            Data="M8.660254,0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z"
+            Fill="{StaticResource PrimaryHueMidBrush}"
+            Stretch="Uniform" />
+
+        <TextBlock
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="14"
+            FontWeight="Bold"
+            Foreground="{StaticResource PrimaryHueDarkForegroundBrush}"
+            Text="{Binding Iterations}" />
+
+        <Grid Grid.Column="2" Margin="8,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="8,0,8,4"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="{Binding Title}" />
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button
+                    Width="10"
+                    Height="10"
+                    Padding="0"
+                    Style="{StaticResource MaterialDesignToolForegroundButton}">
+                    <materialDesign:PackIcon
+                        Width="10"
+                        Height="10"
+                        Kind="Tag" />
+                </Button>
+                <ListView ItemsSource="{Binding Categories}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="-4,-8,-8,-8"
+                                Background="{StaticResource PrimaryHueMidBrush}"
+                                CornerRadius="2">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="8,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="10"
+                                        Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+                                        Text="{Binding Name}" />
+                                    <Button
+                                        Width="16"
+                                        Height="16"
+                                        Margin="4,1,1,1"
+                                        Padding="0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+                                        Style="{StaticResource MaterialDesignToolForegroundButton}">
+                                        <materialDesign:PackIcon Width="10" Kind="Close" />
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </Grid>
+
+        <TextBlock
+            Grid.Column="3"
+            Margin="8,0"
+            VerticalAlignment="Center"
+            Text="{Binding AggregatedTime}" />
+
+        <Button
+            Grid.Column="4"
+            Width="32"
+            Height="32"
+            Padding="0"
+            Command="{Binding RemoveCommand}"
+            Style="{StaticResource MaterialDesignToolForegroundButton}">
+            <materialDesign:PackIcon Kind="Close" />
+        </Button>
+    </Grid>
+</Border>

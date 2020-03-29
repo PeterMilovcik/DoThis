@@ -9,6 +9,8 @@ namespace Beeffective.Models
 
         public string Title { get; set; }
 
+        public string Categories { get; set; }
+
         public bool IsSelected { get; set; }
 
         public int Iterations { get; set; }
