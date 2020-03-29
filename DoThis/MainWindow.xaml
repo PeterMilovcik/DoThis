@@ -5,7 +5,7 @@
     xmlns:controls="clr-namespace:Beeffective.Controls"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="Beeffective"
-    Width="600"
+    Width="800"
     Height="450"
     AllowsTransparency="True"
     Background="Transparent"
@@ -67,53 +67,30 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid
+                    Grid.Column="0"
+                    Height="60"
+                    Visibility="{Binding ReadOnlyTitleBarVisibility}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock
-                        Margin="8,0"
+                        Margin="8"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         FontSize="16"
                         FontWeight="Bold"
-                        Text="{Binding SelectedItem.Title}"
-                        Visibility="{Binding ReadOnlyTitleBarVisibility}" />
-                    <ListView Grid.Row="1" ItemsSource="{Binding SelectedItem.Categories}">
-                        <ListView.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Border
-                                    Margin="0,-4,-8,-4"
-                                    Background="{StaticResource PrimaryHueMidBrush}"
-                                    CornerRadius="4">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock
-                                            Margin="8,2,0,2"
-                                            VerticalAlignment="Center"
-                                            FontSize="10"
-                                            Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
-                                            Text="{Binding Name}" />
-                                        <Button
-                                            Width="20"
-                                            Height="15"
-                                            Padding="0"
-                                            Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
-                                            Style="{StaticResource MaterialDesignToolForegroundButton}">
-                                            <md:PackIcon Width="10" Kind="Close" />
-                                        </Button>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                        Text="{Binding SelectedItem.Title}" />
+                    <controls:CategoriesControl
+                        Grid.Row="1"
+                        Margin="8,0,0,8"
+                        DataContext="{Binding SelectedItem}" />
                 </Grid>
-                <Grid Grid.Column="0" Visibility="{Binding EditableTitleBarVisibility}">
+                <Grid
+                    Grid.Column="0"
+                    Height="60"
+                    Visibility="{Binding EditableTitleBarVisibility}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -174,7 +151,7 @@
                 <Button
                     Grid.Column="5"
                     Width="30"
-                    Margin="0,2,2,2"
+                    Margin="0,2,14,2"
                     Padding="0"
                     Style="{StaticResource MaterialDesignRaisedButton}">
                     <md:PackIcon Kind="Settings" />
@@ -208,18 +185,76 @@
             Grid.Column="1"
             Margin="2"
             Background="{DynamicResource MaterialDesignPaper}">
-            <ItemsControl Grid.IsSharedSizeScope="True" ItemsSource="{Binding Items}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
+            <ListView ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="45">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <md:PackIcon
+                                        Width="16"
+                                        Height="16"
+                                        Kind="Clockwise" />
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Content="{Binding Iterations}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="545" Header="Title">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <Label
+                                            Grid.Row="0"
+                                            Content="{Binding Title}"
+                                            ToolTip="{Binding Title}" />
+                                        <controls:CategoriesControl Grid.Row="1" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="70" Header="Time">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label VerticalAlignment="Center" Content="{Binding AggregatedTime}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="30">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Width="22"
+                                        Height="22"
+                                        Padding="0"
+                                        Command="{Binding RemoveCommand}"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        <md:PackIcon
+                                            Width="14"
+                                            Height="14"
+                                            Kind="Close" />
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                    <!--<DataTemplate>
                         <controls:ItemControl x:Name="ItemControl" />
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                 <Setter TargetName="ItemControl" Property="Background" Value="{DynamicResource MaterialDesignSelection}" />
                             </DataTrigger>
                         </DataTemplate.Triggers>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                    </DataTemplate>-->
+                </ListView.View>
+            </ListView>
         </md:Card>
     </Grid>
 </Window>
