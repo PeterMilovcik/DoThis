@@ -8,6 +8,8 @@ namespace Beeffective.ViewModels
     {
         public CategoryViewModel(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
             Name = name;
             RemoveCategoryCommand = new DelegateCommand(obj => RemoveCategory());
         }

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Beeffective.Commands;
 using Beeffective.Extensions;
 using Beeffective.Models;
+using Beeffective.Views;
 using MaterialDesignThemes.Wpf;
 
 namespace Beeffective.ViewModels
@@ -13,8 +15,9 @@ namespace Beeffective.ViewModels
     class ItemViewModel : ViewModel
     {
         private readonly ItemModel model;
-        private string title;
         private string icon;
+        private string newCategory;
+        private bool isDialogOpen;
 
         public ItemViewModel(ItemModel model)
         {
@@ -23,6 +26,8 @@ namespace Beeffective.ViewModels
             UpdateIcon();
             SelectCommand = new DelegateCommand(obj => Select());
             RemoveCommand = new DelegateCommand(obj => Remove());
+            ShowAddCategoryDialogCommand = new DelegateCommand(async obj => await ShowAddCategoryDialogAsync());
+            SubmitNewCategoryCommand = new DelegateCommand(async obj => await SubmitNewCategoryAsync());
         }
 
         public int Id => model.Id;
@@ -41,10 +46,57 @@ namespace Beeffective.ViewModels
 
         public ObservableCollection<CategoryViewModel> Categories { get; }
 
+        public string NewCategory
+        {
+            get => newCategory;
+            set
+            {
+                if (Equals(newCategory, value)) return;
+                newCategory = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand ShowAddCategoryDialogCommand { get; }
+
+        private async Task ShowAddCategoryDialogAsync()
+        {
+            var view = new AddCategoryView { DataContext = this };
+            await DialogHost.Show(view, "ItemsDialogHost");
+        }
+
+        public ICommand SubmitNewCategoryCommand { get; }
+
+        private async Task SubmitNewCategoryAsync()
+        {
+            if (string.IsNullOrEmpty(NewCategory)) return;
+            NewCategory = NewCategory.Trim();
+            if (Categories.Any(c => c.Name == NewCategory)) return;
+            var categoryViewModel = new CategoryViewModel(NewCategory);
+            Categories.Add(categoryViewModel);
+            model.Categories += $" {NewCategory}";
+            App.Database.Update(model);
+            await App.Database.SaveChangesAsync();
+            IsDialogOpen = false;
+            NewCategory = string.Empty;
+        }
+
+        public bool IsDialogOpen
+        {
+            get => isDialogOpen;
+            set
+            {
+                if (Equals(isDialogOpen, value)) return;
+                isDialogOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
         private IEnumerable<CategoryViewModel> ParseCategories()
         {
             if (string.IsNullOrWhiteSpace(model.Categories)) return new List<CategoryViewModel>();
             return model.Categories.Split(" ")
+                .Where(c => !string.IsNullOrWhiteSpace(c))
                 .Select(c =>
                 {
                     var viewModel = new CategoryViewModel(c);

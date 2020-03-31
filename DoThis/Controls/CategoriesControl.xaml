@@ -14,6 +14,7 @@
             Height="22"
             Margin="0,0"
             Padding="0"
+            Command="{Binding ShowAddCategoryDialogCommand}"
             Style="{StaticResource MaterialDesignFlatButton}">
             <materialDesign:PackIcon
                 Width="12"
