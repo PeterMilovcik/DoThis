@@ -195,7 +195,22 @@ namespace Beeffective.ViewModels
                     SelectedItem = null;
                 }
 
-                Items.Remove(viewModel);
+                Remove(Items, viewModel);
+            }
+        }
+
+        private void Remove(ObservableCollection<ItemViewModel> items, ItemViewModel viewModel)
+        {
+            if (items.Contains(viewModel))
+            {
+                items.Remove(viewModel);
+            }
+            else
+            {
+                foreach (var itemViewModel in items)
+                {
+                    Remove(itemViewModel.SubItems, viewModel);
+                }
             }
         }
 

@@ -21,6 +21,8 @@ namespace Beeffective.Models
 
         public string Details { get; set; }
 
+        public bool IsCompleted { get; set; }
+
         public DateTime CompletedAt { get; set; }
 
         public int Urgency { get; set; }

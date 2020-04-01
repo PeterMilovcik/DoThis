@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,7 @@ namespace Beeffective.ViewModels
         private bool isDialogOpen;
         private Visibility editableNewSubItemVisibility;
         private string editableNewSubItemText;
+        private Visibility completedVisibility;
 
         public ItemViewModel(ItemModel model)
         {
@@ -36,6 +38,7 @@ namespace Beeffective.ViewModels
             AddSubItemCommand = new DelegateCommand(obj => AddSubItem());
             SubmitNewCategoryCommand = new DelegateCommand(async obj => await SubmitNewCategoryAsync());
             SubmitNewSubItemCommand = new DelegateCommand(obj => SubmitNewSubItem());
+            CompleteCommand = new DelegateCommand(obj => Complete());
             EditableNewSubItemVisibility = Visibility.Collapsed;
         }
 
@@ -235,8 +238,31 @@ namespace Beeffective.ViewModels
             }
         }
 
-        public ICommand RemoveCommand { get; }
+        public bool IsCompleted
+        {
+            get => model.IsCompleted;
+            set
+            {
+                if (Equals(model.IsCompleted, value)) return;
+                model.IsCompleted = value;
+                SaveModel();
+                CompletedVisibility = IsCompleted ? Visibility.Collapsed : Visibility.Visible;
+                OnPropertyChanged();
+            }
+        }
 
+        public Visibility CompletedVisibility
+        {
+            get => completedVisibility;
+            set
+            {
+                if (Equals(completedVisibility, value)) return;
+                completedVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand RemoveCommand { get; }
 
         private void Remove()
         {
@@ -313,6 +339,10 @@ namespace Beeffective.ViewModels
 
         private void OnSubItemAdded(ItemViewModel item) => 
             SubItemAdded?.Invoke(this, new ItemEventArgs(item));
+
+        public ICommand CompleteCommand { get; }
+
+        private void Complete() => IsCompleted = true;
 
         private void SaveModel()
         {

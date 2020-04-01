@@ -279,6 +279,7 @@
                                     Height="30"
                                     Margin="0,0,2,0"
                                     Padding="0"
+                                    Command="{Binding CompleteCommand}"
                                     Style="{StaticResource MaterialDesignRaisedButton}">
                                     <md:PackIcon Kind="CheckboxMarkedOutline" />
                                 </Button>
