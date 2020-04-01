@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Beeffective.Commands;
 using Beeffective.Extensions;
@@ -18,16 +21,22 @@ namespace Beeffective.ViewModels
         private string icon;
         private string newCategory;
         private bool isDialogOpen;
+        private Visibility editableNewSubItemVisibility;
+        private string editableNewSubItemText;
 
         public ItemViewModel(ItemModel model)
         {
             this.model = model;
             Categories = new ObservableCollection<CategoryViewModel>(ParseCategories());
+            SubItems = new ObservableCollection<ItemViewModel>();
             UpdateIcon();
             SelectCommand = new DelegateCommand(obj => Select());
             RemoveCommand = new DelegateCommand(obj => Remove());
             ShowAddCategoryDialogCommand = new DelegateCommand(async obj => await ShowAddCategoryDialogAsync());
+            AddSubItemCommand = new DelegateCommand(obj => AddSubItem());
             SubmitNewCategoryCommand = new DelegateCommand(async obj => await SubmitNewCategoryAsync());
+            SubmitNewSubItemCommand = new DelegateCommand(obj => SubmitNewSubItem());
+            EditableNewSubItemVisibility = Visibility.Collapsed;
         }
 
         public int Id => model.Id;
@@ -56,6 +65,8 @@ namespace Beeffective.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public ObservableCollection<ItemViewModel> SubItems { get; }
 
         public ICommand ShowAddCategoryDialogCommand { get; }
 
@@ -225,6 +236,7 @@ namespace Beeffective.ViewModels
 
         public ICommand RemoveCommand { get; }
 
+
         private void Remove()
         {
             App.Database.Remove(model);
@@ -232,10 +244,68 @@ namespace Beeffective.ViewModels
             OnRemoved();
         }
 
+
         public event EventHandler Removed;
 
-        private void OnRemoved()
-            => Removed?.Invoke(this, EventArgs.Empty);
+        private void OnRemoved() => Removed?.Invoke(this, EventArgs.Empty);
+
+        public ICommand AddSubItemCommand { get; }
+
+        private void AddSubItem() =>
+            EditableNewSubItemVisibility = EditableNewSubItemVisibility == Visibility.Collapsed
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+        public Visibility EditableNewSubItemVisibility
+        {
+            get => editableNewSubItemVisibility;
+            set
+            {
+                if (Equals(editableNewSubItemVisibility, value)) return;
+                editableNewSubItemVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string EditableNewSubItemText
+        {
+            get => editableNewSubItemText;
+            set
+            {
+                if (Equals(editableNewSubItemText, value)) return;
+                editableNewSubItemText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand SubmitNewSubItemCommand { get; }
+
+        private void SubmitNewSubItem()
+        {
+            EditableNewSubItemVisibility = Visibility.Collapsed;
+            if (!string.IsNullOrEmpty(EditableNewSubItemText))
+            {
+                var categories = EditableNewSubItemText.ParseCategories();
+                categories.ForEach(c => EditableNewSubItemText = EditableNewSubItemText.Replace(c, ""));
+                EditableNewSubItemText = EditableNewSubItemText
+                    .Replace("#", "")
+                    .Replace("@", "");
+                EditableNewSubItemText = Regex.Replace(EditableNewSubItemText, @"\s+", " ");
+
+                var entry = App.Database.Items.Add(
+                    new ItemModel
+                    {
+                        Title = EditableNewSubItemText,
+                        ParentId = Id,
+                        CreatedAt = DateTime.Now,
+                        Categories = string.Join(" ", categories)
+                    });
+                App.Database.SaveChanges();
+                var newModel = entry.Entity;
+                var item = new ItemViewModel(newModel);
+                SubItems.Add(item);
+            }
+        }
 
         private void SaveModel()
         {

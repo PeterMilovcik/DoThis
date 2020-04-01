@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Beeffective.ViewModels;
@@ -50,6 +51,18 @@ namespace Beeffective
             if (e.Key == Key.Enter)
             {
                 viewModel.SubmitCommand.Execute(null);
+            }
+        }
+
+        private void OnEditableNewSubItemTextKeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                if (e.Key == Key.Enter)
+                {
+                    var itemViewModel = textBox.DataContext as ItemViewModel;
+                    itemViewModel.SubmitNewSubItemCommand.Execute(null);
+                }
             }
         }
     }

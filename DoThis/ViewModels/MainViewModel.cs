@@ -119,7 +119,7 @@ namespace Beeffective.ViewModels
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             if (!string.IsNullOrEmpty(EditableTitleBarText))
             {
-                var categories = ParseCategories(EditableTitleBarText);
+                var categories = EditableTitleBarText.ParseCategories();
                 categories.ForEach(c => EditableTitleBarText = EditableTitleBarText.Replace(c, ""));
                 EditableTitleBarText = EditableTitleBarText
                     .Replace("#", "")
@@ -142,15 +142,6 @@ namespace Beeffective.ViewModels
                 EditableTitleBarText = string.Empty;
                 SelectedItem = newViewModel;
             }
-        }
-
-        private List<string> ParseCategories(string text)
-        {
-            if (string.IsNullOrEmpty(text)) return new List<string>();
-            return text.Split(" ")
-                .Where(w => w.StartsWith("#") || w.StartsWith("@"))
-                .Select(w => w.Replace("#", ""))
-                .Select(w => w.Replace("@", "")).ToList();
         }
 
         private void Subscribe(ItemViewModel newViewModel)

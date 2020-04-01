@@ -109,7 +109,7 @@
                         Padding="0"
                         Command="{Binding SubmitCommand}"
                         Style="{StaticResource MaterialDesignRaisedButton}">
-                        <md:PackIcon Kind="Check" />
+                        <md:PackIcon Kind="CheckboxMarkedOutline" />
                     </Button>
                 </Grid>
                 <Button
@@ -197,7 +197,7 @@
                         </Style>
                     </TreeView.ItemContainerStyle>
                     <TreeView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type vm:ItemViewModel}" ItemsSource="{Binding Items}">
+                        <HierarchicalDataTemplate DataType="{x:Type vm:ItemViewModel}" ItemsSource="{Binding SubItems}">
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -207,9 +207,14 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                                <Grid Grid.Column="0">
+                                <Grid Grid.Row="0" Grid.Column="0">
                                     <md:PackIcon
                                         Width="34"
                                         Height="34"
@@ -223,7 +228,7 @@
                                         TextAlignment="Center" />
                                 </Grid>
 
-                                <Grid Grid.Column="1">
+                                <Grid Grid.Row="0" Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
@@ -236,53 +241,89 @@
                                     <controls:CategoriesControl Grid.Row="1" Margin="0,0,0,-6" />
                                 </Grid>
 
-                                <Button
-                                    Grid.Column="2"
-                                    Width="26"
-                                    Height="26"
-                                    Margin="0,0,8,0"
-                                    Padding="0"
-                                    Style="{StaticResource MaterialDesignFlatButton}">
-                                    <md:PackIcon
-                                        Width="18"
-                                        Height="18"
-                                        Kind="ClipboardOutline" />
-                                </Button>
-
-                                <Button
-                                    Grid.Column="3"
-                                    Width="26"
-                                    Height="26"
-                                    Margin="0,0,8,0"
-                                    Padding="0"
-                                    Style="{StaticResource MaterialDesignFlatButton}">
-                                    <md:PackIcon
-                                        Width="18"
-                                        Height="18"
-                                        Kind="Check" />
-                                </Button>
-
                                 <TextBlock
-                                    Grid.Column="4"
-                                    Margin="0,0,8,0"
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Margin="0,0,16,0"
                                     VerticalAlignment="Center"
                                     Text="{Binding AggregatedTime}"
                                     TextAlignment="Center" />
 
                                 <Button
-                                    Grid.Column="5"
-                                    Width="26"
-                                    Height="26"
-                                    Margin="0,0,8,0"
+                                    Grid.Row="0"
+                                    Grid.Column="3"
+                                    Width="30"
+                                    Height="30"
+                                    Margin="0,0,2,0"
                                     Padding="0"
-                                    Command="{Binding RemoveCommand}"
-                                    Style="{StaticResource MaterialDesignFlatButton}">
-                                    <md:PackIcon
-                                        Width="18"
-                                        Height="18"
-                                        Kind="Close" />
+                                    Style="{StaticResource MaterialDesignRaisedButton}">
+                                    <md:PackIcon Kind="ClipboardOutline" />
                                 </Button>
 
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="4"
+                                    Width="30"
+                                    Height="30"
+                                    Margin="0,0,2,0"
+                                    Padding="0"
+                                    Command="{Binding AddSubItemCommand}"
+                                    Style="{StaticResource MaterialDesignRaisedButton}">
+                                    <md:PackIcon Kind="Add" />
+                                </Button>
+
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="5"
+                                    Width="30"
+                                    Height="30"
+                                    Margin="0,0,2,0"
+                                    Padding="0"
+                                    Style="{StaticResource MaterialDesignRaisedButton}">
+                                    <md:PackIcon Kind="CheckboxMarkedOutline" />
+                                </Button>
+
+                                <Button
+                                    Grid.Row="0"
+                                    Grid.Column="6"
+                                    Width="30"
+                                    Height="30"
+                                    Margin="0,0,2,0"
+                                    Padding="0"
+                                    Command="{Binding RemoveCommand}"
+                                    Style="{StaticResource MaterialDesignRaisedButton}">
+                                    <md:PackIcon Kind="Close" />
+                                </Button>
+
+                                <Grid
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="7"
+                                    Height="40"
+                                    Visibility="{Binding EditableNewSubItemVisibility}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox
+                                        x:Name="EditableNewSubItemText"
+                                        Grid.Column="0"
+                                        Margin="8,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        KeyDown="OnEditableNewSubItemTextKeyDown"
+                                        Text="{Binding EditableNewSubItemText, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button
+                                        Grid.Column="1"
+                                        Margin="2"
+                                        Padding="0"
+                                        Command="{Binding SubmitNewSubItemCommand}"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                        <md:PackIcon Kind="Check" />
+                                    </Button>
+                                </Grid>
 
                             </Grid>
 
