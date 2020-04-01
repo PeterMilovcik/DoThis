@@ -194,9 +194,21 @@ namespace Beeffective.ViewModels
 
         public TimeSpan AggregatedTime
         {
-            get => model.AggregatedTime;
+            get
+            {
+                if (IsLeaf) return model.AggregatedTime;
+
+                var result = new TimeSpan();
+                foreach (var subItem in SubItems)
+                {
+                    result = result.Add(subItem.AggregatedTime);
+                }
+
+                return result;
+            }
             set
             {
+                if (!IsLeaf) return;
                 if (Equals(model.AggregatedTime, value)) return;
                 model.AggregatedTime = value;
                 SaveModel();
@@ -258,6 +270,18 @@ namespace Beeffective.ViewModels
             {
                 if (Equals(completedVisibility, value)) return;
                 completedVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsLeaf
+        {
+            get => model.IsLeaf;
+            set
+            {
+                if (Equals(model.IsLeaf, value)) return;
+                model.IsLeaf = value;
+                SaveModel();
                 OnPropertyChanged();
             }
         }
@@ -325,12 +349,14 @@ namespace Beeffective.ViewModels
                         Title = EditableNewSubItemText,
                         ParentId = Id,
                         CreatedAt = DateTime.Now,
-                        Categories = string.Join(" ", categories)
+                        Categories = string.Join(" ", categories),
+                        IsLeaf = true
                     });
                 App.Database.SaveChanges();
                 var newModel = entry.Entity;
                 var item = new ItemViewModel(newModel);
                 SubItems.Add(item);
+                IsLeaf = false;
                 OnSubItemAdded(item);
             }
         }

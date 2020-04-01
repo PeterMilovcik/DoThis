@@ -17,6 +17,8 @@ namespace Beeffective.Models
 
         public int Iterations { get; set; }
 
+        public bool IsLeaf { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public string Details { get; set; }
