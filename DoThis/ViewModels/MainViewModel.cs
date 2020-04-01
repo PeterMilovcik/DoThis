@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using Beeffective.Commands;
@@ -20,6 +21,7 @@ namespace Beeffective.ViewModels
         private string titleBarText;
         private string editableTitleBarText;
         private ItemViewModel selectedItem;
+        private readonly List<ItemViewModel> allItems;
 
         public MainViewModel(IMainView view)
             : base(view)
@@ -31,13 +33,37 @@ namespace Beeffective.ViewModels
             Timer.TimerFinished += OnTimerFinished;
             ReadOnlyTitleBarVisibility = Visibility.Visible;
             EditableTitleBarVisibility = Visibility.Collapsed;
+            allItems = new List<ItemViewModel>();
             Items = new ObservableCollection<ItemViewModel>(LoadItems());
-            Items.ToList().ForEach(Subscribe);
             SelectedItem = Items.FirstOrDefault(i => i.IsSelected);
         }
 
-        private IEnumerable<ItemViewModel> LoadItems() => 
-            App.Database.Items.Select(m => new ItemViewModel(m));
+        private IEnumerable<ItemViewModel> LoadItems()
+        {
+            var result = new List<ItemViewModel>();
+            var itemModels = App.Database.Items;
+            foreach (var itemModel in itemModels)
+            {
+                var itemViewModel = new ItemViewModel(itemModel);
+                Subscribe(itemViewModel);
+                allItems.Add(itemViewModel);
+            }
+
+            foreach (var itemViewModel in allItems)
+            {
+                if (itemViewModel.ParentId == 0)
+                {
+                    result.Add(itemViewModel);
+                }
+                else
+                {
+                    var parent = allItems.First(i => i.Id == itemViewModel.ParentId);
+                    parent.SubItems.Add(itemViewModel);
+                }
+            }
+
+            return result;
+        }
 
         public Visibility ReadOnlyTitleBarVisibility
         {
@@ -148,6 +174,7 @@ namespace Beeffective.ViewModels
         {
             newViewModel.Selected += OnItemSelected;
             newViewModel.Removed += OnItemRemoved;
+            newViewModel.SubItemAdded += OnSubItemAdded;
         }
 
         private void OnSelectedItemChanged() => TitleBarText = SelectedItem?.Title;
@@ -172,8 +199,12 @@ namespace Beeffective.ViewModels
             }
         }
 
-        private void OnTimerTicked(object sender, EventArgs e) 
-            => SelectedItem.IfNotNull(
-                () => SelectedItem.AggregatedTime = SelectedItem.AggregatedTime.Add(Timer.Interval));
+        private void OnSubItemAdded(object? sender, ItemEventArgs e) => Subscribe(e.Item);
+
+        private void OnTimerTicked(object sender, EventArgs e)
+        {
+            if (SelectedItem == null) return;
+            SelectedItem.AggregatedTime = SelectedItem.AggregatedTime.Add(Timer.Interval);
+        }
     }
 }

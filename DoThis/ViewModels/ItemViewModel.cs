@@ -40,6 +40,7 @@ namespace Beeffective.ViewModels
         }
 
         public int Id => model.Id;
+        public int ParentId => model.ParentId;
 
         public string Title
         {
@@ -304,8 +305,14 @@ namespace Beeffective.ViewModels
                 var newModel = entry.Entity;
                 var item = new ItemViewModel(newModel);
                 SubItems.Add(item);
+                OnSubItemAdded(item);
             }
         }
+
+        public event EventHandler<ItemEventArgs> SubItemAdded;
+
+        private void OnSubItemAdded(ItemViewModel item) => 
+            SubItemAdded?.Invoke(this, new ItemEventArgs(item));
 
         private void SaveModel()
         {
