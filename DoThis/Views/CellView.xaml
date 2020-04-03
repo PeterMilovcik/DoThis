@@ -58,8 +58,9 @@
             <Label.Content>
                 <AccessText
                     FontFamily="{StaticResource MaterialDesignFont}"
+                    FontWeight="Bold"
                     Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
-                    Text="This is some very long, very descriptive text"
+                    Text="{Binding Text}"
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
             </Label.Content>

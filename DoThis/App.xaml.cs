@@ -1,5 +1,6 @@
-﻿using System.Windows;
+using System.Windows;
 using Beeffective.Data;
+using Syncfusion.Licensing;
 
 namespace Beeffective
 {
@@ -9,6 +10,11 @@ namespace Beeffective
     public partial class App : Application
     {
         private static Database database;
+
+        public App()
+        {
+            SyncfusionLicenseProvider.RegisterLicense("##SyncfusionLicense##");
+        }
 
         internal static Database Database
         {

@@ -19,10 +19,19 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfDiagram.WPF" Version="18.1.0.42" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="bee.png" />
   </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="PreBuild: cd &quot;$(ProjectDir)&quot; &#xD;&#xA;SyncfusionLicenseRegister.bat PreBuild App.xaml.cs" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="PostBuild: cd &quot;$(ProjectDir)&quot; &#xD;&#xA;SyncfusionLicenseRegister.bat PostBuild App.xaml.cs" />
+  </Target>
 
 </Project>

@@ -1,14 +1,53 @@
-﻿namespace Beeffective.ViewModels
+﻿using System.Collections.ObjectModel;
+
+namespace Beeffective.ViewModels
 {
     class HoneycombViewModel : ViewModel
     {
         private double width;
         private double height;
+        private double zoomFactor;
+        private const double CellHeight = 125;
+        private const double CellWidth = 110;
 
         public HoneycombViewModel()
         {
-            Width = 1000;
-            Height = 1000;
+            Width = 5000;
+            Height = 5000;
+            ZoomFactor = 1;
+            Cells = new ObservableCollection<CellViewModel>
+            {
+                new CellViewModel {X = 2500, Y = 2500 + 0 * CellHeight, Text = "A"},
+                new CellViewModel {X = 2500, Y = 2500 + 1 * CellHeight, Text = "B"},
+                new CellViewModel {X = 2500, Y = 2500 + 2 * CellHeight, Text = "C"},
+                new CellViewModel {X = 2500, Y = 2500 + 3 * CellHeight, Text = "D"},
+                new CellViewModel {X = 2500, Y = 2500 + 4 * CellHeight, Text = "E"},
+
+                new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 0 * CellHeight, Text = "F"},
+                new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 1 * CellHeight, Text = "G"},
+                new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 2 * CellHeight, Text = "H"},
+                new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 3 * CellHeight, Text = "I"},
+                new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 4 * CellHeight, Text = "K"},
+
+                new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 0 * CellHeight, Text = "L"},
+                new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 1 * CellHeight, Text = "M"},
+                new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 2 * CellHeight, Text = "N"},
+                new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 3 * CellHeight, Text = "O"},
+                new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 4 * CellHeight, Text = "P"},
+            };
+        }
+
+        public ObservableCollection<CellViewModel> Cells { get; }
+
+        public double ZoomFactor
+        {
+            get => zoomFactor;
+            set
+            {
+                if (Equals(zoomFactor, value)) return;
+                zoomFactor = value;
+                OnPropertyChanged();
+            }
         }
 
         public double Width

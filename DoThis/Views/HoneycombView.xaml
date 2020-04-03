@@ -8,6 +8,7 @@
     xmlns:vm="clr-namespace:Beeffective.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Background="{StaticResource MaterialDesignCardBackground}"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <vm:HoneycombViewModel />
@@ -15,44 +16,31 @@
     <Grid>
 
         <ScrollViewer
+            x:Name="Scroll"
             AllowDrop="True"
             HorizontalScrollBarVisibility="Auto"
             VerticalScrollBarVisibility="Auto">
-            <Canvas
-                x:Name="Canvas"
-                Width="1000"
-                Height="1000"
-                Background="{StaticResource MaterialDesignCardBackground}"
-                MouseWheel="OnMouseWheel"
-                ScrollViewer.CanContentScroll="True"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <local:CellView Canvas.Left="500" Canvas.Top="250" />
-                <local:CellView Canvas.Left="500" Canvas.Top="375" />
-                <local:CellView Canvas.Left="500" Canvas.Top="500" />
-                <local:CellView Canvas.Left="500" Canvas.Top="625" />
-                <local:CellView Canvas.Left="500" Canvas.Top="750" />
 
-                <local:CellView Canvas.Left="390" Canvas.Top="187" />
-                <local:CellView Canvas.Left="390" Canvas.Top="312" />
-                <local:CellView Canvas.Left="390" Canvas.Top="437" />
-                <local:CellView Canvas.Left="390" Canvas.Top="562" />
-                <local:CellView Canvas.Left="390" Canvas.Top="687" />
-
-                <local:CellView Canvas.Left="610" Canvas.Top="187" />
-                <local:CellView Canvas.Left="610" Canvas.Top="312" />
-                <local:CellView Canvas.Left="610" Canvas.Top="437" />
-                <local:CellView Canvas.Left="610" Canvas.Top="562" />
-                <local:CellView Canvas.Left="610" Canvas.Top="687" />
-            </Canvas>
-            <!--<ItemsControl Width="{Binding Width}" Height="{Binding Height}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas Background="{StaticResource MaterialDesignCardBackground}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>-->
-
+            <ItemsControl
+                x:Name="ItemsControl"
+                Width="{Binding Width}"
+                Height="{Binding Height}"
+                ItemsSource="{Binding Cells}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:CellView DataContext="{Binding}">
+                            <local:CellView.RenderTransform>
+                                <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
+                            </local:CellView.RenderTransform>
+                        </local:CellView>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
         </ScrollViewer>
     </Grid>

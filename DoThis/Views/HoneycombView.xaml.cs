@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Beeffective.Views
 {
@@ -18,32 +11,45 @@ namespace Beeffective.Views
     /// </summary>
     public partial class HoneycombView : UserControl
     {
-        private double zoomMax = 5;
-        private double zoomMin = 0.5;
-        private double zoomSpeed = 0.001;
-        private double zoom = 1;
-
         public HoneycombView()
         {
             InitializeComponent();
         }
 
-        private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+        protected override void OnInitialized(EventArgs e)
+        { 
+            base.OnInitialized(e);
+            
+            //Scroll.ScrollToHorizontalOffset(Scroll.ScrollableWidth / 2);
+            //Scroll.ScrollToVerticalOffset(Scroll.ScrollableHeight / 2);
+            //Scroll.ScrollToHorizontalOffset((Scroll.ExtentWidth - Scroll.ViewportWidth) / 2);
+            //Scroll.ScrollToVerticalOffset((Scroll.ExtentHeight - Scroll.ViewportHeight) / 2);
+        }
+
+        private void OnCanvasMouseDown(object sender, MouseButtonEventArgs e)
         {
-            zoom += zoomSpeed * e.Delta; // Ajust zooming speed (e.Delta = Mouse spin value )
-            if (zoom < zoomMin) { zoom = zoomMin; } // Limit Min Scale
-            if (zoom > zoomMax) { zoom = zoomMax; } // Limit Max Scale
+            //var position = e.GetPosition(Canvas);
 
-            Point mousePos = e.GetPosition(Canvas);
+            //Scroll.ScrollToHorizontalOffset(position.X - Scroll.ActualWidth / 2);
+            //Scroll.ScrollToVerticalOffset(position.Y - Scroll.ActualHeight / 2);
+        }
 
-            if (zoom > 1)
-            {
-                Canvas.RenderTransform = new ScaleTransform(zoom, zoom, mousePos.X, mousePos.Y); // transform Canvas size from mouse position
-            }
-            else
-            {
-                Canvas.RenderTransform = new ScaleTransform(zoom, zoom); // transform Canvas size
-            }
+        private void OnCanvasMouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void OnMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var position = e.GetPosition(ItemsControl);
+
+            //double offsetX = (position.X / ItemsControl.ActualWidth) * ItemsControl.ActualWidth;
+            //double offsetY = (position.Y / ItemsControl.ActualHeight) * ItemsControl.ActualHeight;
+            double offsetX = ItemsControl.ActualWidth / 2 - position.X;
+            double offsetY = ItemsControl.ActualHeight / 2 - position.Y;
+
+
+            Scroll.ScrollToHorizontalOffset(offsetX);
+            Scroll.ScrollToVerticalOffset(offsetY);
         }
     }
 }
