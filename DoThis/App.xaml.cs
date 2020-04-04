@@ -16,16 +16,6 @@ namespace Beeffective
             SyncfusionLicenseProvider.RegisterLicense("##SyncfusionLicense##");
         }
 
-        internal static Database Database
-        {
-            get
-            {
-                if (database == null)
-                {
-                    database = new Database();
-                }
-                return database;
-            }
-        }
+        internal static Database Database => database ??= new Database();
     }
 }

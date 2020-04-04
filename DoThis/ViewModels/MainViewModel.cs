@@ -214,7 +214,7 @@ namespace Beeffective.ViewModels
             }
         }
 
-        private void OnSubItemAdded(object? sender, ItemEventArgs e) => Subscribe(e.Item);
+        private void OnSubItemAdded(object sender, ItemEventArgs e) => Subscribe(e.Item);
 
         private void OnTimerTicked(object sender, EventArgs e)
         {
