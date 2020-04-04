@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Beeffective.Data.Entities;
@@ -39,6 +40,18 @@ namespace Beeffective.Data
         {
             context.Remove(entity);
             await context.SaveChangesAsync(CancellationToken.None);
+        }
+
+        public void Add(params CellEntity[] newCellEntities)
+        {
+            newCellEntities.ToList().ForEach(cellEntity => context.Add(cellEntity));
+            context.SaveChanges();
+        }
+
+        public async Task RemoveAllAsync()
+        {
+            context.RemoveRange(context.Cells);
+            await context.SaveChangesAsync();
         }
     }
 }
