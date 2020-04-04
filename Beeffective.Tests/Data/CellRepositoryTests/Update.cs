@@ -4,22 +4,24 @@ using NUnit.Framework;
 
 namespace Beeffective.Tests.Data.CellRepositoryTests
 {
-    class AddCells : TestFixture
+    class Update : TestFixture
     {
+        private const string ChangedTestTitle = "changed test title 1";
+
         public override void SetUp()
         {
             base.SetUp();
-            Sut.Add(CellEntity1, CellEntity2, CellEntity3);
+            Sut.Add(CellEntity1);
+            CellEntity1.Title = ChangedTestTitle;
+            Sut.Update(CellEntity1);
         }
 
         [Test]
-        public async Task LoadAsync_Contain_AddedCells()
+        public async Task CellEntity_IsUpdated()
         {
             var cellEntities = await Sut.LoadAsync();
-            cellEntities.Should().NotBeNull();
             cellEntities.Should().Contain(CellEntity1);
-            cellEntities.Should().Contain(CellEntity2);
-            cellEntities.Should().Contain(CellEntity3);
+            CellEntity1.Title.Should().Be(ChangedTestTitle);
         }
     }
 }

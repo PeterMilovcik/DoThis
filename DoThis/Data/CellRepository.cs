@@ -53,5 +53,23 @@ namespace Beeffective.Data
             context.RemoveRange(context.Cells);
             await context.SaveChangesAsync();
         }
+
+        public void RemoveAll()
+        {
+            context.RemoveRange(context.Cells);
+            context.SaveChanges();
+        }
+
+        public void Update(CellEntity changedCellEntity)
+        {
+            context.Update(changedCellEntity);
+            context.SaveChanges();
+        }
+
+        public void Remove(CellEntity cellEntityToRemove)
+        {
+            context.Remove(cellEntityToRemove);
+            context.SaveChanges();
+        }
     }
 }

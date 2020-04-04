@@ -4,20 +4,20 @@ using NUnit.Framework;
 
 namespace Beeffective.Tests.Data.CellRepositoryTests
 {
-    class RemoveAllAsync : TestFixture
+    class RemoveAsync : TestFixture
     {
         public override void SetUp()
         {
             base.SetUp();
-            Sut.Add(CellEntity1, CellEntity2, CellEntity3);
+            Sut.Add(CellEntity1);
         }
 
         [Test]
-        public async Task LoadAsync_ReturnsEmptyList()
+        public async Task DoesNotContain_RemovedCellEntity()
         {
-            await Sut.RemoveAllAsync();
+            await Sut.RemoveAsync(CellEntity1);
             var cellEntities = await Sut.LoadAsync();
-            cellEntities.Should().BeEmpty();
+            cellEntities.Should().NotContain(CellEntity1);
         }
     }
 }

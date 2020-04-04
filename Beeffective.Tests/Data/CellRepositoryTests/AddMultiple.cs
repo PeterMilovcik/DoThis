@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace Beeffective.Tests.Data.CellRepositoryTests
 {
-    class RemoveAllAsync : TestFixture
+    class AddMultiple : TestFixture
     {
         public override void SetUp()
         {
@@ -13,11 +13,13 @@ namespace Beeffective.Tests.Data.CellRepositoryTests
         }
 
         [Test]
-        public async Task LoadAsync_ReturnsEmptyList()
+        public async Task LoadAsync_Contain_AddedCells()
         {
-            await Sut.RemoveAllAsync();
             var cellEntities = await Sut.LoadAsync();
-            cellEntities.Should().BeEmpty();
+            cellEntities.Should().NotBeNull();
+            cellEntities.Should().Contain(CellEntity1);
+            cellEntities.Should().Contain(CellEntity2);
+            cellEntities.Should().Contain(CellEntity3);
         }
     }
 }
