@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Beeffective.Common
 {
-    class Observable : INotifyPropertyChanged
+    public class Observable : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

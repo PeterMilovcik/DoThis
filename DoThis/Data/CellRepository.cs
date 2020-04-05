@@ -9,21 +9,21 @@ namespace Beeffective.Data
 {
     public class CellRepository : IRepository<CellEntity>
     {
-        private readonly CellContext context;
-
-        public CellRepository()
+        public Task<List<CellEntity>> LoadAsync()
         {
-            context = new CellContext();
+            using var context = new CellContext();
+            return context.Cells.ToListAsync();
         }
 
-        public Task<List<CellEntity>> LoadAsync() => 
-            context.Cells.ToListAsync();
-
-        public async Task SaveAsync() => 
+        public async Task SaveAsync()
+        {
+            await using var context = new CellContext();
             await context.SaveChangesAsync(CancellationToken.None);
+        }
 
         public async Task<CellEntity> AddAsync(CellEntity entity)
         {
+            await using var context = new CellContext();
             var entry = await context.AddAsync(entity, CancellationToken.None);
             await context.SaveChangesAsync(CancellationToken.None);
             return entry.Entity;
@@ -31,6 +31,7 @@ namespace Beeffective.Data
 
         public async Task<CellEntity> UpdateAsync(CellEntity entity)
         {
+            await using var context = new CellContext();
             var entry = context.Update(entity);
             await context.SaveChangesAsync(CancellationToken.None);
             return entry.Entity;
@@ -38,36 +39,60 @@ namespace Beeffective.Data
 
         public async Task RemoveAsync(CellEntity entity)
         {
+            await using var context = new CellContext();
             context.Remove(entity);
             await context.SaveChangesAsync(CancellationToken.None);
         }
 
-        public void Add(params CellEntity[] newCellEntities)
+        public CellEntity Add(CellEntity newCellEntity)
         {
-            newCellEntities.ToList().ForEach(cellEntity => context.Add(cellEntity));
+            using var context = new CellContext();
+            if (context.Cells.Contains(newCellEntity)) return null;
+            var entry = context.Add(newCellEntity);
             context.SaveChanges();
+            return entry.Entity;
+        }
+
+        public IEnumerable<CellEntity> Add(
+            IEnumerable<CellEntity> newCellEntities)
+        {
+            {
+                var addedEntities = new List<CellEntity>();
+                newCellEntities.ToList().ForEach(cellEntity =>
+                {
+                    using var context = new CellContext();
+                    var entry = context.Add(cellEntity);
+                    addedEntities.Add(entry.Entity);
+                    context.SaveChanges();
+                });
+                return addedEntities;
+            }
         }
 
         public async Task RemoveAllAsync()
         {
+            await using var context = new CellContext();
             context.RemoveRange(context.Cells);
             await context.SaveChangesAsync();
         }
 
         public void RemoveAll()
         {
+            using var context = new CellContext();
             context.RemoveRange(context.Cells);
             context.SaveChanges();
         }
 
         public void Update(CellEntity changedCellEntity)
         {
+            using var context = new CellContext();
             context.Update(changedCellEntity);
             context.SaveChanges();
         }
 
         public void Remove(CellEntity cellEntityToRemove)
         {
+            using var context = new CellContext();
             context.Remove(cellEntityToRemove);
             context.SaveChanges();
         }

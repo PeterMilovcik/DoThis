@@ -16,6 +16,7 @@ namespace Beeffective.Data
         {
             base.OnConfiguring(options);
             options.UseSqlite("Data Source=cells.db");
+            options.EnableSensitiveDataLogging();
         }
     }
 }

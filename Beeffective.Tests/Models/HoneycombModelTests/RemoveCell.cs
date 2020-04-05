@@ -6,18 +6,15 @@ namespace Beeffective.Tests.Models.HoneycombModelTests
 {
     class RemoveCell : TestFixture
     {
-        private CellModel cellModel;
-
-        public override void Setup()
+        public override void SetUp()
         {
-            base.Setup();
-            cellModel = new CellModel();
-            Sut.AddCell(cellModel);
-            Sut.RemoveCell(cellModel);
+            base.SetUp();
+            CellModel1 = Sut.AddCell(CellModel1);
+            Sut.RemoveCell(CellModel1);
         }
 
         [Test]
         public void Cells_DoesNotContain_AddedCellModel() => 
-            Sut.Cells.Should().NotContain(cellModel);
+            Sut.Cells.Should().NotContain(CellModel1);
     }
 }

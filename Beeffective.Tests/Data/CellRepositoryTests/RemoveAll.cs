@@ -9,7 +9,7 @@ namespace Beeffective.Tests.Data.CellRepositoryTests
         public override void SetUp()
         {
             base.SetUp();
-            Sut.Add(CellEntity1, CellEntity2, CellEntity3);
+            Sut.Add(new[] {CellEntity1, CellEntity2, CellEntity3});
             Sut.RemoveAll();
         }
 
