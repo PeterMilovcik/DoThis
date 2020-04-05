@@ -7,6 +7,7 @@ namespace Beeffective.Models
     {
         private string title;
         private double importance;
+        private double urgency;
 
         public int Id { get; set; }
 
@@ -28,6 +29,17 @@ namespace Beeffective.Models
             {
                 if (Equals(importance, value)) return;
                 importance = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double Urgency
+        {
+            get => urgency;
+            set
+            {
+                if (Equals(urgency, value)) return;
+                urgency = value;
                 OnPropertyChanged();
             }
         }
