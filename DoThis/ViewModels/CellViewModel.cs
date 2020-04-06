@@ -1,41 +1,48 @@
-﻿namespace Beeffective.ViewModels
+﻿using Beeffective.Models;
+
+namespace Beeffective.ViewModels
 {
     public class CellViewModel : ViewModel
     {
-        private string text;
-        private double x;
-        private double y;
+        private readonly CellModel model;
+        
+        public CellViewModel(CellModel model)
+        {
+            this.model = model;
+        }
+
+        public int Id => model.Id;
 
         public double X
         {
-            get => x;
+            get => model.Urgency;
             set
             {
-                if (Equals(x, value)) return;
-                x = value;
+                if (Equals(model.Urgency, value)) return;
+                model.Urgency = value;
                 OnPropertyChanged();
             }
         }
 
         public double Y
         {
-            get => y;
+            get => model.Importance;
             set
             {
-                if (Equals(y, value)) return;
-                y = value;
+                if (Equals(model.Importance, value)) return;
+                model.Importance = value;
                 OnPropertyChanged();
             }
         }
 
 
-        public string Text
+        public string Title
         {
-            get => text;
+            get => model.Title;
             set
             {
-                if (Equals(text, value)) return;
-                text = value;
+                if (Equals(model.Title, value)) return;
+                model.Title = value;
                 OnPropertyChanged();
             }
         }

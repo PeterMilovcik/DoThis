@@ -3,6 +3,10 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Beeffective.Data;
+using Beeffective.Extensions;
+using Beeffective.Models;
+using Beeffective.ViewModels;
 
 namespace Beeffective.Views
 {
@@ -11,15 +15,21 @@ namespace Beeffective.Views
     /// </summary>
     public partial class HoneycombView : UserControl
     {
+        private readonly HoneycombViewModel viewModel;
+
         public HoneycombView()
         {
+            var repository = new CellRepository();
+            var model = new HoneycombModel(repository);
+            viewModel = new HoneycombViewModel(model);
+            DataContext = viewModel;
             InitializeComponent();
         }
 
         protected override void OnInitialized(EventArgs e)
         { 
             base.OnInitialized(e);
-            
+            viewModel.LoadAsync().FireAndForgetSafeAsync();
             //Scroll.ScrollToHorizontalOffset(Scroll.ScrollableWidth / 2);
             //Scroll.ScrollToVerticalOffset(Scroll.ScrollableHeight / 2);
             //Scroll.ScrollToHorizontalOffset((Scroll.ExtentWidth - Scroll.ViewportWidth) / 2);

@@ -14,7 +14,9 @@ namespace Beeffective.Extensions
             return new CellModel
             {
                 Id = cellEntity.Id,
-                Title = cellEntity.Title
+                Title = cellEntity.Title,
+                Urgency = cellEntity.Urgency,
+                Importance = cellEntity.Importance
             };
         }
     }

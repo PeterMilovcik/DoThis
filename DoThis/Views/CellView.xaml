@@ -60,7 +60,7 @@
                     FontFamily="{StaticResource MaterialDesignFont}"
                     FontWeight="Bold"
                     Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
-                    Text="{Binding Text}"
+                    Text="{Binding Title}"
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
             </Label.Content>

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Beeffective.Data;
 using Beeffective.Data.Entities;
 using Beeffective.Extensions;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Beeffective.Models
 {
@@ -56,6 +53,19 @@ namespace Beeffective.Models
         {
             var cellEntities = repository
                 .LoadAsync().GetAwaiter().GetResult();
+            cells.Clear();
+            cells.AddRange(cellEntities.Select(
+                cellEntity =>
+                {
+                    var cellModel = cellEntity.ToCellModel();
+                    Subscribe(cellModel);
+                    return cellModel;
+                }));
+        }
+
+        public async Task LoadAsync()
+        {
+            var cellEntities = await repository.LoadAsync();
             cells.Clear();
             cells.AddRange(cellEntities.Select(
                 cellEntity =>
