@@ -22,7 +22,9 @@
                 x:Name="ItemsControl"
                 Width="{Binding Width}"
                 Height="{Binding Height}"
-                ItemsSource="{Binding Cells}">
+                Background="{StaticResource MaterialDesignCardBackground}"
+                ItemsSource="{Binding Cells}"
+                MouseLeftButtonUp="OnMouseLeftButtonUp">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />

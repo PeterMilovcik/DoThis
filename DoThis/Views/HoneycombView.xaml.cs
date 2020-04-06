@@ -61,5 +61,10 @@ namespace Beeffective.Views
             Scroll.ScrollToHorizontalOffset(offsetX);
             Scroll.ScrollToVerticalOffset(offsetY);
         }
+
+        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.Click(e.GetPosition(ItemsControl));
+        }
     }
 }
