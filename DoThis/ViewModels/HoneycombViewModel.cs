@@ -2,7 +2,7 @@
 
 namespace Beeffective.ViewModels
 {
-    class HoneycombViewModel : ViewModel
+    public class HoneycombViewModel : ViewModel
     {
         private double width;
         private double height;

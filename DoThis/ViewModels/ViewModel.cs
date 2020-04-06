@@ -2,7 +2,7 @@
 
 namespace Beeffective.ViewModels
 {
-    class ViewModel : Observable
+    public class ViewModel : Observable
     {
     }
 }

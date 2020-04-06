@@ -1,6 +1,6 @@
 ﻿namespace Beeffective.ViewModels
 {
-    class CellViewModel : ViewModel
+    public class CellViewModel : ViewModel
     {
         private string text;
         private double x;
