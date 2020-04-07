@@ -29,6 +29,10 @@ namespace Beeffective.Views
         protected override void OnInitialized(EventArgs e)
         { 
             base.OnInitialized(e);
+            double offsetX = ItemsControl.Width / 2;
+            double offsetY = ItemsControl.Height / 2;
+            Scroll.ScrollToHorizontalOffset(offsetX - SystemParameters.WorkArea.Width / 2);
+            Scroll.ScrollToVerticalOffset(offsetY -SystemParameters.WorkArea.Height / 2);
             viewModel.LoadAsync().FireAndForgetSafeAsync();
             //Scroll.ScrollToHorizontalOffset(Scroll.ScrollableWidth / 2);
             //Scroll.ScrollToVerticalOffset(Scroll.ScrollableHeight / 2);
@@ -60,11 +64,6 @@ namespace Beeffective.Views
 
             Scroll.ScrollToHorizontalOffset(offsetX);
             Scroll.ScrollToVerticalOffset(offsetY);
-        }
-
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            viewModel.Click(e.GetPosition(ItemsControl));
         }
     }
 }

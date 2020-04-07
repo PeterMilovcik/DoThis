@@ -9,7 +9,10 @@
     d:DesignHeight="600"
     d:DesignWidth="600"
     mc:Ignorable="d">
-    <Grid>
+    <Canvas Width="500" Height="500">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="-250" Y="-250" />
+        </Canvas.RenderTransform>
         <!--<md:PackIcon
             Width="300"
             Height="300"
@@ -36,8 +39,161 @@
                 </TransformGroup>
             </md:PackIcon.RenderTransform>
         </md:PackIcon>-->
+
+        <!--  SouthWest  -->
+        <Grid Canvas.Left="141" Canvas.Top="312">
+            <Polygon
+                Fill="{StaticResource MaterialDesignPaper}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Button
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource MaterialDesignIconButton}">
+                <Button.RenderTransform>
+                    <TranslateTransform X="-25" Y="-20" />
+                </Button.RenderTransform>
+                <md:PackIcon Kind="Add" />
+            </Button>
+        </Grid>
+
+        <!--  South  -->
+        <Grid Canvas.Left="250" Canvas.Top="377">
+            <Polygon
+                Fill="{StaticResource MaterialDesignPaper}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Button
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource MaterialDesignIconButton}">
+                <Button.RenderTransform>
+                    <TranslateTransform X="-25" Y="-20" />
+                </Button.RenderTransform>
+                <md:PackIcon Kind="Add" />
+            </Button>
+        </Grid>
+
+        <!--  North  -->
+        <Grid Canvas.Left="250" Canvas.Top="123">
+            <Polygon
+                Fill="{StaticResource MaterialDesignPaper}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Button
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource MaterialDesignIconButton}">
+                <Button.RenderTransform>
+                    <TranslateTransform X="-25" Y="-20" />
+                </Button.RenderTransform>
+                <md:PackIcon Kind="Add" />
+            </Button>
+        </Grid>
+
+        <!--  SouthEast  -->
+        <Grid Canvas.Left="360" Canvas.Top="313">
+            <Polygon
+                Fill="{StaticResource MaterialDesignPaper}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Button
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource MaterialDesignIconButton}">
+                <Button.RenderTransform>
+                    <TranslateTransform X="-25" Y="-20" />
+                </Button.RenderTransform>
+                <md:PackIcon Kind="Add" />
+            </Button>
+        </Grid>
+
+        <!--  NorthEast  -->
+        <Grid Canvas.Left="360" Canvas.Top="186">
+            <Polygon
+                Fill="{StaticResource MaterialDesignPaper}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Button
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource MaterialDesignIconButton}">
+                <Button.RenderTransform>
+                    <TranslateTransform X="-25" Y="-20" />
+                </Button.RenderTransform>
+                <md:PackIcon Kind="Add" />
+            </Button>
+        </Grid>
+
+        <!--  NorthWest  -->
+        <Grid Canvas.Left="140" Canvas.Top="185">
+            <Polygon
+                Fill="{StaticResource MaterialDesignPaper}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Button
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{StaticResource MaterialDesignIconButton}">
+                <Button.RenderTransform>
+                    <TranslateTransform X="-25" Y="-20" />
+                </Button.RenderTransform>
+                <md:PackIcon Kind="Add" />
+            </Button>
+        </Grid>
+
+        <!--  Center  -->
         <Polygon
-            Name="hexagon"
+            Canvas.Left="250"
+            Canvas.Top="250"
             Fill="{StaticResource PrimaryHueDarkBrush}"
             Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
             Stroke="{StaticResource PrimaryHueMidBrush}"
@@ -50,6 +206,8 @@
             </Polygon.RenderTransform>
         </Polygon>
         <Label
+            Canvas.Left="200"
+            Canvas.Top="210"
             Width="100"
             Height="80"
             HorizontalContentAlignment="Center"
@@ -64,10 +222,7 @@
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
             </Label.Content>
-            <Label.RenderTransform>
-                <TranslateTransform X="-64" Y="-74" />
-            </Label.RenderTransform>
         </Label>
 
-    </Grid>
+    </Canvas>
 </UserControl>

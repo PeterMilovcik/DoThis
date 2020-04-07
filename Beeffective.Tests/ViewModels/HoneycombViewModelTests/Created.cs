@@ -7,11 +7,11 @@ namespace Beeffective.Tests.ViewModels.HoneycombViewModelTests
     {
         [Test]
         public void Width() => 
-            Sut.Width.Should().Be(5000);
+            Sut.Width.Should().Be(10000);
 
         [Test]
         public void Height() => 
-            Sut.Height.Should().Be(5000);
+            Sut.Height.Should().Be(10000);
 
         [Test]
         public void Cells_NotNull() => 

@@ -8,23 +8,24 @@
     xmlns:vm="clr-namespace:Beeffective.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="{StaticResource MaterialDesignCardBackground}"
+    Background="{StaticResource MaterialDesignPaper}"
     mc:Ignorable="d">
-    <Grid>
+    <Grid x:Name="Container">
 
         <ScrollViewer
             x:Name="Scroll"
+            Width="{Binding ElementName=Container, Path=ActualWidth}"
+            Height="{Binding ElementName=Container, Path=ActualHeight}"
             AllowDrop="True"
-            HorizontalScrollBarVisibility="Auto"
-            VerticalScrollBarVisibility="Auto">
+            HorizontalScrollBarVisibility="Visible"
+            VerticalScrollBarVisibility="Visible">
 
             <ItemsControl
                 x:Name="ItemsControl"
                 Width="{Binding Width}"
                 Height="{Binding Height}"
-                Background="{StaticResource MaterialDesignCardBackground}"
-                ItemsSource="{Binding Cells}"
-                MouseLeftButtonUp="OnMouseLeftButtonUp">
+                Background="{StaticResource MaterialDesignPaper}"
+                ItemsSource="{Binding Cells}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas />

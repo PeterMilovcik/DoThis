@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using Beeffective.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Beeffective.ViewModels
 {
@@ -19,8 +21,8 @@ namespace Beeffective.ViewModels
         public HoneycombViewModel(HoneycombModel model)
         {
             this.model = model ?? throw new ArgumentNullException(nameof(model));
-            Width = 5000;
-            Height = 5000;
+            Width = 10000;
+            Height = 10000;
             ZoomFactor = 1;
             Cells = new ObservableCollection<CellViewModel>();
             //Cells = new ObservableCollection<CellViewModel>
@@ -88,54 +90,16 @@ namespace Beeffective.ViewModels
             {
                 Cells.Add(new CellViewModel(cellModel));
             }
-        }
 
-        public void Click(Point point)
-        {
-            const double height = 125;
-            const double width = 105;
-
-
-            var xList = new List<double>();
-            for (int i = 0; i < Width / width; i++)
+            if (!Cells.Any())
             {
-                xList.Add(i * width);
+                Cells.Add(new CellViewModel(new CellModel
+                {
+                    Urgency = Width / 2, 
+                    Importance = Height / 2, 
+                    Title = "CENTER"
+                }));
             }
-            var yList = new List<double>();
-            for (int i = 0; i < Height / height; i++)
-            {
-                yList.Add(i * height);
-            }
-
-            double min = 0;
-            double max = Width;
-            double urgency = 0;
-            for (int i = 0; i < xList.Count; i++)
-            {
-                if (xList[i] > point.X) min = xList[i];
-                if (xList[i] < point.X) max = xList[i];
-            }
-
-            urgency = Math.Abs(point.X - min) < Math.Abs(point.X - max) ? min : max;
-
-            min = 0;
-            max = Height;
-            double importance = 0;
-            for (int i = 0; i < yList.Count; i++)
-            {
-                if (yList[i] > point.Y) min = yList[i];
-                if (yList[i] < point.Y) max = yList[i];
-            }
-
-            importance = Math.Abs(point.Y - min) < Math.Abs(point.Y - max) ? min : max;
-
-            var cellModel = new CellModel
-            {
-                Title = "test", 
-                Urgency = urgency, 
-                Importance = importance
-            };
-            Cells.Add(new CellViewModel(cellModel));
         }
     }
 }
