@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Resources;
 using System.Threading.Tasks;
-using System.Windows;
 using Beeffective.Models;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Beeffective.ViewModels
 {
@@ -24,10 +22,13 @@ namespace Beeffective.ViewModels
             Width = 10000;
             Height = 10000;
             ZoomFactor = 1;
-            Cells = new ObservableCollection<CellViewModel>();
+            EmptyCells = new ObservableCollection<CellViewModel>();
+            FullCells = new ObservableCollection<CellViewModel>();
         }
 
-        public ObservableCollection<CellViewModel> Cells { get; }
+        public ObservableCollection<CellViewModel> EmptyCells { get; }
+
+        public ObservableCollection<CellViewModel> FullCells { get; }
 
         public double ZoomFactor
         {
@@ -65,22 +66,31 @@ namespace Beeffective.ViewModels
         public async Task LoadAsync()
         {
             await model.LoadAsync();
-            Cells.Clear();
+            EmptyCells.Clear();
+            FullCells.Clear();
             foreach (var cellModel in model.Cells)
             {
-                Cells.Add(new CellViewModel(cellModel, this));
+                var cellViewModel = new CellViewModel(cellModel, this);
+                if (cellViewModel.IsEmpty)
+                {
+                    EmptyCells.Add(cellViewModel);
+                }
+                else
+                {
+                    FullCells.Add(cellViewModel);
+                }
             }
 
-            if (!Cells.Any())
+            if (!FullCells.Any())
             {
                 var cellModel = new CellModel
                 {
                     Urgency = Width / 2, 
                     Importance = Height / 2, 
-                    Title = "CENTER"
+                    Title = string.Empty,
                 };
                 var cellViewModel = new CellViewModel(cellModel, this);
-                Cells.Add(cellViewModel);
+                EmptyCells.Add(cellViewModel);
             }
         }
     }

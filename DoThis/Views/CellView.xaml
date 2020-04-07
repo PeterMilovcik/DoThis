@@ -40,213 +40,76 @@
             </md:PackIcon.RenderTransform>
         </md:PackIcon>-->
 
-        <!--  SouthWest  -->
+        <!--  Empty Cell  -->
         <Grid
-            Canvas.Left="141"
-            Canvas.Top="312"
-            Visibility="{Binding AdjacentCells.SouthWest.EmptyVisibility}">
-            <Polygon
-                Fill="{StaticResource MaterialDesignPaper}"
-                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
-                StrokeThickness="5.0">
-                <Polygon.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="30" />
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                    </TransformGroup>
-                </Polygon.RenderTransform>
-            </Polygon>
-            <Button
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding AdjacentCells.SouthWest.CreateNewCellCommand}"
-                Style="{StaticResource MaterialDesignIconButton}">
-                <Button.RenderTransform>
-                    <TranslateTransform X="-25" Y="-20" />
-                </Button.RenderTransform>
-                <md:PackIcon Kind="Add" />
-            </Button>
-        </Grid>
-
-        <!--  South  -->
-        <Grid
-            Canvas.Left="250"
-            Canvas.Top="377"
-            Visibility="{Binding AdjacentCells.South.EmptyVisibility}">
-            <Polygon
-                Fill="{StaticResource MaterialDesignPaper}"
-                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
-                StrokeThickness="5.0">
-                <Polygon.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="30" />
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                    </TransformGroup>
-                </Polygon.RenderTransform>
-            </Polygon>
-            <Button
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding AdjacentCells.South.CreateNewCellCommand}"
-                Style="{StaticResource MaterialDesignIconButton}">
-                <Button.RenderTransform>
-                    <TranslateTransform X="-25" Y="-20" />
-                </Button.RenderTransform>
-                <md:PackIcon Kind="Add" />
-            </Button>
-        </Grid>
-
-        <!--  North  -->
-        <Grid
-            Canvas.Left="250"
-            Canvas.Top="123"
-            Visibility="{Binding AdjacentCells.North.EmptyVisibility}">
-            <Polygon
-                Fill="{StaticResource MaterialDesignPaper}"
-                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
-                StrokeThickness="5.0">
-                <Polygon.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="30" />
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                    </TransformGroup>
-                </Polygon.RenderTransform>
-            </Polygon>
-            <Button
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding AdjacentCells.North.CreateNewCellCommand}"
-                Style="{StaticResource MaterialDesignIconButton}">
-                <Button.RenderTransform>
-                    <TranslateTransform X="-25" Y="-20" />
-                </Button.RenderTransform>
-                <md:PackIcon Kind="Add" />
-            </Button>
-        </Grid>
-
-        <!--  SouthEast  -->
-        <Grid
-            Canvas.Left="360"
-            Canvas.Top="313"
-            Visibility="{Binding AdjacentCells.SouthEast.EmptyVisibility}">
-            <Polygon
-                Fill="{StaticResource MaterialDesignPaper}"
-                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
-                StrokeThickness="5.0">
-                <Polygon.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="30" />
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                    </TransformGroup>
-                </Polygon.RenderTransform>
-            </Polygon>
-            <Button
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding AdjacentCells.SouthEast.CreateNewCellCommand}"
-                Style="{StaticResource MaterialDesignIconButton}">
-                <Button.RenderTransform>
-                    <TranslateTransform X="-25" Y="-20" />
-                </Button.RenderTransform>
-                <md:PackIcon Kind="Add" />
-            </Button>
-        </Grid>
-
-        <!--  NorthEast  -->
-        <Grid
-            Canvas.Left="360"
-            Canvas.Top="186"
-            Visibility="{Binding AdjacentCells.NorthEast.EmptyVisibility}">
-            <Polygon
-                Fill="{StaticResource MaterialDesignPaper}"
-                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
-                StrokeThickness="5.0">
-                <Polygon.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="30" />
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                    </TransformGroup>
-                </Polygon.RenderTransform>
-            </Polygon>
-            <Button
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding AdjacentCells.NorthEast.CreateNewCellCommand}"
-                Style="{StaticResource MaterialDesignIconButton}">
-                <Button.RenderTransform>
-                    <TranslateTransform X="-25" Y="-20" />
-                </Button.RenderTransform>
-                <md:PackIcon Kind="Add" />
-            </Button>
-        </Grid>
-
-        <!--  NorthWest  -->
-        <Grid
-            Canvas.Left="140"
-            Canvas.Top="185"
-            Visibility="{Binding AdjacentCells.NorthWest.EmptyVisibility}">
-            <Polygon
-                Fill="{StaticResource MaterialDesignPaper}"
-                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
-                StrokeThickness="5.0">
-                <Polygon.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="30" />
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                    </TransformGroup>
-                </Polygon.RenderTransform>
-            </Polygon>
-            <Button
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding AdjacentCells.NorthWest.CreateNewCellCommand}"
-                Style="{StaticResource MaterialDesignIconButton}">
-                <Button.RenderTransform>
-                    <TranslateTransform X="-25" Y="-20" />
-                </Button.RenderTransform>
-                <md:PackIcon Kind="Add" />
-            </Button>
-        </Grid>
-
-        <!--  Center  -->
-        <Polygon
             Canvas.Left="250"
             Canvas.Top="250"
-            Fill="{StaticResource PrimaryHueDarkBrush}"
-            Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-            Stroke="{StaticResource PrimaryHueMidBrush}"
-            StrokeThickness="5.0">
-            <Polygon.RenderTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="30" />
-                    <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                </TransformGroup>
-            </Polygon.RenderTransform>
-        </Polygon>
-        <Label
-            Canvas.Left="200"
-            Canvas.Top="210"
-            Width="100"
-            Height="80"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontSize="14">
-            <Label.Content>
-                <AccessText
-                    FontFamily="{StaticResource MaterialDesignFont}"
-                    FontWeight="Bold"
-                    Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
-                    Text="{Binding Title}"
-                    TextAlignment="Center"
-                    TextWrapping="Wrap" />
-            </Label.Content>
-        </Label>
+            Visibility="{Binding EmptyVisibility}">
+            <Polygon
+                Fill="{StaticResource MaterialDesignPaper}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Button
+                Width="70"
+                Height="70"
+                Padding="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding CreateNewCellCommand}"
+                SnapsToDevicePixels="True"
+                Style="{StaticResource MaterialDesignIconButton}">
+                <Button.RenderTransform>
+                    <TranslateTransform X="-36" Y="-36" />
+                </Button.RenderTransform>
+                <md:PackIcon Kind="Add" />
+            </Button>
+        </Grid>
+
+        <!--  Cell  -->
+        <Grid
+            Canvas.Left="250"
+            Canvas.Top="250"
+            Visibility="{Binding CellVisibility}">
+            <Polygon
+                Fill="{StaticResource PrimaryHueDarkBrush}"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueMidBrush}"
+                StrokeThickness="5.0">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>
+            <Label
+                Width="100"
+                Height="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontSize="14">
+                <Label.RenderTransform>
+                    <TranslateTransform X="-64" Y="-75" />
+                </Label.RenderTransform>
+                <Label.Content>
+                    <AccessText
+                        FontFamily="{StaticResource MaterialDesignFont}"
+                        FontWeight="Bold"
+                        Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+                        Text="{Binding Title}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                </Label.Content>
+            </Label>
+        </Grid>
 
     </Canvas>
 </UserControl>

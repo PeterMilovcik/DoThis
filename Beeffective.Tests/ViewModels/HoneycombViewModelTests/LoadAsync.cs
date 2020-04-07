@@ -25,8 +25,9 @@ namespace Beeffective.Tests.ViewModels.HoneycombViewModelTests
         public async Task LoadAsync_Cells_Contain_OneCell()
         {
             await Sut.LoadAsync();
-            Sut.Cells.Count.Should().Be(1);
-            var cellViewModel = Sut.Cells.First();
+            Sut.EmptyCells.Count.Should().Be(0);
+            Sut.FullCells.Count.Should().Be(1);
+            var cellViewModel = Sut.FullCells.First();
             cellViewModel.Id.Should().Be(1);
             cellViewModel.X.Should().Be(2);
             cellViewModel.Y.Should().Be(3);

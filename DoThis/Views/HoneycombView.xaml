@@ -20,28 +20,59 @@
             HorizontalScrollBarVisibility="Visible"
             VerticalScrollBarVisibility="Visible">
 
-            <ItemsControl
-                x:Name="ItemsControl"
-                Width="{Binding Width}"
-                Height="{Binding Height}"
-                Background="{StaticResource MaterialDesignPaper}"
-                ItemsSource="{Binding Cells}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:CellView DataContext="{Binding}">
-                            <local:CellView.RenderTransform>
-                                <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
-                            </local:CellView.RenderTransform>
-                        </local:CellView>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <Grid>
+                <ItemsControl
+                    x:Name="Background"
+                    Width="{Binding Width}"
+                    Height="{Binding Height}"
+                    Background="{StaticResource MaterialDesignPaper}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
 
+                <ItemsControl
+                    Width="{Binding Width}"
+                    Height="{Binding Height}"
+                    ItemsSource="{Binding EmptyCells}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:CellView DataContext="{Binding}">
+                                <local:CellView.RenderTransform>
+                                    <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
+                                </local:CellView.RenderTransform>
+                            </local:CellView>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <ItemsControl
+                    Width="{Binding Width}"
+                    Height="{Binding Height}"
+                    ItemsSource="{Binding FullCells}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:CellView DataContext="{Binding}">
+                                <local:CellView.RenderTransform>
+                                    <TranslateTransform X="{Binding X}" Y="{Binding Y}" />
+                                </local:CellView.RenderTransform>
+                            </local:CellView>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

@@ -14,7 +14,11 @@ namespace Beeffective.Tests.ViewModels.HoneycombViewModelTests
             Sut.Height.Should().Be(10000);
 
         [Test]
-        public void Cells_NotNull() =>
-            Sut.Cells.Should().NotBeNull();
+        public void EmptyCells_NotNull() =>
+            Sut.EmptyCells.Should().NotBeNull();
+
+        [Test]
+        public void FullCells_NotNull() =>
+            Sut.FullCells.Should().NotBeNull();
     }
 }
