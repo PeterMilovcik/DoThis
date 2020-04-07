@@ -25,26 +25,6 @@ namespace Beeffective.ViewModels
             Height = 10000;
             ZoomFactor = 1;
             Cells = new ObservableCollection<CellViewModel>();
-            //Cells = new ObservableCollection<CellViewModel>
-            //{
-            //    new CellViewModel {X = 2500, Y = 2500 + 0 * CellHeight, Text = "A"},
-            //    new CellViewModel {X = 2500, Y = 2500 + 1 * CellHeight, Text = "B"},
-            //    new CellViewModel {X = 2500, Y = 2500 + 2 * CellHeight, Text = "C"},
-            //    new CellViewModel {X = 2500, Y = 2500 + 3 * CellHeight, Text = "D"},
-            //    new CellViewModel {X = 2500, Y = 2500 + 4 * CellHeight, Text = "E"},
-
-            //    new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 0 * CellHeight, Text = "F"},
-            //    new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 1 * CellHeight, Text = "G"},
-            //    new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 2 * CellHeight, Text = "H"},
-            //    new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 3 * CellHeight, Text = "I"},
-            //    new CellViewModel {X = 2500 + 1 * CellWidth, Y = 2437.5 + 4 * CellHeight, Text = "K"},
-
-            //    new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 0 * CellHeight, Text = "L"},
-            //    new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 1 * CellHeight, Text = "M"},
-            //    new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 2 * CellHeight, Text = "N"},
-            //    new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 3 * CellHeight, Text = "O"},
-            //    new CellViewModel {X = 2500 - 1 * CellWidth, Y = 2437.5 + 4 * CellHeight, Text = "P"},
-            //};
         }
 
         public ObservableCollection<CellViewModel> Cells { get; }
@@ -88,17 +68,19 @@ namespace Beeffective.ViewModels
             Cells.Clear();
             foreach (var cellModel in model.Cells)
             {
-                Cells.Add(new CellViewModel(cellModel));
+                Cells.Add(new CellViewModel(cellModel, this));
             }
 
             if (!Cells.Any())
             {
-                Cells.Add(new CellViewModel(new CellModel
+                var cellModel = new CellModel
                 {
                     Urgency = Width / 2, 
                     Importance = Height / 2, 
                     Title = "CENTER"
-                }));
+                };
+                var cellViewModel = new CellViewModel(cellModel, this);
+                Cells.Add(cellViewModel);
             }
         }
     }

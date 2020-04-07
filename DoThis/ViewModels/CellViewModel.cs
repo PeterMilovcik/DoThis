@@ -6,9 +6,10 @@ namespace Beeffective.ViewModels
     {
         private readonly CellModel model;
         
-        public CellViewModel(CellModel model)
+        public CellViewModel(CellModel model, HoneycombViewModel honeycomb)
         {
             this.model = model;
+            AdjacentCells = new AdjacentCells(this, honeycomb);
         }
 
         public int Id => model.Id;
@@ -46,5 +47,7 @@ namespace Beeffective.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public AdjacentCells AdjacentCells { get; }
     }
 }
