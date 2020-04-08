@@ -93,5 +93,33 @@ namespace Beeffective.ViewModels
                 EmptyCells.Add(cellViewModel);
             }
         }
+
+        public CellModel AddFullCell(CellModel newCellModel)
+        {
+            var addedCellModel = model.AddCell(newCellModel);
+            var newCellViewModel = new CellViewModel(addedCellModel, this);
+            FullCells.Add(newCellViewModel);
+            return addedCellModel;
+        }
+
+        public void RemoveFullCell(CellViewModel cellViewModelToRemove)
+        {
+            model.RemoveCell(cellViewModelToRemove.Model);
+            FullCells.Remove(cellViewModelToRemove);
+        }
+
+        public CellModel AddEmptyCell(CellModel newCellModel)
+        {
+            var addedCellModel = model.AddCell(newCellModel);
+            var newCellViewModel = new CellViewModel(addedCellModel, this);
+            EmptyCells.Add(newCellViewModel);
+            return addedCellModel;
+        }
+
+        public void RemoveEmptyCell(CellViewModel cellViewModelToRemove)
+        {
+            model.RemoveCell(cellViewModelToRemove.Model);
+            EmptyCells.Remove(cellViewModelToRemove);
+        }
     }
 }

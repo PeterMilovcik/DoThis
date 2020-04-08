@@ -90,7 +90,8 @@
                     </TransformGroup>
                 </Polygon.RenderTransform>
             </Polygon>
-            <Label
+
+            <!--<Label
                 Width="100"
                 Height="80"
                 HorizontalContentAlignment="Center"
@@ -108,7 +109,26 @@
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </Label.Content>
-            </Label>
+            </Label>-->
+
+            <TextBox
+                Width="100"
+                Height="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                FontFamily="{StaticResource MaterialDesignFont}"
+                FontSize="14"
+                FontWeight="Bold"
+                Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+                Style="{StaticResource MaterialDesignTextBox}"
+                Text="{Binding Title}"
+                TextAlignment="Center"
+                TextWrapping="Wrap">
+                <TextBox.RenderTransform>
+                    <TranslateTransform X="-64" Y="-75" />
+                </TextBox.RenderTransform>
+            </TextBox>
+
         </Grid>
 
     </Canvas>
