@@ -87,7 +87,7 @@ namespace Beeffective.ViewModels
                 Urgency = X,
                 Importance = Y - VerticalOffset,
             };
-            honeycomb.AddEmptyCell(new CellViewModel(cellModel, honeycomb));
+            honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateNorthEastCell()
@@ -97,7 +97,7 @@ namespace Beeffective.ViewModels
                 Urgency = X + DiagonalHorizontalOffset,
                 Importance = Y - DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(new CellViewModel(cellModel, honeycomb));
+            honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateNorthWestCell()
@@ -107,7 +107,7 @@ namespace Beeffective.ViewModels
                 Urgency = X - DiagonalHorizontalOffset,
                 Importance = Y - DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(new CellViewModel(cellModel, honeycomb));
+            honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateSouthCell()
@@ -117,7 +117,7 @@ namespace Beeffective.ViewModels
                 Urgency = X,
                 Importance = Y + VerticalOffset,
             };
-            honeycomb.AddEmptyCell(new CellViewModel(cellModel, honeycomb));
+            honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateSouthWestCell()
@@ -127,7 +127,7 @@ namespace Beeffective.ViewModels
                 Urgency = X - DiagonalHorizontalOffset,
                 Importance = Y + DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(new CellViewModel(cellModel, honeycomb));
+            honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateSouthEastCell()
@@ -137,7 +137,7 @@ namespace Beeffective.ViewModels
                 Urgency = X + DiagonalHorizontalOffset,
                 Importance = Y + DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(new CellViewModel(cellModel, honeycomb));
+            honeycomb.AddEmptyCell(cellModel);
         }
     }
 }
