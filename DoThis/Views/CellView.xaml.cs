@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,50 +19,41 @@ namespace Beeffective.Views
             InitializeComponent();
         }
         
-        private void OnLabelMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void OnHexagonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (DataContext is CellViewModel cellViewModel)
+            Debug.WriteLine("OnHexagonMouseLeftButtonDown");
+            if (DataContext is CellViewModel viewModel)
             {
-                TitleLabel.Visibility = Visibility.Collapsed;
-                TitleTextBox.Visibility = Visibility.Visible;
-                cellViewModel.IsEditing = true;
+                Debug.WriteLine(string.IsNullOrEmpty(viewModel.Title) ? "empty" : viewModel.Title);
+                viewModel.Honeycomb.PressedCell = viewModel;
             }
         }
 
-        private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
+        private void OnHexagonMouseMove(object sender, MouseEventArgs e)
         {
-            if (DataContext is CellViewModel cellViewModel &&
-                (e.Key == Key.Enter || e.Key == Key.Escape))
+            if (DataContext is CellViewModel viewModel)
             {
-                cellViewModel.IsEditing = false;
-                TitleLabel.Visibility = Visibility.Visible;
-                TitleTextBox.Visibility = Visibility.Collapsed;
+                Debug.WriteLine("OnHexagonMouseMove");
+                if (viewModel.Honeycomb.PressedCell != null)
+                {
+                    Debug.WriteLine(string.IsNullOrEmpty(viewModel.Title) ? "empty" : viewModel.Title);
+                    viewModel.Honeycomb.IsDrag = true;
+                }
             }
         }
 
-        private void OnHexagonMouseUp(object sender, MouseButtonEventArgs e)
+        private void OnHexagonMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (DataContext is CellViewModel cellViewModel)
+            Debug.WriteLine("OnHexagonMouseLeftButtonUp");
+            if (DataContext is CellViewModel viewModel)
             {
-                cellViewModel.IsSelected = !cellViewModel.IsSelected;
+                Debug.WriteLine(string.IsNullOrEmpty(viewModel.Title) ? "empty" : viewModel.Title);
+                if (!viewModel.Honeycomb.IsDrag)
+                {
+                    viewModel.IsSelected = !viewModel.IsSelected;
+                }
+                viewModel.Honeycomb.Release(viewModel);
             }
         }
-
-        //private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == nameof(viewModel.IsSelected))
-        //    {
-        //        if (viewModel.IsSelected)
-        //        {
-        //            Polygon.Fill = FindResource("PrimaryHueMidBrush") as Brush;
-        //            Polygon.Stroke = FindResource("PrimaryHueDarkBrush") as Brush;
-        //        }
-        //        else
-        //        {
-        //            Polygon.Fill = FindResource("PrimaryHueDarkBrush") as Brush;
-        //            Polygon.Stroke = FindResource("PrimaryHueMidBrush") as Brush;
-        //        }
-        //    }
-        //}
     }
 }

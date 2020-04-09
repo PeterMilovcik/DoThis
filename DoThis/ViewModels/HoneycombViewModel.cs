@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.ObjectModel;
-using System.Resources;
 using System.Threading.Tasks;
+using System.Windows;
 using Beeffective.Models;
 
 namespace Beeffective.ViewModels
@@ -14,9 +14,10 @@ namespace Beeffective.ViewModels
         private double height;
         private double zoomFactor;
         private CellViewModel selectedCell;
+        private Visibility titleVisibility;
         private const double CellHeight = 125;
         private const double CellWidth = 110;
-
+        
         public HoneycombViewModel(HoneycombModel model)
         {
             this.model = model ?? throw new ArgumentNullException(nameof(model));
@@ -25,11 +26,13 @@ namespace Beeffective.ViewModels
             ZoomFactor = 1;
             EmptyCells = new ObservableCollection<CellViewModel>();
             FullCells = new ObservableCollection<CellViewModel>();
+            TitleVisibility = Visibility.Collapsed;
         }
 
         public ObservableCollection<CellViewModel> EmptyCells { get; }
 
         public ObservableCollection<CellViewModel> FullCells { get; }
+
 
         public double ZoomFactor
         {
@@ -126,9 +129,24 @@ namespace Beeffective.ViewModels
             {
                 if (Equals(selectedCell, value)) return;
                 selectedCell = value;
+                TitleVisibility = selectedCell != null ? Visibility.Visible : Visibility.Collapsed;
                 OnPropertyChanged();
             }
         }
+
+        public Visibility TitleVisibility
+        {
+            get => titleVisibility;
+            set
+            {
+                if (Equals(titleVisibility, value)) return;
+                titleVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public CellViewModel PressedCell { get; set; }
+        public bool IsDrag { get; set; }
 
         public CellModel AddEmptyCell(CellModel newCellModel)
         {
@@ -142,6 +160,24 @@ namespace Beeffective.ViewModels
         {
             model.RemoveCell(cellViewModelToRemove.Model);
             EmptyCells.Remove(cellViewModelToRemove);
+        }
+
+        public void Release(CellViewModel viewModel)
+        {
+            if (IsDrag && PressedCell != viewModel)
+            {
+                var startX = PressedCell.X;
+                var startY = PressedCell.Y;
+                var stopX = viewModel.X;
+                var stopY = viewModel.Y;
+                viewModel.X = startX;
+                viewModel.Y = startY;
+                PressedCell.X = stopX;
+                PressedCell.Y = stopY;
+            }
+
+            PressedCell = null;
+            IsDrag = false;
         }
     }
 }

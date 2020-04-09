@@ -12,17 +12,17 @@ namespace Beeffective.ViewModels
         private const double DiagonalHorizontalOffset = 111;
         private const double DiagonalVerticalOffset = 62.5;
         private const double VerticalOffset = 125;
-        private readonly HoneycombViewModel honeycomb;
-        private bool isEditing;
         private bool isSelected;
 
         public CellViewModel(CellModel model, HoneycombViewModel honeycomb)
         {
             Model = model;
-            this.honeycomb = honeycomb;
+            Honeycomb = honeycomb;
             CreateNewCellCommand = new DelegateCommand(obj => CreateNewCell());
             IsSelected = false;
         }
+
+        public HoneycombViewModel Honeycomb { get; }
 
         public int Id => Model.Id;
 
@@ -72,17 +72,6 @@ namespace Beeffective.ViewModels
         
         public CellModel Model { get; set; }
 
-        public bool IsEditing
-        {
-            get => isEditing;
-            set
-            {
-                if (Equals(isEditing, value)) return;
-                isEditing = value;
-                OnPropertyChanged();
-            }
-        }
-
         public bool IsSelected
         {
             get => isSelected;
@@ -102,14 +91,14 @@ namespace Beeffective.ViewModels
             SelectionChanged?.Invoke(this, EventArgs.Empty);
 
         private void DeselectOtherCells() => 
-            honeycomb.FullCells.Except(new[] {this}).ToList()
+            Honeycomb.FullCells.Except(new[] {this}).ToList()
                 .ForEach(cell => cell.IsSelected = false);
 
         private void CreateNewCell()
         {
             Title = "new";
-            honeycomb.RemoveEmptyCell(this);
-            Model = honeycomb.AddFullCell(Model);
+            Honeycomb.RemoveEmptyCell(this);
+            Model = Honeycomb.AddFullCell(Model);
             CreateNorthCell();
             CreateNorthEastCell();
             CreateNorthWestCell();
@@ -125,7 +114,7 @@ namespace Beeffective.ViewModels
                 Urgency = X,
                 Importance = Y - VerticalOffset,
             };
-            honeycomb.AddEmptyCell(cellModel);
+            Honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateNorthEastCell()
@@ -135,7 +124,7 @@ namespace Beeffective.ViewModels
                 Urgency = X + DiagonalHorizontalOffset,
                 Importance = Y - DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(cellModel);
+            Honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateNorthWestCell()
@@ -145,7 +134,7 @@ namespace Beeffective.ViewModels
                 Urgency = X - DiagonalHorizontalOffset,
                 Importance = Y - DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(cellModel);
+            Honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateSouthCell()
@@ -155,7 +144,7 @@ namespace Beeffective.ViewModels
                 Urgency = X,
                 Importance = Y + VerticalOffset,
             };
-            honeycomb.AddEmptyCell(cellModel);
+            Honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateSouthWestCell()
@@ -165,7 +154,7 @@ namespace Beeffective.ViewModels
                 Urgency = X - DiagonalHorizontalOffset,
                 Importance = Y + DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(cellModel);
+            Honeycomb.AddEmptyCell(cellModel);
         }
 
         private void CreateSouthEastCell()
@@ -175,7 +164,7 @@ namespace Beeffective.ViewModels
                 Urgency = X + DiagonalHorizontalOffset,
                 Importance = Y + DiagonalVerticalOffset,
             };
-            honeycomb.AddEmptyCell(cellModel);
+            Honeycomb.AddEmptyCell(cellModel);
         }
     }
 }

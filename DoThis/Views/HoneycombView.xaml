@@ -80,7 +80,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Background="{StaticResource MaterialDesignCardBackground}"
-            Opacity="0.8">
+            Opacity="0.8"
+            Visibility="{Binding TitleVisibility}">
             <TextBox
                 Width="500"
                 Margin="16"
