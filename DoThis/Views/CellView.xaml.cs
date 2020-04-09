@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Beeffective.ViewModels;
 
 namespace Beeffective.Views
 {
@@ -22,5 +17,51 @@ namespace Beeffective.Views
         {
             InitializeComponent();
         }
+        
+        private void OnLabelMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is CellViewModel cellViewModel)
+            {
+                TitleLabel.Visibility = Visibility.Collapsed;
+                TitleTextBox.Visibility = Visibility.Visible;
+                cellViewModel.IsEditing = true;
+            }
+        }
+
+        private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            if (DataContext is CellViewModel cellViewModel &&
+                (e.Key == Key.Enter || e.Key == Key.Escape))
+            {
+                cellViewModel.IsEditing = false;
+                TitleLabel.Visibility = Visibility.Visible;
+                TitleTextBox.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void OnHexagonMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (DataContext is CellViewModel cellViewModel)
+            {
+                cellViewModel.IsSelected = !cellViewModel.IsSelected;
+            }
+        }
+
+        //private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    if (e.PropertyName == nameof(viewModel.IsSelected))
+        //    {
+        //        if (viewModel.IsSelected)
+        //        {
+        //            Polygon.Fill = FindResource("PrimaryHueMidBrush") as Brush;
+        //            Polygon.Stroke = FindResource("PrimaryHueDarkBrush") as Brush;
+        //        }
+        //        else
+        //        {
+        //            Polygon.Fill = FindResource("PrimaryHueDarkBrush") as Brush;
+        //            Polygon.Stroke = FindResource("PrimaryHueMidBrush") as Brush;
+        //        }
+        //    }
+        //}
     }
 }

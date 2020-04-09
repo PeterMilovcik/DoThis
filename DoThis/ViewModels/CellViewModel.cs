@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using Beeffective.Commands;
 using Beeffective.Models;
@@ -11,12 +12,15 @@ namespace Beeffective.ViewModels
         private const double DiagonalVerticalOffset = 62.5;
         private const double VerticalOffset = 125;
         private readonly HoneycombViewModel honeycomb;
+        private bool isEditing;
+        private bool isSelected;
 
         public CellViewModel(CellModel model, HoneycombViewModel honeycomb)
         {
             Model = model;
             this.honeycomb = honeycomb;
             CreateNewCellCommand = new DelegateCommand(obj => CreateNewCell());
+            IsSelected = false;
         }
 
         public int Id => Model.Id;
@@ -66,6 +70,33 @@ namespace Beeffective.ViewModels
         public ICommand CreateNewCellCommand { get; }
         
         public CellModel Model { get; set; }
+
+        public bool IsEditing
+        {
+            get => isEditing;
+            set
+            {
+                if (Equals(isEditing, value)) return;
+                isEditing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                if (Equals(isSelected, value)) return;
+                isSelected = value;
+                if (isSelected) DeselectOtherCells();
+                OnPropertyChanged();
+            }
+        }
+
+        private void DeselectOtherCells() => 
+            honeycomb.FullCells.Except(new[] {this}).ToList()
+                .ForEach(cell => cell.IsSelected = false);
 
         private void CreateNewCell()
         {

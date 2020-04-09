@@ -77,12 +77,29 @@
         <Grid
             Canvas.Left="250"
             Canvas.Top="250"
+            FocusManager.FocusedElement="{Binding ElementName=TitleTextBox}"
             Visibility="{Binding CellVisibility}">
             <Polygon
-                Fill="{StaticResource PrimaryHueDarkBrush}"
+                x:Name="Polygon"
+                MouseUp="OnHexagonMouseUp"
                 Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
                 StrokeThickness="5.0">
+                <Polygon.Style>
+                    <Style TargetType="{x:Type Polygon}">
+                        <Setter Property="Fill" Value="{StaticResource PrimaryHueDarkBrush}" />
+                        <Setter Property="Stroke" Value="{StaticResource PrimaryHueMidBrush}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                                <Setter Property="Fill" Value="{StaticResource PrimaryHueMidBrush}" />
+                                <Setter Property="Stroke" Value="{StaticResource PrimaryHueDarkBrush}" />
+                            </DataTrigger>
+                            <!--<DataTrigger Binding="{Binding IsSelected}" Value="False">
+                                <Setter Property="Fill" Value="{StaticResource PrimaryHueDarkBrush}" />
+                                <Setter Property="Stroke" Value="{StaticResource PrimaryHueMidBrush}" />
+                            </DataTrigger>-->
+                        </Style.Triggers>
+                    </Style>
+                </Polygon.Style>
                 <Polygon.RenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="30" />
@@ -91,12 +108,28 @@
                 </Polygon.RenderTransform>
             </Polygon>
 
-            <!--<Label
+            <!--<Polygon
+                Fill="Transparent"
+                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                Stroke="{StaticResource PrimaryHueLightBrush}"
+                StrokeThickness="10.0"
+                Visibility="{Binding SelectionVisibility}">
+                <Polygon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <ScaleTransform ScaleX="0.47" ScaleY="0.47" />
+                    </TransformGroup>
+                </Polygon.RenderTransform>
+            </Polygon>-->
+
+            <Label
+                x:Name="TitleLabel"
                 Width="100"
-                Height="80"
+                Height="100"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                FontSize="14">
+                FontSize="14"
+                MouseUp="OnHexagonMouseUp">
                 <Label.RenderTransform>
                     <TranslateTransform X="-64" Y="-75" />
                 </Label.RenderTransform>
@@ -109,13 +142,15 @@
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </Label.Content>
-            </Label>-->
+            </Label>
 
             <TextBox
+                x:Name="TitleTextBox"
                 Width="100"
                 Height="80"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
+                Focusable="True"
                 FontFamily="{StaticResource MaterialDesignFont}"
                 FontSize="14"
                 FontWeight="Bold"
@@ -123,11 +158,22 @@
                 Style="{StaticResource MaterialDesignTextBox}"
                 Text="{Binding Title}"
                 TextAlignment="Center"
-                TextWrapping="Wrap">
+                TextWrapping="Wrap"
+                Visibility="Collapsed">
                 <TextBox.RenderTransform>
                     <TranslateTransform X="-64" Y="-75" />
                 </TextBox.RenderTransform>
             </TextBox>
+
+            <!--<md:PopupBox Padding="2,0,2,0">
+                <md:PopupBox.RenderTransform>
+                    <TranslateTransform X="40" Y="-75" />
+                </md:PopupBox.RenderTransform>
+                <StackPanel>
+                    <Button Content="More" />
+                    <Button Content="Options" />
+                </StackPanel>
+            </md:PopupBox>-->
 
         </Grid>
 
