@@ -164,7 +164,7 @@ namespace Beeffective.ViewModels
 
         public void Release(CellViewModel viewModel)
         {
-            if (IsDrag && PressedCell != viewModel)
+            if (IsDrag && PressedCell != viewModel && !viewModel.IsEmpty)
             {
                 var startX = PressedCell.X;
                 var startY = PressedCell.Y;

@@ -50,7 +50,14 @@ namespace Beeffective.Views
                 Debug.WriteLine(string.IsNullOrEmpty(viewModel.Title) ? "empty" : viewModel.Title);
                 if (!viewModel.Honeycomb.IsDrag)
                 {
-                    viewModel.IsSelected = !viewModel.IsSelected;
+                    if (viewModel.IsEmpty)
+                    {
+                        viewModel.CreateNewCellCommand.Execute(null);
+                    }
+                    else
+                    {
+                        viewModel.IsSelected = !viewModel.IsSelected;
+                    }
                 }
                 viewModel.Honeycomb.Release(viewModel);
             }

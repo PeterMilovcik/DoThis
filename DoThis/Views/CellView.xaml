@@ -34,6 +34,16 @@
                     </TransformGroup>
                 </Polygon.RenderTransform>
             </Polygon>
+            <md:PackIcon
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Kind="Add"
+                MouseLeftButtonDown="OnHexagonMouseLeftButtonDown"
+                MouseLeftButtonUp="OnHexagonMouseLeftButtonUp"
+                MouseMove="OnHexagonMouseMove">
+                <md:PackIcon.RenderTransform>
+                    <TranslateTransform X="-10" Y="-5" />
+                </md:PackIcon.RenderTransform>
+            </md:PackIcon>
             <!--<Button
                 Width="70"
                 Height="70"
