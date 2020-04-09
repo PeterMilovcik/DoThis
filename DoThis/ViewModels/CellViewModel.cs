@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Beeffective.Commands;
@@ -91,8 +92,14 @@ namespace Beeffective.ViewModels
                 isSelected = value;
                 if (isSelected) DeselectOtherCells();
                 OnPropertyChanged();
+                OnSelectionChanged();
             }
         }
+
+        public event EventHandler SelectionChanged;
+
+        private void OnSelectionChanged() => 
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
 
         private void DeselectOtherCells() => 
             honeycomb.FullCells.Except(new[] {this}).ToList()

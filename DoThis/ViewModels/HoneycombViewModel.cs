@@ -13,6 +13,7 @@ namespace Beeffective.ViewModels
         private double width;
         private double height;
         private double zoomFactor;
+        private CellViewModel selectedCell;
         private const double CellHeight = 125;
         private const double CellWidth = 110;
 
@@ -77,7 +78,7 @@ namespace Beeffective.ViewModels
                 }
                 else
                 {
-                    FullCells.Add(cellViewModel);
+                    AddFullCell(cellViewModel);
                 }
             }
 
@@ -98,14 +99,35 @@ namespace Beeffective.ViewModels
         {
             var addedCellModel = model.AddCell(newCellModel);
             var newCellViewModel = new CellViewModel(addedCellModel, this);
-            FullCells.Add(newCellViewModel);
+            AddFullCell(newCellViewModel);
             return addedCellModel;
+        }
+
+        private void AddFullCell(CellViewModel cellViewModel)
+        {
+            cellViewModel.SelectionChanged += OnCellViewModelSelectionChanged;
+            FullCells.Add(cellViewModel);
         }
 
         public void RemoveFullCell(CellViewModel cellViewModelToRemove)
         {
             model.RemoveCell(cellViewModelToRemove.Model);
+            cellViewModelToRemove.SelectionChanged -= OnCellViewModelSelectionChanged;
             FullCells.Remove(cellViewModelToRemove);
+        }
+
+        private void OnCellViewModelSelectionChanged(object? sender, EventArgs e) => 
+            SelectedCell = FullCells.FirstOrDefault(c => c.IsSelected);
+
+        public CellViewModel SelectedCell
+        {
+            get => selectedCell;
+            set
+            {
+                if (Equals(selectedCell, value)) return;
+                selectedCell = value;
+                OnPropertyChanged();
+            }
         }
 
         public CellModel AddEmptyCell(CellModel newCellModel)

@@ -74,5 +74,21 @@
                 </ItemsControl>
             </Grid>
         </ScrollViewer>
+
+        <Grid
+            Margin="16"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Background="{StaticResource MaterialDesignCardBackground}"
+            Opacity="0.8">
+            <TextBox
+                Width="500"
+                Margin="16"
+                FontSize="20"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Style="{StaticResource MaterialDesignTextBox}"
+                Text="{Binding SelectedCell.Title}" />
+        </Grid>
+
     </Grid>
 </UserControl>
