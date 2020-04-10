@@ -34,6 +34,7 @@ namespace Beeffective.ViewModels
                 if (Equals(Model.Urgency, value)) return;
                 Model.Urgency = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Priority));
             }
         }
 
@@ -45,6 +46,7 @@ namespace Beeffective.ViewModels
                 if (Equals(Model.Importance, value)) return;
                 Model.Importance = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Priority));
             }
         }
 
@@ -72,6 +74,20 @@ namespace Beeffective.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string SpaceSeparatedTags
+        {
+            get => Model.Tags;
+            set
+            {
+                if (Equals(Model.Tags, value)) return;
+                Model.Tags = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public double Priority =>
+            Math.Sqrt(Math.Pow(Math.Abs(Honeycomb.Width - X), 2) + Math.Pow(Y, 2));
 
         public bool IsEmpty => string.IsNullOrWhiteSpace(Title);
 

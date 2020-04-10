@@ -15,8 +15,6 @@ namespace Beeffective.ViewModels
         private double zoomFactor;
         private CellViewModel selectedCell;
         private Visibility titleVisibility;
-        private const double CellHeight = 125;
-        private const double CellWidth = 110;
         
         public HoneycombViewModel(HoneycombModel model)
         {
@@ -33,6 +31,8 @@ namespace Beeffective.ViewModels
 
         public ObservableCollection<CellViewModel> FullCells { get; }
 
+        public IOrderedEnumerable<CellViewModel> PriorityList => 
+            FullCells.OrderBy(c => c.Priority);
 
         public double ZoomFactor
         {
@@ -110,6 +110,7 @@ namespace Beeffective.ViewModels
         {
             cellViewModel.SelectionChanged += OnCellViewModelSelectionChanged;
             FullCells.Add(cellViewModel);
+            OnPropertyChanged(nameof(PriorityList));
         }
 
         public void RemoveFullCell(CellViewModel cellViewModelToRemove)
@@ -117,6 +118,7 @@ namespace Beeffective.ViewModels
             model.RemoveCell(cellViewModelToRemove.Model);
             cellViewModelToRemove.SelectionChanged -= OnCellViewModelSelectionChanged;
             FullCells.Remove(cellViewModelToRemove);
+            OnPropertyChanged(nameof(PriorityList));
         }
 
         private void OnCellViewModelSelectionChanged(object? sender, EventArgs e) => 
@@ -129,6 +131,7 @@ namespace Beeffective.ViewModels
             {
                 if (Equals(selectedCell, value)) return;
                 selectedCell = value;
+                if (selectedCell != null) selectedCell.IsSelected = true;
                 TitleVisibility = selectedCell != null ? Visibility.Visible : Visibility.Collapsed;
                 OnPropertyChanged();
             }
@@ -174,6 +177,7 @@ namespace Beeffective.ViewModels
                 viewModel.Y = startY;
                 PressedCell.X = stopX;
                 PressedCell.Y = stopY;
+                OnPropertyChanged(nameof(PriorityList));
             }
 
             PressedCell = null;

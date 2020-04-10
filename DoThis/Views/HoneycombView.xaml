@@ -92,9 +92,22 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <materialDesign:PackIcon
+
+            <Label
                 Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalContentAlignment="Center"
+                Background="{StaticResource PrimaryHueMidBrush}"
+                Content="TASK"
+                FontSize="14"
+                FontWeight="Bold"
+                Foreground="{StaticResource PrimaryHueMidForegroundBrush}" />
+
+            <materialDesign:PackIcon
+                Grid.Row="1"
                 Grid.Column="0"
                 Width="20"
                 Height="20"
@@ -111,7 +124,7 @@
                 </materialDesign:PackIcon.RenderTransform>
             </materialDesign:PackIcon>
             <TextBox
-                Grid.Row="0"
+                Grid.Row="1"
                 Grid.Column="1"
                 Margin="16,0"
                 materialDesign:HintAssist.Hint="title"
@@ -121,7 +134,7 @@
                 Text="{Binding SelectedCell.Title}" />
 
             <materialDesign:PackIcon
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="0"
                 Width="20"
                 Height="20"
@@ -131,7 +144,7 @@
                 Foreground="{StaticResource PrimaryHueMidBrush}"
                 Kind="Target" />
             <TextBox
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 Margin="16,0"
                 VerticalContentAlignment="Center"
@@ -142,7 +155,7 @@
                 Text="{Binding SelectedCell.Goal}" />
 
             <materialDesign:PackIcon
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="0"
                 Width="20"
                 Height="20"
@@ -152,16 +165,45 @@
                 Foreground="{StaticResource PrimaryHueMidBrush}"
                 Kind="TagOutline" />
             <TextBox
-                Grid.Row="2"
+                Grid.Row="3"
                 Grid.Column="1"
                 Margin="16,0,16,8"
                 materialDesign:HintAssist.Hint="space separated tags"
                 FontSize="14"
                 Foreground="{StaticResource PrimaryHueMidBrush}"
                 Style="{StaticResource MaterialDesignTextBox}"
-                Text="{Binding SelectedCell.Tags}" />
+                Text="{Binding SelectedCell.SpaceSeparatedTags}" />
 
+        </Grid>
 
+        <Grid
+            Margin="16,16,36,36"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Stretch"
+            Background="{StaticResource MaterialDesignCardBackground}"
+            Opacity="0.8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label
+                Grid.Row="0"
+                HorizontalContentAlignment="Center"
+                Background="{StaticResource PrimaryHueMidBrush}"
+                Content="PRIORITY"
+                FontSize="14"
+                FontWeight="Bold"
+                Foreground="{StaticResource PrimaryHueMidForegroundBrush}" />
+            <ListView
+                Grid.Row="1"
+                ItemsSource="{Binding PriorityList}"
+                SelectedItem="{Binding SelectedCell}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Title}" Foreground="{StaticResource PrimaryHueMidBrush}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
     </Grid>
