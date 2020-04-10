@@ -8,6 +8,8 @@ namespace Beeffective.Models
         private string title;
         private double importance;
         private double urgency;
+        private string goal;
+        private string tags;
 
         public int Id { get; set; }
 
@@ -40,6 +42,28 @@ namespace Beeffective.Models
             {
                 if (Equals(urgency, value)) return;
                 urgency = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Goal
+        {
+            get => goal;
+            set
+            {
+                if (Equals(goal, value)) return;
+                goal = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Tags
+        {
+            get => tags;
+            set
+            {
+                if (Equals(tags, value)) return;
+                tags = value;
                 OnPropertyChanged();
             }
         }

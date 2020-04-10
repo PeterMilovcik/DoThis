@@ -62,6 +62,17 @@ namespace Beeffective.ViewModels
             }
         }
 
+        public string Goal
+        {
+            get => Model.Goal;
+            set
+            {
+                if (Equals(Model.Goal, value)) return;
+                Model.Goal = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool IsEmpty => string.IsNullOrWhiteSpace(Title);
 
         public Visibility EmptyVisibility => IsEmpty ? Visibility.Visible : Visibility.Collapsed;

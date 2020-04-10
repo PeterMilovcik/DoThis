@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Beeffective.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:Beeffective.ViewModels"
     d:DesignHeight="450"
@@ -76,19 +77,91 @@
         </ScrollViewer>
 
         <Grid
+            Width="500"
             Margin="16"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="{StaticResource MaterialDesignCardBackground}"
             Opacity="0.8"
             Visibility="{Binding TitleVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <materialDesign:PackIcon
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="20"
+                Height="20"
+                Margin="16,0,0,8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Kind="HexagonOutline">
+                <materialDesign:PackIcon.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="30" />
+                        <TranslateTransform X="8" />
+                    </TransformGroup>
+                </materialDesign:PackIcon.RenderTransform>
+            </materialDesign:PackIcon>
             <TextBox
-                Width="500"
-                Margin="16"
-                FontSize="20"
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="16,0"
+                materialDesign:HintAssist.Hint="title"
+                FontSize="18"
                 Foreground="{StaticResource PrimaryHueMidBrush}"
                 Style="{StaticResource MaterialDesignTextBox}"
                 Text="{Binding SelectedCell.Title}" />
+
+            <materialDesign:PackIcon
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="20"
+                Height="20"
+                Margin="16,0,0,4"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Kind="Target" />
+            <TextBox
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="16,0"
+                VerticalContentAlignment="Center"
+                materialDesign:HintAssist.Hint="goal"
+                FontSize="16"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Style="{StaticResource MaterialDesignTextBox}"
+                Text="{Binding SelectedCell.Goal}" />
+
+            <materialDesign:PackIcon
+                Grid.Row="2"
+                Grid.Column="0"
+                Width="20"
+                Height="20"
+                Margin="16,0,0,8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Kind="TagOutline" />
+            <TextBox
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="16,0,16,8"
+                materialDesign:HintAssist.Hint="space separated tags"
+                FontSize="14"
+                Foreground="{StaticResource PrimaryHueMidBrush}"
+                Style="{StaticResource MaterialDesignTextBox}"
+                Text="{Binding SelectedCell.Tags}" />
+
+
         </Grid>
 
     </Grid>

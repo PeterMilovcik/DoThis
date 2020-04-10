@@ -2,14 +2,16 @@
 using Beeffective.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Beeffective.Migrations
 {
     [DbContext(typeof(CellContext))]
-    partial class CellContextModelSnapshot : ModelSnapshot
+    [Migration("20200410125207_Add_Goal_Tags")]
+    partial class Add_Goal_Tags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -44,23 +44,6 @@
                     <TranslateTransform X="-10" Y="-5" />
                 </md:PackIcon.RenderTransform>
             </md:PackIcon>
-            <!--<Button
-                Width="70"
-                Height="70"
-                Padding="0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding CreateNewCellCommand}"
-                MouseLeftButtonDown="OnHexagonMouseLeftButtonDown"
-                MouseLeftButtonUp="OnHexagonMouseLeftButtonUp"
-                MouseMove="OnHexagonMouseMove"
-                SnapsToDevicePixels="True"
-                Style="{StaticResource MaterialDesignIconButton}">
-                <Button.RenderTransform>
-                    <TranslateTransform X="-36" Y="-36" />
-                </Button.RenderTransform>
-                <md:PackIcon Kind="Add" />
-            </Button>-->
         </Grid>
 
         <!--  Cell  -->

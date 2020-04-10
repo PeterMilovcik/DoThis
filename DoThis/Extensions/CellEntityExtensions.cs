@@ -16,7 +16,9 @@ namespace Beeffective.Extensions
                 Id = cellEntity.Id,
                 Title = cellEntity.Title,
                 Urgency = cellEntity.Urgency,
-                Importance = cellEntity.Importance
+                Importance = cellEntity.Importance,
+                Goal = cellEntity.Goal,
+                Tags = cellEntity.Tags
             };
         }
     }

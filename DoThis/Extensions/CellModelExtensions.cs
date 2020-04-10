@@ -16,7 +16,9 @@ namespace Beeffective.Extensions
                 Id = cellModel.Id,
                 Title = cellModel.Title,
                 Urgency = cellModel.Urgency,
-                Importance = cellModel.Importance
+                Importance = cellModel.Importance,
+                Goal = cellModel.Goal,
+                Tags = cellModel.Tags
             };
         }
     }
