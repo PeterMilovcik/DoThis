@@ -7,7 +7,7 @@ using Beeffective.Commands;
 
 namespace Beeffective.ViewModels
 {
-    class TimerViewModel : ViewModel
+    public class TimerViewModel : ViewModel
     {
         private int remaining;
         private int fontSize;

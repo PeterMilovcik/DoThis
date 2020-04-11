@@ -2,7 +2,10 @@
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
+using System.Windows.Input;
+using Beeffective.Commands;
 using Beeffective.Models;
 
 namespace Beeffective.ViewModels
@@ -15,7 +18,10 @@ namespace Beeffective.ViewModels
         private double zoomFactor;
         private CellViewModel selectedCell;
         private Visibility titleVisibility;
-        
+        private Timer timer;
+        private bool isTimerEnabled;
+        private DateTime? lastUpdate;
+
         public HoneycombViewModel(HoneycombModel model)
         {
             this.model = model ?? throw new ArgumentNullException(nameof(model));
@@ -25,6 +31,38 @@ namespace Beeffective.ViewModels
             EmptyCells = new ObservableCollection<CellViewModel>();
             FullCells = new ObservableCollection<CellViewModel>();
             TitleVisibility = Visibility.Collapsed;
+            TimerCommand = new DelegateCommand(obj => IsTimerEnabled = !IsTimerEnabled);
+            timer = new Timer {Interval = 250};
+            timer.Elapsed += OnTimerElapsed;
+        }
+
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            if (lastUpdate.HasValue)
+            {
+                if (SelectedCell != null)
+                {
+                    var delta = DateTime.Now - lastUpdate.Value;
+                    SelectedCell.TimeSpent = SelectedCell.TimeSpent.Add(delta);
+                }
+            }
+
+            lastUpdate = DateTime.Now;
+        }
+
+        public ICommand TimerCommand { get; }
+
+        public bool IsTimerEnabled
+        {
+            get => isTimerEnabled;
+            set
+            {
+                if (Equals(isTimerEnabled, value)) return;
+                isTimerEnabled = value;
+                if (!isTimerEnabled) lastUpdate = null;
+                timer.Enabled = isTimerEnabled;
+                OnPropertyChanged();
+            }
         }
 
         public ObservableCollection<CellViewModel> EmptyCells { get; }
