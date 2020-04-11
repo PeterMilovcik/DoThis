@@ -86,6 +86,17 @@ namespace Beeffective.ViewModels
             }
         }
 
+        public TimeSpan TimeSpent
+        {
+            get => Model.TimeSpent;
+            set
+            {
+                if (Equals(Model.TimeSpent, value)) return;
+                Model.TimeSpent = value;
+                OnPropertyChanged();
+            }
+        }
+
         public double Priority =>
             Math.Sqrt(Math.Pow(Math.Abs(Honeycomb.Width - X), 2) + Math.Pow(Y, 2));
 

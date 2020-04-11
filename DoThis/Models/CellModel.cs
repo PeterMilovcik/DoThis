@@ -10,6 +10,7 @@ namespace Beeffective.Models
         private double urgency;
         private string goal;
         private string tags;
+        private TimeSpan timeSpent;
 
         public int Id { get; set; }
 
@@ -64,6 +65,17 @@ namespace Beeffective.Models
             {
                 if (Equals(tags, value)) return;
                 tags = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TimeSpan TimeSpent
+        {
+            get => timeSpent;
+            set
+            {
+                if (Equals(timeSpent, value)) return;
+                timeSpent = value;
                 OnPropertyChanged();
             }
         }

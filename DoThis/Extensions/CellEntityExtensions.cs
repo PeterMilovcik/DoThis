@@ -18,7 +18,8 @@ namespace Beeffective.Extensions
                 Urgency = cellEntity.Urgency,
                 Importance = cellEntity.Importance,
                 Goal = cellEntity.Goal,
-                Tags = cellEntity.Tags
+                Tags = cellEntity.Tags,
+                TimeSpent = cellEntity.TimeSpent
             };
         }
     }
