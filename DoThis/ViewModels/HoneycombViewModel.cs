@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Beeffective.Commands;
 using Beeffective.Models;
 
@@ -21,6 +24,8 @@ namespace Beeffective.ViewModels
         private Timer timer;
         private bool isTimerEnabled;
         private DateTime? lastUpdate;
+        private ObservableCollection<TagViewModel> tagsList;
+        private ObservableCollection<GoalViewModel> goalList;
 
         public HoneycombViewModel(HoneycombModel model)
         {
@@ -30,8 +35,11 @@ namespace Beeffective.ViewModels
             ZoomFactor = 1;
             EmptyCells = new ObservableCollection<CellViewModel>();
             FullCells = new ObservableCollection<CellViewModel>();
+            TagsList = new ObservableCollection<TagViewModel>();
+            GoalList = new ObservableCollection<GoalViewModel>();
             TitleVisibility = Visibility.Collapsed;
             TimerCommand = new DelegateCommand(obj => IsTimerEnabled = !IsTimerEnabled);
+            RemoveCellCommand = new DelegateCommand(obj => RemoveCell());
             timer = new Timer {Interval = 250};
             timer.Elapsed += OnTimerElapsed;
         }
@@ -44,13 +52,62 @@ namespace Beeffective.ViewModels
                 {
                     var delta = DateTime.Now - lastUpdate.Value;
                     SelectedCell.TimeSpent = SelectedCell.TimeSpent.Add(delta);
+                    UpdateTagTimes(SelectedCell, delta);
+                    UpdateGoalTimes(SelectedCell, delta);
                 }
             }
 
             lastUpdate = DateTime.Now;
         }
 
+        private void UpdateTagTimes(CellViewModel cellViewModel, in TimeSpan delta)
+        {
+            var tags = cellViewModel.SpaceSeparatedTags.Split(" ");
+            foreach (string tag in tags)
+            {
+                var tagViewModel = TagsList.Single(t => t.Name == tag);
+                tagViewModel.TimeSpent = tagViewModel.TimeSpent.Add(delta);
+            }
+
+            TagsList = new ObservableCollection<TagViewModel>(
+                TagsList.OrderByDescending(t => t.TimeSpent));
+        }
+
+        private void UpdateGoalTimes(CellViewModel cellViewModel, in TimeSpan delta)
+        {
+            var goal = cellViewModel.Goal;
+
+            var goalViewModel = GoalList.Single(t => t.Title == goal);
+            goalViewModel.TimeSpent = goalViewModel.TimeSpent.Add(delta);
+
+            GoalList = new ObservableCollection<GoalViewModel>(
+                GoalList.OrderByDescending(t => t.TimeSpent));
+        }
+
         public ICommand TimerCommand { get; }
+
+        public ICommand RemoveCellCommand { get; }
+
+        private void RemoveCell()
+        {
+            if (SelectedCell == null) return;
+            if (MessageBox.Show(
+                    "Are you sure?", 
+                    "Remove task", 
+                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                var newCellModel = new CellModel();
+                newCellModel.Urgency = SelectedCell.X;
+                newCellModel.Importance = SelectedCell.Y;
+                RemoveFullCell(SelectedCell);
+                SelectedCell = null;
+                var addedEmptyCell = AddEmptyCell(newCellModel);
+                if (addedEmptyCell != null)
+                {
+                    EmptyCells.Add(new CellViewModel(addedEmptyCell, this));
+                }
+            }
+        }
 
         public bool IsTimerEnabled
         {
@@ -71,6 +128,28 @@ namespace Beeffective.ViewModels
 
         public IOrderedEnumerable<CellViewModel> PriorityList => 
             FullCells.OrderBy(c => c.Priority);
+
+        public ObservableCollection<TagViewModel> TagsList
+        {
+            get => tagsList;
+            set
+            {
+                if (Equals(tagsList, value)) return;
+                tagsList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<GoalViewModel> GoalList
+        {
+            get => goalList;
+            set
+            {
+                if (Equals(goalList, value)) return;
+                goalList = value;
+                OnPropertyChanged();
+            }
+        }
 
         public double ZoomFactor
         {
@@ -110,6 +189,7 @@ namespace Beeffective.ViewModels
             await model.LoadAsync();
             EmptyCells.Clear();
             FullCells.Clear();
+            TagsList.Clear();
             foreach (var cellModel in model.Cells)
             {
                 var cellViewModel = new CellViewModel(cellModel, this);
@@ -134,6 +214,8 @@ namespace Beeffective.ViewModels
                 var cellViewModel = new CellViewModel(cellModel, this);
                 EmptyCells.Add(cellViewModel);
             }
+            UpdateTagsList();
+            UpdateGoalList();
         }
 
         public CellModel AddFullCell(CellModel newCellModel)
@@ -147,6 +229,7 @@ namespace Beeffective.ViewModels
         private void AddFullCell(CellViewModel cellViewModel)
         {
             cellViewModel.SelectionChanged += OnCellViewModelSelectionChanged;
+            cellViewModel.PropertyChanged += OnCellViewModelPropertyChanged;
             FullCells.Add(cellViewModel);
             OnPropertyChanged(nameof(PriorityList));
         }
@@ -155,12 +238,73 @@ namespace Beeffective.ViewModels
         {
             model.RemoveCell(cellViewModelToRemove.Model);
             cellViewModelToRemove.SelectionChanged -= OnCellViewModelSelectionChanged;
+            cellViewModelToRemove.PropertyChanged -= OnCellViewModelPropertyChanged;
             FullCells.Remove(cellViewModelToRemove);
             OnPropertyChanged(nameof(PriorityList));
         }
 
         private void OnCellViewModelSelectionChanged(object? sender, EventArgs e) => 
             SelectedCell = FullCells.FirstOrDefault(c => c.IsSelected);
+
+        private void OnCellViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(CellViewModel.SpaceSeparatedTags))
+            {
+                UpdateTagsList();
+            }
+            if (e.PropertyName == nameof(CellViewModel.Goal))
+            {
+                UpdateGoalList();
+            }
+        }
+
+        private void UpdateTagsList()
+        {
+            foreach (var cellViewModel in FullCells
+                .Where(c => !string.IsNullOrWhiteSpace(c.SpaceSeparatedTags)))
+            {
+                var tags = new List<string>();
+                if (!cellViewModel.SpaceSeparatedTags.Contains(" "))
+                {
+                    tags.Add(cellViewModel.SpaceSeparatedTags);
+                }
+                else
+                {
+                    tags.AddRange(cellViewModel.SpaceSeparatedTags.Split(" "));
+                }
+                
+                foreach (string tag in tags)
+                {
+                    var tagViewModel = TagsList.SingleOrDefault(t => t.Name == tag);
+                    if (tagViewModel == null)
+                    {
+                        tagViewModel = new TagViewModel(tag);
+                        TagsList.Add(tagViewModel);
+                    }
+
+                    tagViewModel.TimeSpent = tagViewModel.TimeSpent.Add(cellViewModel.TimeSpent);
+                }
+            }
+            TagsList = new ObservableCollection<TagViewModel>(TagsList.OrderByDescending(t => t.TimeSpent));
+        }
+
+        private void UpdateGoalList()
+        {
+            foreach (var cellViewModel in FullCells
+                .Where(c => !string.IsNullOrWhiteSpace(c.Goal)))
+            {
+                var goalViewModel = GoalList.SingleOrDefault(t => t.Title == cellViewModel.Goal);
+                if (goalViewModel == null)
+                {
+                    goalViewModel = new GoalViewModel(cellViewModel.Goal);
+                    GoalList.Add(goalViewModel);
+                }
+
+                goalViewModel.TimeSpent = goalViewModel.TimeSpent.Add(cellViewModel.TimeSpent);
+            }
+            GoalList = new ObservableCollection<GoalViewModel>(
+                GoalList.OrderByDescending(t => t.TimeSpent));
+        }
 
         public CellViewModel SelectedCell
         {
@@ -191,6 +335,10 @@ namespace Beeffective.ViewModels
 
         public CellModel AddEmptyCell(CellModel newCellModel)
         {
+            var occupied = model.Cells.Any(c =>
+                Math.Abs(c.Importance - newCellModel.Importance) < 0.01 && 
+                Math.Abs(c.Urgency - newCellModel.Urgency) < 0.01);
+            if (occupied) return null;
             var addedCellModel = model.AddCell(newCellModel);
             var newCellViewModel = new CellViewModel(addedCellModel, this);
             EmptyCells.Add(newCellViewModel);

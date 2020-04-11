@@ -15,7 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Yellow.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
-            <system:Double x:Key="Opacity">0.8</system:Double>
+            <system:Double x:Key="Opacity">0.85</system:Double>
             <Style x:Key="Header" TargetType="Label">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="Background" Value="{StaticResource PrimaryHueMidBrush}" />

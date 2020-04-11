@@ -14,6 +14,7 @@
     mc:Ignorable="d">
     <UserControl.InputBindings>
         <KeyBinding Key="Space" Command="{Binding TimerCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding RemoveCellCommand}" />
     </UserControl.InputBindings>
 
 
@@ -84,31 +85,9 @@
 
         <controls:TaskControl HorizontalAlignment="Left" VerticalAlignment="Top" />
 
-        <Grid
-            Margin="16,16,36,36"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Stretch"
-            Background="{StaticResource MaterialDesignCardBackground}"
-            Opacity="{StaticResource Opacity}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Label
-                Grid.Row="0"
-                Content="PRIORITY"
-                Style="{StaticResource Header}" />
-            <ListView
-                Grid.Row="1"
-                ItemsSource="{Binding PriorityList}"
-                SelectedItem="{Binding SelectedCell}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Title}" Foreground="{StaticResource PrimaryHueMidBrush}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+        <controls:PriorityListControl HorizontalAlignment="Right" VerticalAlignment="Top" />
+
+        <controls:TagsListControl HorizontalAlignment="Center" VerticalAlignment="Bottom" />
 
     </Grid>
 </UserControl>
