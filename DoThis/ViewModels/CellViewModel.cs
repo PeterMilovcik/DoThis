@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Beeffective.Commands;
+using Beeffective.Extensions;
 using Beeffective.Models;
 
 namespace Beeffective.ViewModels
@@ -13,6 +14,7 @@ namespace Beeffective.ViewModels
         private const double DiagonalVerticalOffset = 62.5;
         private const double VerticalOffset = 125;
         private bool isSelected;
+        private double cellFontSize;
 
         public CellViewModel(CellModel model, HoneycombViewModel honeycomb)
         {
@@ -20,6 +22,7 @@ namespace Beeffective.ViewModels
             Honeycomb = honeycomb;
             CreateNewCellCommand = new DelegateCommand(obj => CreateNewCell());
             IsSelected = false;
+            CellFontSize = Model.Title.ToCellFontSize();
         }
 
         public HoneycombViewModel Honeycomb { get; }
@@ -57,6 +60,7 @@ namespace Beeffective.ViewModels
             {
                 if (Equals(Model.Title, value)) return;
                 Model.Title = value;
+                CellFontSize = Model.Title.ToCellFontSize();
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(IsEmpty));
                 OnPropertyChanged(nameof(EmptyVisibility));
@@ -109,6 +113,17 @@ namespace Beeffective.ViewModels
         public ICommand CreateNewCellCommand { get; }
         
         public CellModel Model { get; set; }
+
+        public double CellFontSize
+        {
+            get => cellFontSize;
+            set
+            {
+                if (Equals(cellFontSize, value)) return;
+                cellFontSize = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool IsSelected
         {

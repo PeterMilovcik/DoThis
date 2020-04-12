@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="Beeffective.Views.CellView"
+    x:Class="Beeffective.Views.TopmostCellView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,40 +11,11 @@
     mc:Ignorable="d">
     <Canvas Width="500" Height="500">
         <Canvas.RenderTransform>
-            <TranslateTransform X="-250" Y="-250" />
+            <TransformGroup>
+                <TranslateTransform X="-150" Y="-150" />
+                <ScaleTransform ScaleX="0.75" ScaleY="0.75" />
+            </TransformGroup>
         </Canvas.RenderTransform>
-
-        <!--  Empty Cell  -->
-        <Grid
-            Canvas.Left="250"
-            Canvas.Top="250"
-            Visibility="{Binding EmptyVisibility}">
-            <Polygon
-                Fill="{StaticResource MaterialDesignPaper}"
-                MouseLeftButtonDown="OnHexagonMouseLeftButtonDown"
-                MouseLeftButtonUp="OnHexagonMouseLeftButtonUp"
-                MouseMove="OnHexagonMouseMove"
-                Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
-                Stroke="{StaticResource PrimaryHueMidBrush}"
-                StrokeThickness="5.0">
-                <Polygon.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="30" />
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
-                    </TransformGroup>
-                </Polygon.RenderTransform>
-            </Polygon>
-            <md:PackIcon
-                Foreground="{StaticResource PrimaryHueMidBrush}"
-                Kind="Add"
-                MouseLeftButtonDown="OnHexagonMouseLeftButtonDown"
-                MouseLeftButtonUp="OnHexagonMouseLeftButtonUp"
-                MouseMove="OnHexagonMouseMove">
-                <md:PackIcon.RenderTransform>
-                    <TranslateTransform X="-10" Y="-5" />
-                </md:PackIcon.RenderTransform>
-            </md:PackIcon>
-        </Grid>
 
         <!--  Cell  -->
         <Grid
@@ -53,9 +24,6 @@
             Visibility="{Binding CellVisibility}">
             <Polygon
                 x:Name="Polygon"
-                MouseLeftButtonDown="OnHexagonMouseLeftButtonDown"
-                MouseLeftButtonUp="OnHexagonMouseLeftButtonUp"
-                MouseMove="OnHexagonMouseMove"
                 Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
                 StrokeThickness="5.0">
                 <Polygon.Style>
@@ -84,19 +52,16 @@
                 Height="100"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                MouseLeftButtonDown="OnHexagonMouseLeftButtonDown"
-                MouseLeftButtonUp="OnHexagonMouseLeftButtonUp"
-                MouseMove="OnHexagonMouseMove">
+                FontSize="{Binding CellFontSize}">
                 <Label.RenderTransform>
                     <TranslateTransform X="-64" Y="-75" />
                 </Label.RenderTransform>
                 <Label.Content>
                     <AccessText
                         FontFamily="{StaticResource MaterialDesignFont}"
-                        FontSize="{Binding CellFontSize}"
                         FontWeight="Bold"
                         Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
-                        Text="{Binding Title}"
+                        Text="{Binding SelectedCell.Title}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </Label.Content>

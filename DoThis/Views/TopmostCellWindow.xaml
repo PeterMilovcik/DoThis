@@ -1,0 +1,24 @@
+﻿<Window
+    x:Class="Beeffective.Views.TopmostCellWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Beeffective.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="TopmostCellWindow"
+    Width="140"
+    Height="140"
+    AllowsTransparency="True"
+    Background="Transparent"
+    MouseDown="OnMouseDown"
+    Topmost="True"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid>
+        <local:TopmostCellView x:Name="CellView">
+            <local:TopmostCellView.RenderTransform>
+                <RotateTransform Angle="{Binding HexagonAngle}" />
+            </local:TopmostCellView.RenderTransform>
+        </local:TopmostCellView>
+    </Grid>
+</Window>

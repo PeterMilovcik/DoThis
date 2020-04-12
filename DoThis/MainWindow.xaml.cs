@@ -68,7 +68,7 @@ namespace Beeffective
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            var window = new HoneycompWindow();
+            var window = new HoneycombWindow();
             window.Show();
         }
     }

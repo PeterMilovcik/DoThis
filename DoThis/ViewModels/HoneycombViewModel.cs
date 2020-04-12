@@ -9,13 +9,16 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Beeffective.Commands;
+using Beeffective.Extensions;
 using Beeffective.Models;
+using Beeffective.Views;
 
 namespace Beeffective.ViewModels
 {
     public class HoneycombViewModel : ViewModel
     {
         private readonly HoneycombModel model;
+        private readonly IWindow topMostWindow;
         private double width;
         private double height;
         private double zoomFactor;
@@ -26,10 +29,13 @@ namespace Beeffective.ViewModels
         private DateTime? lastUpdate;
         private ObservableCollection<TagViewModel> tagsList;
         private ObservableCollection<GoalViewModel> goalList;
+        private double cellFontSize;
 
-        public HoneycombViewModel(HoneycombModel model)
+        public HoneycombViewModel(HoneycombModel model, IWindow topMostWindow)
         {
             this.model = model ?? throw new ArgumentNullException(nameof(model));
+            this.topMostWindow = topMostWindow;
+            this.topMostWindow.DataContext = this;
             Width = 10000;
             Height = 10000;
             ZoomFactor = 1;
@@ -315,6 +321,24 @@ namespace Beeffective.ViewModels
                 selectedCell = value;
                 if (selectedCell != null) selectedCell.IsSelected = true;
                 TitleVisibility = selectedCell != null ? Visibility.Visible : Visibility.Collapsed;
+                UpdateCellFontSize();
+                OnPropertyChanged();
+            }
+        }
+
+        private void UpdateCellFontSize()
+        {
+            if (SelectedCell == null || string.IsNullOrWhiteSpace(SelectedCell.Title)) return;
+            CellFontSize = SelectedCell.Title.ToCellFontSize();
+        }
+
+        public double CellFontSize
+        {
+            get => cellFontSize;
+            set
+            {
+                if (Equals(cellFontSize, value)) return;
+                cellFontSize = value;
                 OnPropertyChanged();
             }
         }
@@ -368,6 +392,16 @@ namespace Beeffective.ViewModels
 
             PressedCell = null;
             IsDrag = false;
+        }
+
+        public void ShowTopmostWindow()
+        {
+            topMostWindow.Show();
+        }
+
+        public void HideTopmostWindow()
+        {
+            topMostWindow.Hide();
         }
     }
 }

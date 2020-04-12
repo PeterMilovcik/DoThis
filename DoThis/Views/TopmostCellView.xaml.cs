@@ -8,16 +8,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Beeffective.Views
 {
     /// <summary>
-    /// Interaction logic for HoneycompWindow.xaml
+    /// Interaction logic for TopmostCellView.xaml
     /// </summary>
-    public partial class HoneycompWindow : Window
+    public partial class TopmostCellView : UserControl
     {
-        public HoneycompWindow()
+        public TopmostCellView()
         {
             InitializeComponent();
         }

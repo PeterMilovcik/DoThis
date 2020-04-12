@@ -13,7 +13,7 @@ namespace Beeffective.Tests.ViewModels.HoneycombViewModelTests
             Repository = new CellRepository();
             Repository.RemoveAll();
             Model = new HoneycombModel(Repository);
-            Sut = new HoneycombViewModel(Model);
+            Sut = new HoneycombViewModel(Model, null);
             Sut.PropertyChanged += (sender, args) =>
                 ChangedPropertyName = args.PropertyName;
         }

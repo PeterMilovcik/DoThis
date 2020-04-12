@@ -5,7 +5,7 @@
     xmlns:converters="clr-namespace:Beeffective.Converters"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    StartupUri="Views/HoneycompWindow.xaml">
+    StartupUri="Views/HoneycombWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

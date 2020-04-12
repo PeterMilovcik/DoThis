@@ -21,7 +21,8 @@ namespace Beeffective.Views
         {
             var repository = new CellRepository();
             var model = new HoneycombModel(repository);
-            viewModel = new HoneycombViewModel(model);
+            var topMostWindow = new TopmostCellWindow();
+            viewModel = new HoneycombViewModel(model, topMostWindow);
             DataContext = viewModel;
             InitializeComponent();
         }
@@ -34,18 +35,11 @@ namespace Beeffective.Views
             Scroll.ScrollToHorizontalOffset(offsetX - SystemParameters.WorkArea.Width / 2);
             Scroll.ScrollToVerticalOffset(offsetY -SystemParameters.WorkArea.Height / 2);
             viewModel.LoadAsync().FireAndForgetSafeAsync();
-            //Scroll.ScrollToHorizontalOffset(Scroll.ScrollableWidth / 2);
-            //Scroll.ScrollToVerticalOffset(Scroll.ScrollableHeight / 2);
-            //Scroll.ScrollToHorizontalOffset((Scroll.ExtentWidth - Scroll.ViewportWidth) / 2);
-            //Scroll.ScrollToVerticalOffset((Scroll.ExtentHeight - Scroll.ViewportHeight) / 2);
         }
 
         private void OnCanvasMouseDown(object sender, MouseButtonEventArgs e)
         {
-            //var position = e.GetPosition(Canvas);
-
-            //Scroll.ScrollToHorizontalOffset(position.X - Scroll.ActualWidth / 2);
-            //Scroll.ScrollToVerticalOffset(position.Y - Scroll.ActualHeight / 2);
+            
         }
 
         private void OnCanvasMouseMove(object sender, MouseEventArgs e)
@@ -56,11 +50,8 @@ namespace Beeffective.Views
         {
             var position = e.GetPosition(Background);
 
-            //double offsetX = (position.X / ItemsControl.ActualWidth) * ItemsControl.ActualWidth;
-            //double offsetY = (position.Y / ItemsControl.ActualHeight) * ItemsControl.ActualHeight;
             double offsetX = Background.ActualWidth / 2 - position.X;
             double offsetY = Background.ActualHeight / 2 - position.Y;
-
 
             Scroll.ScrollToHorizontalOffset(offsetX);
             Scroll.ScrollToVerticalOffset(offsetY);
