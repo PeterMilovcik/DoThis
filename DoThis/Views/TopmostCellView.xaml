@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Beeffective.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:sf="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="600"
     d:DesignWidth="600"
     mc:Ignorable="d">
@@ -68,6 +69,17 @@
             </Label>
 
         </Grid>
+
+        <sf:SfBusyIndicator
+            Canvas.Left="150"
+            Canvas.Top="145"
+            AnimationSpeed="10"
+            AnimationType="DualRing"
+            Foreground="{StaticResource PrimaryHueMidBrush}"
+            IsBusy="True"
+            Opacity="0.7"
+            ViewboxHeight="200"
+            ViewboxWidth="200" />
 
     </Canvas>
 </UserControl>

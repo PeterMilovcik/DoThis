@@ -19,6 +19,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfBusyIndicator.WPF" Version="18.1.0.43" />
     <PackageReference Include="Syncfusion.SfDiagram.WPF" Version="18.1.0.42" />
   </ItemGroup>
 
