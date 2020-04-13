@@ -10,7 +10,93 @@
     d:DesignHeight="600"
     d:DesignWidth="600"
     mc:Ignorable="d">
-    <Canvas Width="500" Height="500">
+    <Button Width="200" Height="200">
+        <Button.Template>
+            <ControlTemplate>
+                <Canvas Width="200" Height="200">
+
+                    <Polygon
+                        x:Name="Polygon"
+                        Canvas.Left="100"
+                        Canvas.Top="100"
+                        MouseLeftButtonDown="OnMouseLeftButtonDown"
+                        MouseLeftButtonUp="OnMouseLeftButtonUp"
+                        MouseMove="OnMouseMove"
+                        Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
+                        StrokeThickness="5.0">
+                        <Polygon.Style>
+                            <Style TargetType="{x:Type Polygon}">
+                                <Setter Property="Fill" Value="{StaticResource PrimaryHueDarkBrush}" />
+                                <Setter Property="Stroke" Value="{StaticResource PrimaryHueMidBrush}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsSelected}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource PrimaryHueMidBrush}" />
+                                        <Setter Property="Stroke" Value="{StaticResource PrimaryHueDarkBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Polygon.Style>
+                        <Polygon.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="30" />
+                                <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
+                            </TransformGroup>
+                        </Polygon.RenderTransform>
+                    </Polygon>
+
+                    <Label
+                        x:Name="TitleLabel"
+                        Canvas.Left="60"
+                        Canvas.Top="60"
+                        Width="80"
+                        Height="80"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="{Binding CellFontSize}"
+                        MouseLeftButtonDown="OnMouseLeftButtonDown"
+                        MouseLeftButtonUp="OnMouseLeftButtonUp"
+                        MouseMove="OnMouseMove">
+                        <Label.Content>
+                            <AccessText
+                                FontFamily="{StaticResource MaterialDesignFont}"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
+                                Text="{Binding SelectedCell.Title}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </Label.Content>
+                    </Label>
+
+                    <sf:SfBusyIndicator
+                        Canvas.Left="20"
+                        Canvas.Top="16"
+                        AnimationSpeed="10"
+                        AnimationType="DualRing"
+                        Foreground="{StaticResource PrimaryHueMidBrush}"
+                        IsBusy="True"
+                        MouseLeftButtonDown="OnMouseLeftButtonDown"
+                        MouseLeftButtonUp="OnMouseLeftButtonUp"
+                        MouseMove="OnMouseMove"
+                        Opacity="0.7"
+                        ViewboxHeight="160"
+                        ViewboxWidth="160" />
+
+                    <TextBlock
+                        Canvas.Left="60"
+                        Canvas.Top="130"
+                        Width="72"
+                        Margin="4"
+                        FontFamily="{StaticResource MaterialDesignFont}"
+                        FontSize="13"
+                        FontWeight="Bold"
+                        Text="{Binding SelectedCell.TimeSpent, Converter={StaticResource TimeSpanToStringConverter}}"
+                        TextAlignment="Center" />
+
+                </Canvas>
+            </ControlTemplate>
+        </Button.Template>
+    </Button>
+    <!--<Canvas Width="500" Height="500">
         <Canvas.RenderTransform>
             <TransformGroup>
                 <TranslateTransform X="-150" Y="-150" />
@@ -18,13 +104,18 @@
             </TransformGroup>
         </Canvas.RenderTransform>
 
-        <!--  Cell  -->
+    -->
+    <!--  Cell  -->
+    <!--
         <Grid
             Canvas.Left="250"
             Canvas.Top="250"
             Visibility="{Binding CellVisibility}">
             <Polygon
                 x:Name="Polygon"
+                MouseLeftButtonDown="OnMouseLeftButtonDown"
+                MouseLeftButtonUp="OnMouseLeftButtonUp"
+                MouseMove="OnMouseMove"
                 Points="0,-146 126.44,-73 126.44,73 0,146 -126.4397,73 -126.4397,-73"
                 StrokeThickness="5.0">
                 <Polygon.Style>
@@ -53,7 +144,10 @@
                 Height="100"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
-                FontSize="{Binding CellFontSize}">
+                FontSize="{Binding CellFontSize}"
+                MouseLeftButtonDown="OnMouseLeftButtonDown"
+                MouseLeftButtonUp="OnMouseLeftButtonUp"
+                MouseMove="OnMouseMove">
                 <Label.RenderTransform>
                     <TranslateTransform X="-64" Y="-80" />
                 </Label.RenderTransform>
@@ -70,25 +164,16 @@
 
         </Grid>
 
-        <sf:SfBusyIndicator
-            Canvas.Left="150"
-            Canvas.Top="145"
-            AnimationSpeed="10"
-            AnimationType="DualRing"
-            Foreground="{StaticResource PrimaryHueMidBrush}"
-            IsBusy="True"
-            Opacity="0.7"
-            ViewboxHeight="200"
-            ViewboxWidth="200" />
-
         <TextBlock
-            Canvas.Left="212"
+            Canvas.Left="210"
             Canvas.Top="290"
+            Width="72"
             Margin="4"
             FontFamily="{StaticResource MaterialDesignFont}"
-            FontSize="14"
+            FontSize="15"
             FontWeight="Bold"
-            Text="{Binding SelectedCell.TimeSpent, StringFormat=d\\:hh\\:mm\\:ss}" />
+            Text="{Binding SelectedCell.TimeSpent, Converter={StaticResource TimeSpanToStringConverter}}"
+            TextAlignment="Center" />
 
-    </Canvas>
+    </Canvas>-->
 </UserControl>
