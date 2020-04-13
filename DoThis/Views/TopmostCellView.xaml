@@ -55,7 +55,7 @@
                 VerticalContentAlignment="Center"
                 FontSize="{Binding CellFontSize}">
                 <Label.RenderTransform>
-                    <TranslateTransform X="-64" Y="-75" />
+                    <TranslateTransform X="-64" Y="-80" />
                 </Label.RenderTransform>
                 <Label.Content>
                     <AccessText
@@ -80,6 +80,15 @@
             Opacity="0.7"
             ViewboxHeight="200"
             ViewboxWidth="200" />
+
+        <TextBlock
+            Canvas.Left="212"
+            Canvas.Top="290"
+            Margin="4"
+            FontFamily="{StaticResource MaterialDesignFont}"
+            FontSize="14"
+            FontWeight="Bold"
+            Text="{Binding SelectedCell.TimeSpent, StringFormat=d\\:hh\\:mm\\:ss}" />
 
     </Canvas>
 </UserControl>
