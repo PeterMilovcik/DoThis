@@ -6,19 +6,15 @@
     xmlns:local="clr-namespace:Beeffective.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="TopmostCellWindow"
-    Width="200"
-    Height="200"
+    Width="600"
+    Height="600"
     AllowsTransparency="True"
-    Background="Transparent"
+    Background="LightGray"
     MouseDown="OnMouseDown"
     Topmost="True"
     WindowStyle="None"
     mc:Ignorable="d">
     <Grid>
-        <local:TopmostCellView x:Name="CellView">
-            <local:TopmostCellView.RenderTransform>
-                <RotateTransform Angle="{Binding HexagonAngle}" />
-            </local:TopmostCellView.RenderTransform>
-        </local:TopmostCellView>
+        <local:TopmostCellView x:Name="CellView" />
     </Grid>
 </Window>

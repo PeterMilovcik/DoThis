@@ -30,6 +30,7 @@ namespace Beeffective.ViewModels
         private ObservableCollection<TagViewModel> tagsList;
         private ObservableCollection<GoalViewModel> goalList;
         private double cellFontSize;
+        private bool isMenuShown;
 
         public HoneycombViewModel(HoneycombModel model, IWindow topMostWindow)
         {
@@ -48,7 +49,10 @@ namespace Beeffective.ViewModels
             RemoveCellCommand = new DelegateCommand(obj => RemoveCell());
             timer = new Timer {Interval = 250};
             timer.Elapsed += OnTimerElapsed;
+            Topmost = new TopmostViewModel();
         }
+
+        public TopmostViewModel Topmost { get; }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
@@ -356,6 +360,17 @@ namespace Beeffective.ViewModels
 
         public CellViewModel PressedCell { get; set; }
         public bool IsDrag { get; set; }
+
+        public bool IsMenuShown
+        {
+            get => isMenuShown;
+            set
+            {
+                if (Equals(isMenuShown, value)) return;
+                isMenuShown = value;
+                OnPropertyChanged();
+            }
+        }
 
         public CellModel AddEmptyCell(CellModel newCellModel)
         {
