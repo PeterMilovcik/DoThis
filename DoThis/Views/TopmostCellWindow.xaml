@@ -10,7 +10,7 @@
     Height="600"
     AllowsTransparency="True"
     Background="Transparent"
-    MouseDown="OnMouseDown"
+    MouseMove="OnMouseMove"
     Topmost="True"
     WindowStyle="None"
     mc:Ignorable="d">

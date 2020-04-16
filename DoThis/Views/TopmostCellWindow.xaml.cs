@@ -8,10 +8,10 @@ namespace Beeffective.Views
         {
             InitializeComponent();
         }
-
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        
+        private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
             }
