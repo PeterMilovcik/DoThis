@@ -2,8 +2,7 @@
     x:Class="Beeffective.Views.TopmostCellView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:views="clr-namespace:Beeffective.Views"
-    Background="Red">
+    xmlns:views="clr-namespace:Beeffective.Views">
 
     <UserControl.RenderTransform>
         <ScaleTransform ScaleX="1" ScaleY="1" />
@@ -15,42 +14,49 @@
         <views:TitleCellMenuItemView
             Canvas.Left="250"
             Canvas.Top="250"
+            MouseLeftButtonUp="OnTitleMouseLeftButtonUp"
             Text="Title" />
 
         <!--  North East  -->
         <views:TagsCellMenuItemView
             Canvas.Left="400"
             Canvas.Top="163.4"
+            MouseLeftButtonUp="OnTagsMouseLeftButtonUp"
             Text="Tags" />
 
         <!--  South East  -->
         <views:RemoveCellMenuItemView
             Canvas.Left="400"
             Canvas.Top="336.6"
+            MouseLeftButtonUp="OnRemoveMouseLeftButtonUp"
             Text="Remove" />
 
         <!--  North West  -->
         <views:PomodoroCellMenuItemView
             Canvas.Left="100"
             Canvas.Top="163.4"
+            MouseLeftButtonUp="OnPomodoroMouseLeftButtonUp"
             Text="Pomodoro" />
 
         <!--  South West  -->
         <views:TimeTrackerCellMenuItemView
             Canvas.Left="100"
             Canvas.Top="336.6"
+            MouseLeftButtonUp="OnTimeTrackerMouseLeftButtonUp"
             Text="Time Tracker" />
 
         <!--  North  -->
         <views:GoalCellMenuItemView
             Canvas.Left="250"
             Canvas.Top="77"
+            MouseLeftButtonUp="OnGoalMouseLeftButtonUp"
             Text="Goal" />
 
         <!--  South  -->
         <views:FinishCellMenuItemView
             Canvas.Left="250"
             Canvas.Top="423"
+            MouseLeftButtonUp="OnFinishMouseLeftButtonUp"
             Text="Finish" />
 
     </Canvas>

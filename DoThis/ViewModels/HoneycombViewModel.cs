@@ -50,6 +50,7 @@ namespace Beeffective.ViewModels
             timer = new Timer {Interval = 250};
             timer.Elapsed += OnTimerElapsed;
             Topmost = new TopmostViewModel();
+            TitleCommand = new DelegateCommand(obj => MessageBox.Show("Title"));
         }
 
         public TopmostViewModel Topmost { get; }
@@ -97,6 +98,8 @@ namespace Beeffective.ViewModels
         public ICommand TimerCommand { get; }
 
         public ICommand RemoveCellCommand { get; }
+
+        public ICommand TitleCommand { get; }
 
         private void RemoveCell()
         {
