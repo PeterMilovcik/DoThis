@@ -7,13 +7,13 @@ namespace Beeffective.Views
     {
         public TagsCellMenuItemView()
         {
-            InitializeComponent();
+             InitializeComponent();
         }
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", 
             typeof(string), 
-            typeof(TitleCellMenuItemView), 
+            typeof(TagsCellMenuItemView), 
             new PropertyMetadata(default(string)));
 
         public string Text

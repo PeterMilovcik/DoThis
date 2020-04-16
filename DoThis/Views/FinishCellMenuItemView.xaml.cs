@@ -3,9 +3,9 @@ using System.Windows.Controls;
 
 namespace Beeffective.Views
 {
-    public partial class TimeTrackerCellMenuItemView : UserControl
+    public partial class FinishCellMenuItemView : UserControl
     {
-        public TimeTrackerCellMenuItemView()
+        public FinishCellMenuItemView()
         {
             InitializeComponent();
         }
@@ -13,7 +13,7 @@ namespace Beeffective.Views
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", 
             typeof(string), 
-            typeof(TimeTrackerCellMenuItemView), 
+            typeof(FinishCellMenuItemView), 
             new PropertyMetadata(default(string)));
 
         public string Text

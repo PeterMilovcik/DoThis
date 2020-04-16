@@ -3,12 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="clr-namespace:Beeffective.Controls"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Beeffective.Views"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="200"
-    d:DesignWidth="200"
-    mc:Ignorable="d">
+    xmlns:local="clr-namespace:Beeffective.Views">
+    <UserControl.RenderTransform>
+        <TranslateTransform X="-100" Y="-100" />
+    </UserControl.RenderTransform>
     <Canvas Width="200" Height="200">
         <controls:Hexagon
             Canvas.Left="100"
@@ -30,7 +28,7 @@
                     FontFamily="{StaticResource MaterialDesignFont}"
                     FontWeight="Bold"
                     Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
-                    Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:TypeExtension local:TitleCellMenuItemView}}, Path=Text}"
+                    Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:TypeExtension local:TagsCellMenuItemView}}, Path=Text}"
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
             </Label.Content>

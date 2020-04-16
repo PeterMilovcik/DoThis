@@ -9,7 +9,7 @@
     Width="600"
     Height="600"
     AllowsTransparency="True"
-    Background="LightGray"
+    Background="Transparent"
     MouseDown="OnMouseDown"
     Topmost="True"
     WindowStyle="None"

@@ -392,7 +392,7 @@ namespace Beeffective.ViewModels
 
         public void Release(CellViewModel viewModel)
         {
-            if (IsDrag && PressedCell != viewModel && !viewModel.IsEmpty)
+            if (IsDrag && PressedCell != viewModel)
             {
                 var startX = PressedCell.X;
                 var startY = PressedCell.Y;

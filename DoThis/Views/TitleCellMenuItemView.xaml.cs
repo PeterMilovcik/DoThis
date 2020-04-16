@@ -1,12 +1,11 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 
 namespace Beeffective.Views
 {
     /// <summary>
     /// Interaction logic for TitleCellMenuItemView.xaml
     /// </summary>
-    public partial class TitleCellMenuItemView : UserControl
+    public partial class TitleCellMenuItemView
     {
         public TitleCellMenuItemView()
         {

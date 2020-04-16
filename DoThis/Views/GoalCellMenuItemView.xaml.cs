@@ -13,7 +13,7 @@ namespace Beeffective.Views
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text", 
             typeof(string), 
-            typeof(TitleCellMenuItemView), 
+            typeof(GoalCellMenuItemView), 
             new PropertyMetadata(default(string)));
 
         public string Text
