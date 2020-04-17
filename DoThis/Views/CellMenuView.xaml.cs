@@ -32,7 +32,8 @@ namespace Beeffective.Views
         {
             if (DataContext is HoneycombViewModel viewModel)
             {
-                viewModel.IsMenuShown = !viewModel.IsMenuShown;
+                viewModel.RemoveCellCommand.Execute(null);
+                //viewModel.IsMenuShown = !viewModel.IsMenuShown;
             }
         }
 

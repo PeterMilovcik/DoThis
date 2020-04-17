@@ -50,7 +50,7 @@
             Canvas.Left="250"
             Canvas.Top="77"
             MouseLeftButtonUp="OnGoalMouseLeftButtonUp"
-            Text="Goal" />
+            Text="{Binding SelectedCell.Goal}" />
 
         <!--  South  -->
         <views:FinishCellMenuItemView
