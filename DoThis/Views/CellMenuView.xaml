@@ -15,14 +15,14 @@
             Canvas.Left="250"
             Canvas.Top="250"
             MouseLeftButtonUp="OnTitleMouseLeftButtonUp"
-            Text="Title" />
+            Text="{Binding SelectedCell.Title}" />
 
         <!--  North East  -->
         <views:TagsCellMenuItemView
             Canvas.Left="400"
             Canvas.Top="163.4"
             MouseLeftButtonUp="OnTagsMouseLeftButtonUp"
-            Text="Tags" />
+            Text="{Binding SelectedCell.SpaceSeparatedTags}" />
 
         <!--  South East  -->
         <views:RemoveCellMenuItemView
@@ -43,7 +43,7 @@
             Canvas.Left="100"
             Canvas.Top="336.6"
             MouseLeftButtonUp="OnTimeTrackerMouseLeftButtonUp"
-            Text="Time Tracker" />
+            Text="{Binding SelectedCell.TimeSpent, StringFormat=hh\\:mm\\:ss}" />
 
         <!--  North  -->
         <views:GoalCellMenuItemView

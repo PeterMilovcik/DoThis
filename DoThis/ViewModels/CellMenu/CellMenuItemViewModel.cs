@@ -1,4 +1,4 @@
-﻿namespace Beeffective.ViewModels
+﻿namespace Beeffective.ViewModels.CellMenu
 {
     public class CellMenuItemViewModel : ViewModel
     {

@@ -22,7 +22,7 @@
             Height="140"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            FontSize="{Binding CellFontSize}">
+            FontSize="{Binding SelectedCell.CellFontSize}">
             <Label.Content>
                 <AccessText
                     FontFamily="{StaticResource MaterialDesignFont}"

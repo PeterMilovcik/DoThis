@@ -10,18 +10,18 @@ using System.Windows.Input;
 using Beeffective.Commands;
 using Beeffective.Extensions;
 using Beeffective.Models;
+using Beeffective.ViewModels.CellMenu;
 
 namespace Beeffective.ViewModels
 {
     public class HoneycombViewModel : ViewModel
     {
-        private readonly HoneycombModel model;
         private double width;
         private double height;
         private double zoomFactor;
         private CellViewModel selectedCell;
         private Visibility titleVisibility;
-        private Timer timer;
+        private readonly Timer timer;
         private bool isTimerEnabled;
         private DateTime? lastUpdate;
         private ObservableCollection<TagViewModel> tagsList;
@@ -29,9 +29,8 @@ namespace Beeffective.ViewModels
         private double cellFontSize;
         private bool isMenuShown;
 
-        public HoneycombViewModel(HoneycombModel model)
+        public HoneycombViewModel()
         {
-            this.model = model ?? throw new ArgumentNullException(nameof(model));
             Width = 10000;
             Height = 10000;
             ZoomFactor = 1;
@@ -44,11 +43,11 @@ namespace Beeffective.ViewModels
             RemoveCellCommand = new DelegateCommand(obj => RemoveCell());
             timer = new Timer {Interval = 250};
             timer.Elapsed += OnTimerElapsed;
-            Topmost = new TopmostViewModel();
+            CellMenu = new CellMenuViewModel();
             TitleCommand = new DelegateCommand(obj => MessageBox.Show("Title"));
         }
 
-        public TopmostViewModel Topmost { get; }
+        public CellMenuViewModel CellMenu { get; }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
@@ -197,11 +196,11 @@ namespace Beeffective.ViewModels
             try
             {
                 IsBusy = true;
-                await model.LoadAsync();
+                await Honeycomb.LoadAsync();
                 EmptyCells.Clear();
                 FullCells.Clear();
                 TagsList.Clear();
-                foreach (var cellModel in model.Cells)
+                foreach (var cellModel in Honeycomb.Cells)
                 {
                     var cellViewModel = new CellViewModel(cellModel, this);
                     if (cellViewModel.IsEmpty)
@@ -236,7 +235,7 @@ namespace Beeffective.ViewModels
 
         public CellModel AddFullCell(CellModel newCellModel)
         {
-            var addedCellModel = model.AddCell(newCellModel);
+            var addedCellModel = Honeycomb.AddCell(newCellModel);
             var newCellViewModel = new CellViewModel(addedCellModel, this);
             AddFullCell(newCellViewModel);
             return addedCellModel;
@@ -252,7 +251,7 @@ namespace Beeffective.ViewModels
 
         public void RemoveFullCell(CellViewModel cellViewModelToRemove)
         {
-            model.RemoveCell(cellViewModelToRemove.Model);
+            Honeycomb.RemoveCell(cellViewModelToRemove.Model);
             cellViewModelToRemove.SelectionChanged -= OnCellViewModelSelectionChanged;
             cellViewModelToRemove.PropertyChanged -= OnCellViewModelPropertyChanged;
             FullCells.Remove(cellViewModelToRemove);
@@ -380,11 +379,11 @@ namespace Beeffective.ViewModels
 
         public CellModel AddEmptyCell(CellModel newCellModel)
         {
-            var occupied = model.Cells.Any(c =>
+            var occupied = Honeycomb.Cells.Any(c =>
                 Math.Abs(c.Importance - newCellModel.Importance) < 0.01 && 
                 Math.Abs(c.Urgency - newCellModel.Urgency) < 0.01);
             if (occupied) return null;
-            var addedCellModel = model.AddCell(newCellModel);
+            var addedCellModel = Honeycomb.AddCell(newCellModel);
             var newCellViewModel = new CellViewModel(addedCellModel, this);
             EmptyCells.Add(newCellViewModel);
             return addedCellModel;
@@ -392,7 +391,7 @@ namespace Beeffective.ViewModels
 
         public void RemoveEmptyCell(CellViewModel cellViewModelToRemove)
         {
-            model.RemoveCell(cellViewModelToRemove.Model);
+            Honeycomb.RemoveCell(cellViewModelToRemove.Model);
             EmptyCells.Remove(cellViewModelToRemove);
         }
 
