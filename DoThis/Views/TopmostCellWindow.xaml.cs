@@ -2,7 +2,7 @@
 
 namespace Beeffective.Views
 {
-    public partial class TopmostCellWindow : IWindow
+    public partial class TopmostCellWindow : ICellMenuView
     {
         public TopmostCellWindow()
         {

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Beeffective.Data;
 using Beeffective.Data.Entities;
+using Beeffective.Models;
 using Beeffective.Services;
 using Beeffective.ViewModels;
 using Beeffective.Views;
@@ -17,9 +18,13 @@ namespace Beeffective.Bootstrap
 
             // views
             builder.RegisterType<HoneycombWindow>().AsSelf().SingleInstance();
+            builder.RegisterType<TopmostCellWindow>().As<ICellMenuView>().SingleInstance();
 
             // view models
             builder.RegisterType<HoneycombViewModel>().AsSelf().SingleInstance();
+
+            // models
+            builder.RegisterType<HoneycombModel>().AsSelf().SingleInstance();
 
             // services
             builder.RegisterType<HoneycombService>().AsSelf().SingleInstance();

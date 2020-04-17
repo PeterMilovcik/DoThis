@@ -31,7 +31,7 @@ namespace Beeffective.ViewModels
         private double cellFontSize;
         private bool isMenuShown;
 
-        public HoneycombViewModel(HoneycombModel model, IWindow topMostWindow)
+        public HoneycombViewModel(HoneycombModel model, ICellMenuView topMostWindow)
         {
             this.model = model ?? throw new ArgumentNullException(nameof(model));
             this.topMostWindow = topMostWindow;
