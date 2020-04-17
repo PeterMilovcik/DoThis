@@ -1,21 +1,25 @@
 using System.Windows;
-using Beeffective.Data;
+using Beeffective.Bootstrap;
+using Beeffective.Views;
 using Syncfusion.Licensing;
 
 namespace Beeffective
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    public partial class App
     {
-        private static Database database;
-
         public App()
         {
             SyncfusionLicenseProvider.RegisterLicense("##SyncfusionLicense##");
         }
 
-        internal static Database Database => database ??= new Database();
+        private static AppContainer container;
+        internal static AppContainer Container => container ??= new AppContainer();
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            var window = Container.Resolve<HoneycombWindow>();
+            window.Show();
+        }
     }
 }

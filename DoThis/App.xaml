@@ -4,8 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Beeffective.Converters"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    StartupUri="Views/HoneycombWindow.xaml">
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

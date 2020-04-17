@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using Beeffective.Commands;
 using Beeffective.Extensions;
 using Beeffective.Models;
