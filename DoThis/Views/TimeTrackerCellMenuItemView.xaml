@@ -16,17 +16,16 @@
             StrokeThickness="3" />
         <Label
             x:Name="TimeTrackerLabel"
-            Canvas.Left="42"
-            Canvas.Top="30"
-            Width="115"
-            Height="140"
+            Canvas.Left="13"
+            Canvas.Top="75"
+            Width="175"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            FontSize="{Binding CellFontSize}">
+            FontSize="36">
             <Label.Content>
                 <AccessText
                     FontFamily="{StaticResource MaterialDesignFont}"
-                    FontWeight="Bold"
+                    FontWeight="ExtraBold"
                     Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
                     Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:TypeExtension local:TimeTrackerCellMenuItemView}}, Path=Text}"
                     TextAlignment="Center"

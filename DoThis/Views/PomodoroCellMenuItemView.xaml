@@ -22,11 +22,11 @@
             Height="140"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            FontSize="{Binding CellFontSize}">
+            FontSize="36">
             <Label.Content>
                 <AccessText
                     FontFamily="{StaticResource MaterialDesignFont}"
-                    FontWeight="Bold"
+                    FontWeight="ExtraBold"
                     Foreground="{StaticResource PrimaryHueMidForegroundBrush}"
                     Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:TypeExtension local:PomodoroCellMenuItemView}}, Path=Text}"
                     TextAlignment="Center"

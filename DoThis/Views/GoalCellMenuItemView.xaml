@@ -16,13 +16,13 @@
             StrokeThickness="3" />
         <Label
             x:Name="GoalLabel"
-            Canvas.Left="42"
-            Canvas.Top="30"
-            Width="115"
-            Height="140"
+            Canvas.Left="20"
+            Canvas.Top="50"
+            Width="160"
+            Height="100"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            FontSize="{Binding CellFontSize}">
+            FontSize="21">
             <Label.Content>
                 <AccessText
                     FontFamily="{StaticResource MaterialDesignFont}"

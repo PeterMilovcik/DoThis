@@ -5,59 +5,66 @@
     xmlns:views="clr-namespace:Beeffective.Views">
 
     <UserControl.RenderTransform>
-        <ScaleTransform ScaleX="1" ScaleY="1" />
+        <ScaleTransform ScaleX="0.5" ScaleY="0.5" />
     </UserControl.RenderTransform>
 
     <Canvas Width="500" Height="500">
 
-        <!--  Center  -->
-        <views:TitleCellMenuItemView
-            Canvas.Left="250"
-            Canvas.Top="250"
-            MouseLeftButtonUp="OnTitleMouseLeftButtonUp"
-            Text="{Binding SelectedCell.Title}" />
-
         <!--  North East  -->
         <views:TagsCellMenuItemView
-            Canvas.Left="400"
-            Canvas.Top="163.4"
+            Canvas.Left="{Binding CellMenu.Tags.Left}"
+            Canvas.Top="{Binding CellMenu.Tags.Top}"
+            Canvas.ZIndex="{Binding CellMenu.Tags.ZIndex}"
             MouseLeftButtonUp="OnTagsMouseLeftButtonUp"
             Text="{Binding SelectedCell.SpaceSeparatedTags}" />
 
         <!--  South East  -->
         <views:RemoveCellMenuItemView
-            Canvas.Left="400"
-            Canvas.Top="336.6"
+            Canvas.Left="{Binding CellMenu.Remove.Left}"
+            Canvas.Top="{Binding CellMenu.Remove.Top}"
+            Canvas.ZIndex="{Binding CellMenu.Remove.ZIndex}"
             MouseLeftButtonUp="OnRemoveMouseLeftButtonUp"
             Text="Remove" />
 
         <!--  North West  -->
         <views:PomodoroCellMenuItemView
-            Canvas.Left="100"
-            Canvas.Top="163.4"
+            Canvas.Left="{Binding CellMenu.Pomodoro.Left}"
+            Canvas.Top="{Binding CellMenu.Pomodoro.Top}"
+            Canvas.ZIndex="{Binding CellMenu.Pomodoro.ZIndex}"
             MouseLeftButtonUp="OnPomodoroMouseLeftButtonUp"
-            Text="Pomodoro" />
+            Text="25:00" />
 
         <!--  South West  -->
         <views:TimeTrackerCellMenuItemView
-            Canvas.Left="100"
-            Canvas.Top="336.6"
+            Canvas.Left="{Binding CellMenu.TimeTracker.Left}"
+            Canvas.Top="{Binding CellMenu.TimeTracker.Top}"
+            Canvas.ZIndex="{Binding CellMenu.TimeTracker.ZIndex}"
             MouseLeftButtonUp="OnTimeTrackerMouseLeftButtonUp"
             Text="{Binding SelectedCell.TimeSpent, StringFormat=hh\\:mm\\:ss}" />
 
         <!--  North  -->
         <views:GoalCellMenuItemView
-            Canvas.Left="250"
-            Canvas.Top="77"
+            Canvas.Left="{Binding CellMenu.Goal.Left}"
+            Canvas.Top="{Binding CellMenu.Goal.Top}"
+            Canvas.ZIndex="{Binding CellMenu.Goal.ZIndex}"
             MouseLeftButtonUp="OnGoalMouseLeftButtonUp"
             Text="{Binding SelectedCell.Goal}" />
 
         <!--  South  -->
         <views:FinishCellMenuItemView
-            Canvas.Left="250"
-            Canvas.Top="423"
+            Canvas.Left="{Binding CellMenu.Finish.Left}"
+            Canvas.Top="{Binding CellMenu.Finish.Top}"
+            Canvas.ZIndex="{Binding CellMenu.Finish.ZIndex}"
             MouseLeftButtonUp="OnFinishMouseLeftButtonUp"
             Text="Finish" />
+
+        <!--  Center  -->
+        <views:TitleCellMenuItemView
+            Canvas.Left="{Binding CellMenu.Title.Left}"
+            Canvas.Top="{Binding CellMenu.Title.Top}"
+            Canvas.ZIndex="{Binding CellMenu.Title.ZIndex}"
+            MouseLeftButtonUp="OnTitleMouseLeftButtonUp"
+            Text="{Binding SelectedCell.Title}" />
 
     </Canvas>
 

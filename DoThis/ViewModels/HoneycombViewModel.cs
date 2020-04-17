@@ -27,7 +27,6 @@ namespace Beeffective.ViewModels
         private ObservableCollection<TagViewModel> tagsList;
         private ObservableCollection<GoalViewModel> goalList;
         private double cellFontSize;
-        private bool isMenuShown;
 
         public HoneycombViewModel()
         {
@@ -365,17 +364,6 @@ namespace Beeffective.ViewModels
 
         public CellViewModel PressedCell { get; set; }
         public bool IsDrag { get; set; }
-
-        public bool IsMenuShown
-        {
-            get => isMenuShown;
-            set
-            {
-                if (Equals(isMenuShown, value)) return;
-                isMenuShown = value;
-                OnPropertyChanged();
-            }
-        }
 
         public CellModel AddEmptyCell(CellModel newCellModel)
         {
