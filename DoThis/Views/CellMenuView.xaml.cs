@@ -5,12 +5,9 @@ using Beeffective.ViewModels;
 
 namespace Beeffective.Views
 {
-    /// <summary>
-    /// Interaction logic for TopmostCellView.xaml
-    /// </summary>
-    public partial class TopmostCellView
+    public partial class CellMenuView
     {
-        public TopmostCellView()
+        public CellMenuView()
         {
             InitializeComponent();
         }

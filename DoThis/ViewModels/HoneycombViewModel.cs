@@ -10,14 +10,12 @@ using System.Windows.Input;
 using Beeffective.Commands;
 using Beeffective.Extensions;
 using Beeffective.Models;
-using Beeffective.Views;
 
 namespace Beeffective.ViewModels
 {
     public class HoneycombViewModel : ViewModel
     {
         private readonly HoneycombModel model;
-        private readonly IWindow topMostWindow;
         private double width;
         private double height;
         private double zoomFactor;
@@ -31,11 +29,9 @@ namespace Beeffective.ViewModels
         private double cellFontSize;
         private bool isMenuShown;
 
-        public HoneycombViewModel(HoneycombModel model, ICellMenuView topMostWindow)
+        public HoneycombViewModel(HoneycombModel model)
         {
             this.model = model ?? throw new ArgumentNullException(nameof(model));
-            this.topMostWindow = topMostWindow;
-            this.topMostWindow.DataContext = this;
             Width = 10000;
             Height = 10000;
             ZoomFactor = 1;
@@ -198,36 +194,44 @@ namespace Beeffective.ViewModels
 
         public async Task LoadAsync()
         {
-            await model.LoadAsync();
-            EmptyCells.Clear();
-            FullCells.Clear();
-            TagsList.Clear();
-            foreach (var cellModel in model.Cells)
+            try
             {
-                var cellViewModel = new CellViewModel(cellModel, this);
-                if (cellViewModel.IsEmpty)
+                IsBusy = true;
+                await model.LoadAsync();
+                EmptyCells.Clear();
+                FullCells.Clear();
+                TagsList.Clear();
+                foreach (var cellModel in model.Cells)
                 {
+                    var cellViewModel = new CellViewModel(cellModel, this);
+                    if (cellViewModel.IsEmpty)
+                    {
+                        EmptyCells.Add(cellViewModel);
+                    }
+                    else
+                    {
+                        AddFullCell(cellViewModel);
+                    }
+                }
+
+                if (!FullCells.Any())
+                {
+                    var cellModel = new CellModel
+                    {
+                        Urgency = Width / 2, 
+                        Importance = Height / 2, 
+                        Title = string.Empty,
+                    };
+                    var cellViewModel = new CellViewModel(cellModel, this);
                     EmptyCells.Add(cellViewModel);
                 }
-                else
-                {
-                    AddFullCell(cellViewModel);
-                }
+                UpdateTagsList();
+                UpdateGoalList();
             }
-
-            if (!FullCells.Any())
+            finally
             {
-                var cellModel = new CellModel
-                {
-                    Urgency = Width / 2, 
-                    Importance = Height / 2, 
-                    Title = string.Empty,
-                };
-                var cellViewModel = new CellViewModel(cellModel, this);
-                EmptyCells.Add(cellViewModel);
+                IsBusy = false;
             }
-            UpdateTagsList();
-            UpdateGoalList();
         }
 
         public CellModel AddFullCell(CellModel newCellModel)
@@ -409,16 +413,6 @@ namespace Beeffective.ViewModels
 
             PressedCell = null;
             IsDrag = false;
-        }
-
-        public void ShowTopmostWindow()
-        {
-            topMostWindow.Show();
-        }
-
-        public void HideTopmostWindow()
-        {
-            topMostWindow.Hide();
         }
     }
 }

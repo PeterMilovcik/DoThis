@@ -18,7 +18,7 @@ namespace Beeffective.Bootstrap
 
             // views
             builder.RegisterType<HoneycombWindow>().AsSelf().SingleInstance();
-            builder.RegisterType<TopmostCellWindow>().As<ICellMenuView>().SingleInstance();
+            builder.RegisterType<CellMenuWindow>().As<ICellMenuWindow>().SingleInstance();
 
             // view models
             builder.RegisterType<HoneycombViewModel>().AsSelf().SingleInstance();
