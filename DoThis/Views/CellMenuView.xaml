@@ -40,7 +40,7 @@
             Canvas.Top="{Binding CellMenu.TimeTracker.Top}"
             Canvas.ZIndex="{Binding CellMenu.TimeTracker.ZIndex}"
             MouseLeftButtonUp="OnTimeTrackerMouseLeftButtonUp"
-            Text="{Binding SelectedCell.TimeSpent, StringFormat=hh\\:mm\\:ss}" />
+            Text="{Binding SelectedCell.TimeSpent, Converter={StaticResource TimeSpanToStringConverter}}" />
 
         <!--  North  -->
         <views:GoalCellMenuItemView

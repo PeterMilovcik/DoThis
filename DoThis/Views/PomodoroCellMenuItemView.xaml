@@ -16,13 +16,12 @@
             StrokeThickness="3" />
         <Label
             x:Name="PomodoroLabel"
-            Canvas.Left="42"
-            Canvas.Top="30"
-            Width="115"
-            Height="140"
+            Canvas.Left="23"
+            Canvas.Top="63"
+            Width="155"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
-            FontSize="36">
+            FontSize="56">
             <Label.Content>
                 <AccessText
                     FontFamily="{StaticResource MaterialDesignFont}"
