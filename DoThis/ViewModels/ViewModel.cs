@@ -1,6 +1,5 @@
 ﻿using Beeffective.Common;
 using Beeffective.Models;
-using Beeffective.Services;
 
 namespace Beeffective.ViewModels
 {
@@ -18,12 +17,7 @@ namespace Beeffective.ViewModels
         public bool IsBusy
         {
             get => isBusy;
-            set
-            {
-                if (Equals(isBusy, value)) return;
-                isBusy = value;
-                OnPropertyChanged();
-            }
+            set => SetProperty(ref isBusy, value);
         }
     }
 }

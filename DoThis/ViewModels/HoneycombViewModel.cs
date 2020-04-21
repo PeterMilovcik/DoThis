@@ -66,11 +66,14 @@ namespace Beeffective.ViewModels
 
         private void UpdateTagTimes(CellViewModel cellViewModel, in TimeSpan delta)
         {
-            var tags = cellViewModel.SpaceSeparatedTags.Split(" ");
-            foreach (string tag in tags)
+            if (cellViewModel.SpaceSeparatedTags != null)
             {
-                var tagViewModel = TagsList.Single(t => t.Name == tag);
-                tagViewModel.TimeSpent = tagViewModel.TimeSpent.Add(delta);
+                var tags = cellViewModel.SpaceSeparatedTags.Split(" ");
+                foreach (string tag in tags)
+                {
+                    var tagViewModel = TagsList.Single(t => t.Name == tag);
+                    tagViewModel.TimeSpent = tagViewModel.TimeSpent.Add(delta);
+                }
             }
 
             TagsList = new ObservableCollection<TagViewModel>(
@@ -80,9 +83,11 @@ namespace Beeffective.ViewModels
         private void UpdateGoalTimes(CellViewModel cellViewModel, in TimeSpan delta)
         {
             var goal = cellViewModel.Goal;
-
-            var goalViewModel = GoalList.Single(t => t.Title == goal);
-            goalViewModel.TimeSpent = goalViewModel.TimeSpent.Add(delta);
+            if (!string.IsNullOrWhiteSpace(goal))
+            {
+                var goalViewModel = GoalList.Single(t => t.Title == goal);
+                goalViewModel.TimeSpent = goalViewModel.TimeSpent.Add(delta);
+            }
 
             GoalList = new ObservableCollection<GoalViewModel>(
                 GoalList.OrderByDescending(t => t.TimeSpent));

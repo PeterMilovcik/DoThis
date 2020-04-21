@@ -53,7 +53,7 @@ namespace Beeffective.Views
             {
                 ToggleCellMenu(viewModel);
                 viewModel.CellMenu.TimeTracker.ZIndex = 1;
-                viewModel.IsTimerEnabled = !viewModel.IsTimerEnabled;
+                viewModel.IsTimerEnabled = !viewModel.CellMenu.IsMenuShown;
             }
         }
 
